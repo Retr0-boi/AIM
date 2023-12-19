@@ -15,11 +15,144 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
         currentIndex: 3,
         onItemTapped: (index) {},
       ),
-      body: const Center(
-        child: Text(
-          'This is the NOTIFICATIONS Page WITH INDEX 3',
-        ),
+      body: _buildNotificationsList(),
+    );
+  }
+
+  Widget _buildNotificationsList() {
+    // Mock data for notifications
+    List<Map<String, dynamic>?> notifications = [
+      {
+        'type': 'welcome',
+        'message': 'Welcome to this app!',
+        'timestamp': DateTime.now()
+      },
+      {
+        'type': 'friend_request',
+        'username': 'John Doe',
+        'profilePicture': 'path_to_image',
+        'timestamp': DateTime.now()
+      },
+      {
+        'type': 'admin_notification',
+        'message': 'Important message from admin.',
+        'timestamp': DateTime.now()
+      },
+      null,
+    ];
+
+    // Remove null notifications
+    notifications.removeWhere((notification) => notification == null);
+
+    // Sort notifications by time
+    notifications.sort((a, b) => b!['timestamp'].compareTo(a!['timestamp']));
+
+    bool printedTodayHeader =
+        false; // Track whether "Today" header has been printed
+
+    return ListView.builder(
+      itemCount: notifications.length,
+      itemBuilder: (context, index) {
+        final notification = notifications[index]!;
+        final isToday = _isToday(notification['timestamp']);
+        final showHeader = isToday && !printedTodayHeader;
+
+        if (showHeader) {
+          printedTodayHeader = true;
+        }
+
+        return Column(
+          children: [
+            if (showHeader) _buildSectionDivider('Today'),
+            _buildNotificationItem(notification),
+            if (index < notifications.length - 1)
+              Divider(), // Add a divider between notifications
+          ],
+        );
+      },
+    );
+  }
+
+  bool _isToday(DateTime? timestamp) {
+    if (timestamp == null) return false;
+
+    final now = DateTime.now();
+    return timestamp.day == now.day &&
+        timestamp.month == now.month &&
+        timestamp.year == now.year;
+  }
+
+  Widget _buildSectionDivider(String title) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+        title,
+        style: TextStyle(fontWeight: FontWeight.bold),
       ),
+    );
+  }
+
+  Widget _buildNotificationItem(Map<String, dynamic> notification) {
+    if (notification['type'] == 'friend_request') {
+      return _buildFriendRequestItem(notification);
+    }
+
+    // Handle other notification types here
+
+    return ListTile(
+      title: Text(notification['type'] ?? ''),
+      subtitle: Text(notification['message'] ?? ''),
+      onTap: () {
+        // Handle notification tap
+      },
+    );
+  }
+
+  Widget _buildFriendRequestItem(Map<String, dynamic> notification) {
+    return Column(
+      children: [
+        ListTile(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage('images/test.png'),
+            backgroundColor: Colors.transparent,
+          ),
+          title: Text(
+            '${notification['username']} sent a friend request',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          onTap: () {
+            // Handle friend request tap
+          },
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle approve button tap
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade300),
+                  child: Text('Approve'),
+                ),
+              ),
+              SizedBox(width: 16.0), // Add some spacing between the buttons
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // Handle disapprove button tap
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade300),
+                  child: Text('Disapprove'),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

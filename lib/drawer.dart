@@ -1,41 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'theme_provider.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({Key? key}) : super(key: key);
 
   Widget _buildRoundedDrawerHeader(BuildContext context) {
     return Container(
-      
       height: 80,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
         color: Theme.of(context).primaryColor,
-        borderRadius:const BorderRadius.only(
-          bottomLeft: Radius.circular(14.0), 
-          bottomRight: Radius.circular(14.0), 
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(14.0),
+          bottomRight: Radius.circular(14.0),
         ),
       ),
       child: DrawerHeader(
-        padding:const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 20, 
+              radius: 20,
               backgroundColor: Colors.white,
               child: Icon(
                 Icons.person,
-                size: 30, 
+                size: 30,
                 color: Theme.of(context).primaryColor,
               ),
             ),
-            const SizedBox(width: 8), 
+            const SizedBox(width: 8),
             const Text(
               'YOUR NAME',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 18, 
+                fontSize: 18,
               ),
             ),
           ],
@@ -47,47 +48,66 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
-        children: <Widget>[
-          _buildRoundedDrawerHeader(context),
-          Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: Builder(
+          builder: (context) {
+            var themeProvider = Provider.of<ThemeProvider>(context);
+
+            return Column(
               children: <Widget>[
+                _buildRoundedDrawerHeader(context),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      ListTile(
+                        leading: const Icon(Icons.account_circle),
+                        title: const Text('Profile'),
+                        onTap: () {
+                          // Handle profile tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.star),
+                        title: const Text('Placeholder Button'),
+                        onTap: () {
+                          // Handle placeholder button tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                Divider(
+                  color: Theme.of(context).primaryColor,
+                ),
                 ListTile(
-                  leading: const Icon(Icons.account_circle),
-                  title: const Text('Profile'),
+                  leading: Icon(
+                    themeProvider.currentTheme == ThemeData.light()
+                        ? Icons.light_mode_outlined
+                        : Icons.dark_mode_outlined,
+                  ),
                   onTap: () {
-                    // Handle profile tap
-                    Navigator.pop(context);
-                    // Add your navigation logic or any actions you want to perform
+                    themeProvider.toggleTheme();
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.star),
-                  title: const Text('Placeholder Button'),
+                  leading: const Icon(Icons.settings),
+                  title: const Text('Settings'),
                   onTap: () {
-                    // Handle placeholder button tap
+                    // Handle settings tap
                     Navigator.pop(context);
                     // Add your navigation logic or any actions you want to perform
                   },
                 ),
               ],
-            ),
-          ),
-          Divider(
-            color: Theme.of(context).primaryColor,
-          ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text('Settings'),
-            onTap: () {
-              // Handle settings tap
-              Navigator.pop(context);
-              // Add your navigation logic or any actions you want to perform
-            },
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }

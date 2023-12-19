@@ -3,35 +3,8 @@ import '../app_bar.dart';
 import '../drawer.dart';
 import '../bottom_navigation_bar.dart';
 
-class Home extends StatefulWidget {
+class Home extends StatelessWidget implements PreferredSizeWidget {
   const Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  final ScrollController _scrollController = ScrollController();
-  bool _isVisible = true;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
-      setState(() {
-        _isVisible = false;
-      });
-    }
-    if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-      setState(() {
-        _isVisible = true;
-      });
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,23 +15,16 @@ class _HomeState extends State<Home> {
         onItemTapped: (index) {},
       ),
       body: CustomScrollView(
-        controller: _scrollController,
         slivers: [
           SliverAppBar(
-            floating: true,
+            // expandedHeight: 110, // Height of the Suggestions Box
+            floating: false,
             pinned: true,
-            snap: true,
-            // Set expandedHeight if you want to have a custom app bar with an image, etc.
-            // expandedHeight: 110,
-            flexibleSpace: Visibility(
-              visible: _isVisible,
-              child: const MyAppBar(),
-            ),
+            flexibleSpace: const MyAppBar(),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                // Remaining code remains the same
                 if (index == 0) {
                   // Suggestions Box
                   return Container(
@@ -123,19 +89,42 @@ class _HomeState extends State<Home> {
                               child: const Icon(Icons.person),
                             ),
                             SizedBox(width: 8),
-                            Text(
-                              'User $userIndex',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'User $userIndex',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(height: 4),
+                                Text(
+                                  'Placeholder Department and batch',
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                
+                              ],
                             ),
                           ],
                         ),
                         SizedBox(height: 8),
                         // Placeholder image for user post
                         Container(
-                          height: 100,
-                          color: Colors.grey,
+                          height: 250,
+                          color: const Color.fromARGB(255, 150, 64, 64),
+                        ),
+                        SizedBox(height: 8),
+                        // Placeholder text after the red-tinted container
+                        Text(
+                          'Your placeholder text here',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
                         ),
                         SizedBox(height: 8),
                         Row(
@@ -166,11 +155,15 @@ class _HomeState extends State<Home> {
                   );
                 }
               },
-              childCount: 6, // Total number of items (1 Suggestions Box + 5 User Posts)
+              childCount:
+                  6, // Total number of items (1 Suggestions Box + 5 User Posts)
             ),
           ),
         ],
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
