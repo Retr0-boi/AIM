@@ -22,7 +22,7 @@ class PostMenu extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               // code to go back a page
-              _navigateWithAnimationLeft(context, const Home());
+              _navigateToPage(context, const Home());
             },
           );
         },
@@ -78,7 +78,7 @@ class PostMenu extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-  void _navigateWithAnimationLeft(BuildContext context, Widget page) {
+  void _navigateToPage(BuildContext context, Widget page) {
     Navigator.pushReplacement(
       context,
       PageRouteBuilder(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
+import 'ui/settings/settings_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -101,13 +102,22 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                   onTap: () {
                     // Handle settings tap
                     Navigator.pop(context);
-                    // Add your navigation logic or any actions you want to perform
+                    _navigateToPage(context, SettingsPage());
                   },
                 ),
               ],
             );
           },
         ),
+      ),
+    );
+  }
+
+  void _navigateToPage(BuildContext context, Widget page) {
+    Navigator.pushReplacement(
+      context,
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => page,
       ),
     );
   }

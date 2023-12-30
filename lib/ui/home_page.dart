@@ -9,6 +9,7 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Colors.indigo[900],
       drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,

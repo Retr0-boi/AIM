@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'ui/home_page.dart';
+import 'ui/login_page.dart'; // Import your login page
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Replace this condition with your actual logic to check if the user is logged in
+    bool isLoggedIn = true;
+
     return MaterialApp(
       title: 'AIM',
       theme: ThemeData(
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
         focusColor: Colors.blueAccent[700],
         unselectedWidgetColor: Colors.white38,
       ),
-      home: const Home(),
+      home: isLoggedIn ? const Home() : LoginPage(), // Navigate to LoginPage if not logged in
     );
   }
 }
