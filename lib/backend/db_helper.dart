@@ -32,4 +32,8 @@ class DBHelper {
     );
     return result.isNotEmpty;
   }
+  static Future<void> deleteUser() async {
+    final Database db = await initDatabase();
+    await db.delete('users');
+  }
 }

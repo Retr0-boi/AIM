@@ -54,4 +54,7 @@ class AuthService {
       await connection.close();
     }
   }
+  static Future<void> logout() async {
+    await DBHelper.deleteUser();
+  }
 }

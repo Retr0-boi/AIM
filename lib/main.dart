@@ -47,7 +47,6 @@ class AuthenticationWrapper extends StatelessWidget {
 
 
 
-
 // gotta fix the home page drawer button
 // login persistance (FIXED)
-// redirects
+// gotta set redirects and some exception handling

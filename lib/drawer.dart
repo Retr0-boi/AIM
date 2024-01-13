@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'theme_provider.dart';
 import 'ui/settings/settings_page.dart';
+import 'backend/auth_service.dart';
+import 'ui/registration_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -53,7 +55,6 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
         create: (context) => ThemeProvider(),
         child: Builder(
           builder: (context) {
-            var themeProvider = Provider.of<ThemeProvider>(context);
 
             return Column(
               children: <Widget>[
@@ -86,16 +87,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                 Divider(
                   color: Theme.of(context).primaryColor,
                 ),
-                ListTile(
-                  leading: Icon(
-                    themeProvider.currentTheme == ThemeData.light()
-                        ? Icons.light_mode_outlined
-                        : Icons.dark_mode_outlined,
-                  ),
-                  onTap: () {
-                    themeProvider.toggleTheme();
-                  },
-                ),
+                
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text('Settings'),
@@ -103,6 +95,21 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                     // Handle settings tap
                     Navigator.pop(context);
                     _navigateToPage(context, SettingsPage());
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () async {
+                    // Handle logout tap
+                    Navigator.pop(context);
+                    await AuthService.logout();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => RegistrationPage()),
+                      (route) => false,
+                    );
                   },
                 ),
               ],
