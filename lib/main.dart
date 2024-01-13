@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
 import 'ui/home_page.dart';
-import 'ui/registration_page.dart'; // Import your login page
+import 'ui/registration_page.dart';
+import 'backend/auth_service.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MyApp());
 }
-
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
-    // Replace this condition with your actual logic to check if the user is logged in
-    bool isLoggedIn = false;
-
     return MaterialApp(
       title: 'AIM',
       theme: ThemeData(
@@ -23,7 +19,35 @@ class MyApp extends StatelessWidget {
         focusColor: Colors.blueAccent[700],
         unselectedWidgetColor: Colors.white38,
       ),
-      home: isLoggedIn ? const Home() : RegistrationPage(), // Navigate to LoginPage if not logged in
+      home: AuthenticationWrapper(),
     );
   }
 }
+class AuthenticationWrapper extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: AuthService.isLoggedIn(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          bool isLoggedIn = snapshot.data ?? false;
+          return isLoggedIn ? Home() : RegistrationPage();
+        } else {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+      },
+    );
+  }
+}
+
+
+
+
+
+// gotta fix the home page drawer button
+// login persistance (FIXED)
+// redirects

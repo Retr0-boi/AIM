@@ -1,17 +1,19 @@
+import 'package:AIM/ui/login_page.dart';
 import 'package:flutter/material.dart';
+import 'package:AIM/backend/register_user.dart';
 
-void main() {
-  runApp(MyApp());
-}
+// void main() {
+//   runApp(MyApp());
+// }
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: RegistrationPage(),
-    );
-  }
-}
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       home: RegistrationPage(),
+//     );
+//   }
+// }
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -19,14 +21,17 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _dobController = TextEditingController();
-  TextEditingController _batchYearController = TextEditingController();
-  TextEditingController _batchYear2Controller = TextEditingController();
-  TextEditingController _departmentController = TextEditingController();
-  TextEditingController _specializationController = TextEditingController();
+  var registerUser = RegisterUser();
+
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _dobController = TextEditingController();
+  final TextEditingController _batchYearController = TextEditingController();
+  final TextEditingController _batchYear2Controller = TextEditingController();
+  final TextEditingController _departmentController = TextEditingController();
+  final TextEditingController _specializationController =
+      TextEditingController();
 
   DateTime? selectedDate; // To store selected date
 
@@ -49,12 +54,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Registration Page'),
+        title: Text(
+          'Registration Page',
+          style: TextStyle(
+            color: Colors.white, // Change the color to your desired color
+          ),
+        ),
+        backgroundColor: const Color(0xFF002147),
       ),
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16.0, 48.0, 16.0, 0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Name
             TextField(
@@ -180,29 +191,45 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 print('Email: ${_emailController.text}');
                 print('Password: ${_passwordController.text}');
                 // _navigateToPage(context, SettingsPage());
-              },
-              child: Text('Register'),
-            ),
-            SizedBox(height: 32.0),
+                // Add registration data to the database
+                registerUser.registerUser(
+                  _nameController.text,
+                  _dobController.text,
+                  _batchYearController.text,
+                  _batchYear2Controller.text,
+                  _departmentController.text,
+                  _specializationController.text,
+                  _emailController.text,
+                  _passwordController.text,
+                );
 
-            Text(
-              'Alreay have an account? click here',
-              style: TextStyle(
-                // fontWeight: FontWeight.bold,
-                fontSize: 16.0,
+                // Optionally, navigate to the next page after registration
+                // _navigateToPage(context, SettingsPage());
+              },
+              child: const Text('Register'),
+            ),
+
+            const SizedBox(height: 128.0),
+
+            GestureDetector(
+              onTap: () {
+                // Navigate to the login page and replace the current page in the stack
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => LoginPage()),
+                );
+              },
+              child: const Text(
+                'Already have an account? Click here',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16.0,
+                  color: Colors.blue,
+                ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  void _navigateToPage(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
       ),
     );
   }
