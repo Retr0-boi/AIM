@@ -10,8 +10,8 @@ class AuthService {
 
     try {
       Results results = await connection.query(
-        'SELECT * FROM users WHERE email = ? AND password = ?',
-        [username, password],
+        'SELECT * FROM users WHERE email = ? AND password = ? AND locked = ?',
+        [username, password,0],
       );
 
       bool isLoggedIn = results.isNotEmpty;
