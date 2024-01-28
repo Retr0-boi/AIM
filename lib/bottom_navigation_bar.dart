@@ -61,7 +61,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         case 0:
           _navigateWithAnimationLeft(context, const Home());
           break;
-        case 1:
+        case 1: 
           _navigateWithAnimationLeft(context, const Alumni());
           break;
         case 2:
