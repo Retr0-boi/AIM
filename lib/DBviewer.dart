@@ -62,7 +62,7 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
             ),
             for (var user in users)
               Text(
-                'ID: ${user['id']}, Username: ${user['username']}, Email: ${user['email']}, MongoObjectId: ${user['mongoObjectId']}',
+                'Username: ${user['username']}, Email: ${user['email']}, password: ${user['password']},mongo_id: ${user['mongo_id']}',
                 style: TextStyle(fontSize: 16.0),
               ),
             SizedBox(height: 16.0),
@@ -80,8 +80,7 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
                 'Name: ${user['name']}, DOB: ${user['DOB']}, Email: ${user['email']}, '
                 'Password: ${user['password']}, Account Status: ${user['account_status']}, '
                 'Identification: ${user['identification']}, '
-                'Updation Date: ${user['updation_date']}, Updation Time: ${user['updation_time']}, '
-                'Object ID: ${user['obj_id']}',
+                'Updation Date: ${user['updation_date']}, Updation Time: ${user['updation_time']}, ',
                 style: TextStyle(fontSize: 16.0),
               ),
           ],

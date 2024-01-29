@@ -30,7 +30,7 @@ class SettingsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildSettingsOption(context, 'Account', AccountSettingsPage()),
+            // _buildSettingsOption(context, 'Account', AccountSettingsPage()),
             _buildSettingsOption(context, 'Security', SecuritySettingsPage()),
             _buildSettingsOption(context, 'Notifications', NotificationsSettingsPage()),
             _buildSettingsOption(context, 'Data Privacy', DataPrivacySettingsPage()),

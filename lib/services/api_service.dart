@@ -13,7 +13,6 @@ class ApiService {
         print('Request: ${options.method} ${options.path}');
         print('Request data: ${options.data}');
         return handler.next(options);
-        
       },
       onResponse: (response, handler) {
         print('Response: ${response.statusCode}');
@@ -22,7 +21,7 @@ class ApiService {
       },
       onError: (DioException e, handler) {
         print('Error DioException: ${e.message}');
-        
+
         return handler.next(e);
       },
     ));
@@ -38,7 +37,8 @@ class ApiService {
         }),
         data: json.encode(userData),
       );
-      print('registering-Raw Response: ${response.toString()}'); // Add this line
+      print(
+          'registering-Raw Response: ${response.toString()}'); // Add this line
       print('registering-Request Data: ${json.encode(userData)}');
       print('registering-Response Status Code: ${response.statusCode}');
       print('registering-Response Data: ${response.data}');
@@ -60,11 +60,13 @@ class ApiService {
         }
       }
 
-      if (responseData.containsKey('success') && responseData['success'] != null) {
+      if (responseData.containsKey('success') &&
+          responseData['success'] != null) {
         bool success = responseData['success'];
-        
 
-        return {'success': success}; // Include the MongoDB object ID in the response
+        return {
+          'success': success
+        }; // Include the MongoDB object ID in the response
       } else {
         print('Error api_service.dart: ${response.statusMessage}');
         return {'success': false, 'error': response.statusMessage};
@@ -104,9 +106,15 @@ class ApiService {
         if (responseData.containsKey('success') &&
             responseData['success'] != null) {
           bool success = responseData['success'];
-          String mongoId = responseData['mongo_id']; // Add this line to get the MongoDB object ID
-        String userName = responseData['name']; // Add this line to get the MongoDB object ID
-          return {'success': success, 'mongo_id': mongoId,'userName':userName};
+          String mongoId = responseData[
+              'mongo_id']; // Add this line to get the MongoDB object ID
+          String userName = responseData[
+              'name']; // Add this line to get the MongoDB object ID
+          return {
+            'success': success,
+            'mongo_id': mongoId,
+            'userName': userName
+          };
         } else {
           return {'success': false};
         }
@@ -115,11 +123,82 @@ class ApiService {
         return {'success': false};
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      print('Exception at api_service.dart: $e');
       if (e is DioException && e.response != null) {
         print('Full Response api_service.dart: ${e.response}');
       }
       return {'success': false};
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchUserData(String mongoId) async {
+    try {
+      final response = await _dio.get(
+        '$apiUrl?action=getUserData&mongoId=$mongoId',
+      );
+
+      // Check if the request was successful
+      if (response.statusCode == 200) {
+        // Check if response data is not null
+        if (response.data != null) {
+          // Parse the JSON response
+          Map<String, dynamic> responseData = json.decode(response.data!);
+
+          // Check if the response indicates success
+          if (responseData['success'] == true) {
+            // Extract user data
+            Map<String, dynamic> userData = responseData['userData'];
+
+            String department = userData['department'];
+            String program = userData['program'];
+            String batch = userData['batch_from'] +"-"+ userData['batch_to'];
+            String name = userData['name'];
+            String email = userData['email'];
+            String DOB = userData['DOB'];
+            String currentStatus = userData['current_status'];
+            String currentInstitution = userData['current_institution'];
+            String currentProgram = userData['programme'];
+            String expYearOfPassing = userData['expected_year_of_passing'];
+            String currentOrg = userData['current_organisation'];
+            String currentDesignation = userData['designation'];
+            String profilePic = userData['profile_picture'];
+
+            // Return the extracted data
+            return {
+              'success': true,
+              'name': name,
+              'email': email,
+              'department': department,
+              'program': program,
+              'batch': batch,
+              'DOB': DOB,
+              'current_status': currentStatus,
+              'current_institution': currentInstitution,
+              'current_program': currentProgram,
+              'exp_year_of_passing': expYearOfPassing,
+              'current_org': currentOrg,
+              'current_designation': currentDesignation,
+              'profile_picture': profilePic,
+            };
+          } else {
+            // Handle case when the API indicates failure
+            return {'success': false, 'error': responseData['error']};
+          }
+        } else {
+          // Handle case when response data is null
+          return {'success': false, 'error': 'Response data is null'};
+        }
+      } else {
+        int? SC = response.statusCode;
+
+        // Handle HTTP error
+        return {'success': false, 'error': 'Failed to fetch user data $SC'};
+      }
+    } catch (e) {
+
+      // Handle general exception
+      print('Exception api_service.dart: $e');
+      return {'success': false, 'error-api_services': 'Failed to fetch user data'};
     }
   }
 }

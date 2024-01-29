@@ -7,7 +7,7 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        "PLACEHOLDER NAME",
+        "AIM Alumni",
         style: TextStyle(
           color: Theme.of(context).focusColor,
         ),

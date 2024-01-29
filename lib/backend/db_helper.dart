@@ -82,7 +82,7 @@ class DBHelper {
     print('Contents of users table:');
     for (var user in users) {
       print(
-          'ID: ${user['id']}, Username: ${user['username']}, Email: ${user['email']}');
+          'Username: ${user['username']}, Email: ${user['email']},Password: ${user['password']},mongo_id: ${user['mongo_id']}');
     }
   }
 
@@ -121,4 +121,14 @@ class DBHelper {
   }
 
   // TILL HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+  static Future<Map<String, dynamic>> getUserData() async {
+    final Database db = await initDatabase();
+    List<Map<String, dynamic>> result = await db.query('users');
+
+    if (result.isNotEmpty) {
+      return result.first;
+    } else {
+      return {}; // Return an empty map if no user data found
+    }
+  }
 }

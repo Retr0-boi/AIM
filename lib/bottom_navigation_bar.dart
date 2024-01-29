@@ -59,58 +59,32 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
       switch (index) {
         case 0:
-          _navigateWithAnimationLeft(context, const Home());
+          _navigateWithoutAnimation(context, const Home());
           break;
         case 1: 
-          _navigateWithAnimationLeft(context, const Alumni());
+          _navigateWithoutAnimation(context, const Alumni());
           break;
         case 2:
-          _navigateWithAnimationRight(context, const PostMenu());
+          _navigateWithoutAnimation(context, const PostMenu());
           break;
         case 3:
-          _navigateWithAnimationRight(context, const Notifications());
+          _navigateWithoutAnimation(context, const Notifications());
           break;
         case 4:
-          _navigateWithAnimationRight(context, const Chat());
+          _navigateWithoutAnimation(context, const Chat());
           break;
       }
     }
   }
 
-  void _navigateWithAnimationLeft(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
+  void _navigateWithoutAnimation(BuildContext context, Widget page) {
+    Navigator.push(
       context,
       PageRouteBuilder(
         pageBuilder: (context, animation, secondaryAnimation) => page,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 0.0);
-          const end = Offset.zero;
-          const curve = Curves.easeInOut;
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          var offsetAnimation = animation.drive(tween);
-
-          return SlideTransition(position: offsetAnimation, child: child);
-        },
+        
       ),
     );
   }
-  void _navigateWithAnimationRight(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          const begin = Offset(0.0, 0.0);
-          const end = Offset.zero;
-          const curve = Curves.easeInOut;
-          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
-          var offsetAnimation = animation.drive(tween);
-
-          return SlideTransition(position: offsetAnimation, child: child);
-        },
-      ),
-    );
-  }
+  
 }

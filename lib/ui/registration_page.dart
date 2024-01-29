@@ -328,6 +328,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       'identification': 'none',
                       'updation_date': 'none',
                       'updation_time': 'none',
+                      'profile_picture': 'DefaultUserIcon.png',
                       'current_status':
                           _selectedStatus, // Add this line for the 'current_status' field
                       'current_institution': _currentInstitutionController

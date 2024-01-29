@@ -4,6 +4,8 @@ import 'theme_provider.dart';
 import 'ui/settings/settings_page.dart';
 import 'backend/auth_service.dart';
 import 'ui/registration_page.dart';
+import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/ui/drawer/profile_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -35,12 +37,25 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Text(
-              'YOUR NAME',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
+            FutureBuilder<Map<String, dynamic>>(
+              // Fetch the user data from DBHelper
+              future: DBHelper.getUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  String username =
+                      snapshot.data?['username'] ?? 'Default Username';
+
+                  return Text(
+                    username,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
             ),
           ],
         ),
@@ -55,7 +70,6 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
         create: (context) => ThemeProvider(),
         child: Builder(
           builder: (context) {
-
             return Column(
               children: <Widget>[
                 _buildRoundedDrawerHeader(context),
@@ -68,13 +82,54 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                         title: const Text('Profile'),
                         onTap: () {
                           // Handle profile tap
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ProfilePage()),
+                          );
+
                           // Add your navigation logic or any actions you want to perform
                         },
                       ),
                       ListTile(
                         leading: const Icon(Icons.star),
-                        title: const Text('Placeholder Button'),
+                        title: const Text('Events'),
+                        onTap: () {
+                          // Handle placeholder button tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.groups_2),
+                        title: const Text('Connection'),
+                        onTap: () {
+                          // Handle placeholder button tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.message_sharp),
+                        title: const Text('Contact'),
+                        onTap: () {
+                          // Handle placeholder button tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.place),
+                        title: const Text('Campus Visit'),
+                        onTap: () {
+                          // Handle placeholder button tap
+                          Navigator.pop(context);
+                          // Add your navigation logic or any actions you want to perform
+                        },
+                      ),
+                      ListTile(
+                        leading: const Icon(Icons.work),
+                        title: const Text('Request Job'),
                         onTap: () {
                           // Handle placeholder button tap
                           Navigator.pop(context);
@@ -87,14 +142,15 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                 Divider(
                   color: Theme.of(context).primaryColor,
                 ),
-                
                 ListTile(
                   leading: const Icon(Icons.settings),
                   title: const Text('Settings'),
                   onTap: () {
                     // Handle settings tap
-                    Navigator.pop(context);
-                    _navigateToPage(context, SettingsPage());
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SettingsPage()),
+                    );
                   },
                 ),
                 ListTile(
@@ -116,15 +172,6 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
             );
           },
         ),
-      ),
-    );
-  }
-
-  void _navigateToPage(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
       ),
     );
   }

@@ -82,13 +82,12 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 } else {
                   // Show an error dialog on failed login
-                  showDialog(
+                  showDialog( 
                     context: context,
                     builder: (BuildContext context) {
-                      return AlertDialog(
+                      return  AlertDialog(
                         title: Text('Login Failed'),
-                        content: Text(
-                            authenticationResult['error'] ?? 'Unknown error'),
+                        content: Text(authenticationResult['error'] ?? 'Unknown error'),
                         actions: [
                           TextButton(
                             onPressed: () {
