@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ui/alumni_page.dart';
 import 'ui/home_page.dart';
-import 'ui/post_page.dart';
+import 'ui/post_pages/post_page.dart';
 import 'ui/notifications_page.dart';
 import 'ui/chat_page.dart';
 

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'theme_provider.dart';
-import 'ui/settings/settings_page.dart';
-import 'backend/auth_service.dart';
-import 'ui/registration_page.dart';
+import 'package:AIM/theme_provider.dart';
+import 'package:AIM/ui/settings/settings_page.dart';
+import 'package:AIM/backend/auth_service.dart';
+import 'package:AIM/ui/registration_page.dart';
 import 'package:AIM/backend/db_helper.dart';
 import 'package:AIM/ui/drawer/profile_page.dart';
+import 'package:AIM/ui/drawer/connections_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -105,7 +106,12 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                         title: const Text('Connection'),
                         onTap: () {
                           // Handle placeholder button tap
-                          Navigator.pop(context);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ConnectionsPage()
+                                ),
+                          );
                           // Add your navigation logic or any actions you want to perform
                         },
                       ),
