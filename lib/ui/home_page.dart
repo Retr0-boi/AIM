@@ -4,7 +4,6 @@ import '../drawer.dart';
 import '../bottom_navigation_bar.dart';
 
 class Home extends StatelessWidget implements PreferredSizeWidget {
-  
   const Home({Key? key}) : super(key: key);
 
   @override
@@ -27,135 +26,88 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                if (index == 0) {
-                  // Suggestions Box
-                  return Container(
-                    height: 110,
-                    margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.black),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 9,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.all(8),
-                          child: Column(
+                // User Posts Box
+                int userIndex = index - 1; // Adjust index for posts
+                return Container(
+                  margin: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 20,
+                            child: const Icon(Icons.person),
+                          ),
+                          SizedBox(width: 8),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
-                                width: 60,
-                                height: 60,
-                                decoration: BoxDecoration(
-                                  color: Colors.blue,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: const Center(
-                                  child: CircleAvatar(
-                                    radius: 25,
-                                    backgroundColor: Colors.transparent,
-                                  ),
+                              Text(
+                                'User $userIndex',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const SizedBox(height: 4),
+                              SizedBox(height: 4),
                               Text(
-                                'User $index',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                'Placeholder Department and batch',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
                                 ),
                               ),
                             ],
                           ),
-                        );
-                      },
-                    ),
-                  );
-                } else {
-                  // User Posts Box
-                  int userIndex = index - 1; // Adjust index for posts
-                  return Container(
-                    margin: EdgeInsets.all(8),
-                    padding: EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.grey),
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 20,
-                              child: const Icon(Icons.person),
-                            ),
-                            SizedBox(width: 8),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'User $userIndex',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                SizedBox(height: 4),
-                                Text(
-                                  'Placeholder Department and batch',
-                                  style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.grey,
-                                  ),
-                                ),
-                                
-                              ],
-                            ),
-                          ],
+                        ],
+                      ),
+                      SizedBox(height: 8),
+                      // Placeholder image for user post
+                      Container(
+                        height: 250,
+                        color: const Color.fromARGB(255, 150, 64, 64),
+                      ),
+                      SizedBox(height: 8),
+                      // Placeholder text after the red-tinted container
+                      Text(
+                        'Your placeholder text here',
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
                         ),
-                        SizedBox(height: 8),
-                        // Placeholder image for user post
-                        Container(
-                          height: 250,
-                          color: const Color.fromARGB(255, 150, 64, 64),
-                        ),
-                        SizedBox(height: 8),
-                        // Placeholder text after the red-tinted container
-                        Text(
-                          'Your placeholder text here',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.black,
+                      ),
+                      SizedBox(height: 8),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle comment button
+                            },
+                            child: const Icon(Icons.comment_outlined),
                           ),
-                        ),
-                        SizedBox(height: 8),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle comment button
-                              },
-                              child: const Icon(Icons.comment_outlined),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle placeholder button
-                              },
-                              child: const Icon(Icons.thumb_up_off_alt),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                // Handle placeholder button
-                              },
-                              child: const Icon(Icons.share),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  );
-                }
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle placeholder button
+                            },
+                            child: const Icon(Icons.thumb_up_off_alt),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle placeholder button
+                            },
+                            child: const Icon(Icons.share),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
               },
               childCount:
                   6, // Total number of items (1 Suggestions Box + 5 User Posts)

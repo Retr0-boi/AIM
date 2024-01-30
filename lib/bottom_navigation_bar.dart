@@ -71,7 +71,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           _navigateWithoutAnimation(context, const Notifications());
           break;
         case 4:
-          _navigateWithoutAnimation(context, const Chat());
+          _navigateWithoutAnimation(context, Chat());
           break;
       }
     }

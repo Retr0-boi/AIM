@@ -1,92 +1,101 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'home_page.dart';
+import 'package:AIM/app_bar.dart';
+import 'package:AIM/drawer.dart';
+import 'package:AIM/bottom_navigation_bar.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-// import '../app_bar.dart';
-// import '../drawer.dart';
-// import '../bottom_navigation_bar.dart';
-
-class PostMenu extends StatelessWidget implements PreferredSizeWidget {
+class PostMenu extends StatefulWidget {
   const PostMenu({Key? key}) : super(key: key);
+
+  @override
+  _PostMenuState createState() => _PostMenuState();
+}
+
+class _PostMenuState extends State<PostMenu> {
+  TextEditingController subjectController = TextEditingController();
+  TextEditingController contentController = TextEditingController();
+  File? selectedImage;
+  
+  Future<void> _requestPermissions() async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+  }
+
+  Future<void> _pickImage() async {
+    await _requestPermissions(); // Add this line
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      backgroundColor: Theme.of(context).primaryColor,
-      leading: Builder(
-        builder: (BuildContext context) {
-          return IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              // code to go back a page
-              _navigateToPage(context, const Home());
-            },
-          );
-        },
+      appBar: const MyAppBar(),
+      drawer: const MyDrawer(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 2,
+        onItemTapped: (index) {},
       ),
-    ),
-      
-      body: Stack(
-        children: [
-          // Gallery content view
-          Center(
-            child: Text(
-              'Gallery Content View',
-              style: TextStyle(fontSize: 20),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Subject:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
-          ),
-
-          // Preview on top
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            child: AppBar(
-              backgroundColor: Colors.transparent,
-              leading: Builder(
-                builder: (BuildContext context) {
-                  return IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {
-                      // Navigate back when the back button is pressed
-                      Navigator.of(context).pop();
-                    },
-                  );
-                },
+            TextField(
+              controller: subjectController,
+              decoration: InputDecoration(
+                hintText: 'Enter the subject...',
               ),
             ),
-          ),
-          Positioned(
-            top: kToolbarHeight,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Center(
-              child: Text(
-                'Preview',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            SizedBox(height: 20),
+            Text(
+              'Content:',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            TextField(
+              controller: contentController,
+              maxLines: 5,
+              decoration: InputDecoration(
+                hintText: 'Enter the content...',
               ),
             ),
-          ),
-        ],
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _pickImage,
+              child: Text('Select Image'),
+            ),
+            SizedBox(height: 20),
+            selectedImage != null
+                ? Image.file(
+                    selectedImage!,
+                    height: 100,
+                  )
+                : Container(),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // Add logic to handle posting (e.g., sending data to MongoDB)
+                // Access the entered data using subjectController.text, contentController.text, and selectedImage
+              },
+              child: Text('Post'),
+            ),
+          ],
+        ),
       ),
     );
   }
-  void _navigateToPage(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-        
-      ),
-    );
-  }
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
