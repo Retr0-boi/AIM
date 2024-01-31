@@ -88,7 +88,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           _buildUserInfo('Name:', userData['name']),
                           _buildUserInfo('Department:', userData['department']),
                           _buildUserInfo('Program:', userData['program']),
-                          _buildUserInfo('Batch:', userData['batch']),
+                          _buildUserInfo('Batch:', userData['batch_from'] +" - " + userData['batch_to']),
                           _buildUserInfo('Email:', userData['email']),
                           _buildUserInfo('Date of Birth:', userData['DOB']),
                           // Add other information as needed

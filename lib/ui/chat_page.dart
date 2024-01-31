@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:AIM/app_bar.dart';
 import 'package:AIM/drawer.dart';
 import 'package:AIM/bottom_navigation_bar.dart';
+import 'package:AIM/ui/drawer/connections_page.dart';
+
 class Chat extends StatelessWidget implements PreferredSizeWidget {
-      Chat({super.key});
+  Chat({super.key});
 
   // Remove 'const' since the list contains dynamic values
   final List<String> users = ['User 1', 'User 2', 'User 3'];
@@ -24,7 +26,10 @@ class Chat extends StatelessWidget implements PreferredSizeWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _showUserSelectionDialog(context);
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ConnectionsPage()),
+          );
         },
         tooltip: 'Start a new chat',
         child: const Icon(Icons.chat),
@@ -34,36 +39,4 @@ class Chat extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-
-  void _showUserSelectionDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext dialogContext) {
-        return AlertDialog(
-          title: const Text('Choose a user to chat with'),
-          content: Column(
-            children: [
-              // Replace this with a ListView.builder to display your users
-              for (String user in users)
-                ListTile(
-                  title: Text(user),
-                  onTap: () {
-                    Navigator.of(dialogContext).pop();
-                    _startChatWithUser(context, user);
-                  },
-                ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  void _startChatWithUser(BuildContext context, String selectedUser) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('Starting a chat with $selectedUser'),
-      ),
-    );
-  }
 }

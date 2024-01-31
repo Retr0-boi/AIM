@@ -151,7 +151,8 @@ class ApiService {
 
             String department = userData['department'];
             String program = userData['program'];
-            String batch = userData['batch_from'] +"-"+ userData['batch_to'];
+            String batchFrom = userData['batch_from'];
+            String batchTo = userData['batch_to'];
             String name = userData['name'];
             String email = userData['email'];
             String DOB = userData['DOB'];
@@ -170,7 +171,8 @@ class ApiService {
               'email': email,
               'department': department,
               'program': program,
-              'batch': batch,
+              'batch_from': batchFrom,
+              'batch_to': batchTo,
               'DOB': DOB,
               'current_status': currentStatus,
               'current_institution': currentInstitution,
@@ -201,4 +203,48 @@ class ApiService {
       return {'success': false, 'error-api_services': 'Failed to fetch user data'};
     }
   }
+  Future<List<Map<String, dynamic>>> searchUsers(
+    String batchFrom, String batchTo, String department, String program) async {
+  try {
+    final response = await _dio.get(
+      '$apiUrl?action=searchUsers&batchFrom=$batchFrom&batchTo=$batchTo&department=$department&program=$program',
+    );
+
+    dynamic responseData = response.data;
+
+    if (responseData == null) {
+      print('Empty response received');
+      return [];
+    }
+
+    if (responseData is String) {
+      // Handle non-JSON response
+      try {
+        responseData = json.decode(responseData);
+      } catch (e) {
+        print('Invalid JSON response format: $responseData');
+        return [];
+      }
+    }
+
+    if (responseData.containsKey('success') && responseData['success'] == true) {
+      // Extract matched users data
+      List<dynamic> matchedUsersData = responseData['matchedUsers'];
+
+      // Convert the list of dynamic to List<Map<String, dynamic>>
+      List<Map<String, dynamic>> matchingUsers =
+          List<Map<String, dynamic>>.from(matchedUsersData);
+
+      return matchingUsers;
+    } else {
+      print('Error api_service.dart: ${response.statusMessage}');
+      return [];
+    }
+  } catch (e) {
+    print('Exception api_service.dart: $e');
+    return [];
+  }
 }
+
+}
+

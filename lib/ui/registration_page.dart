@@ -32,12 +32,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _selectedProgram = "";
   String _selectedStatus = "";
 
-  final List<String> departments = [
-    "Department A",
-    "Department B",
-    "Department C"
-  ];
-  final List<String> programs = ["Program 1", "Program 2", "Program 3"];
+  final List<String> departments = ["MBA",];
+  final List<String> programs = ["MBA"];
   final List<String> statuses = [
     "Student",
     "Working (Govt)",
