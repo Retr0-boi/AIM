@@ -12,23 +12,57 @@ class ConnectionsPage extends StatelessWidget implements PreferredSizeWidget {
       drawer: const MyDrawer(),
       body: CustomScrollView(
         slivers: [
-          _buildSection("Classmates", _classmatesList()),
-          _buildSection("Friends", _friendsList()),
+          SliverToBoxAdapter(
+            child: _buildHeading("Classmates"),
+          ),
+          _buildSection(_classmatesList()),
+          SliverToBoxAdapter(
+            child: _buildHeading("Friends"),
+          ),
+          _buildSection(_friendsList()),
         ],
       ),
     );
   }
 
-  SliverList _buildSection(String title, List<String> userList) {
+  SliverList _buildSection(List<String> userList) {
     return SliverList(
       delegate: SliverChildBuilderDelegate(
         (BuildContext context, int index) {
-          return ListTile(
-            title: Text(userList[index]),
-            // Add more ListTile customization or onTap logic as needed
+          return Container(
+            margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
+            padding: EdgeInsets.all(16.0),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.grey),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.grey,
+                  // Replace with user's profile picture
+                ),
+                SizedBox(width: 16),
+                Text(userList[index]), // Replace with user's name
+              ],
+            ),
           );
         },
         childCount: userList.length,
+      ),
+    );
+  }
+
+  Widget _buildHeading(String heading) {
+    return Container(
+      padding: EdgeInsets.all(10.0),
+      child: Text(
+        heading,
+        style: TextStyle(
+          fontSize: 18.0,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
+        ),
       ),
     );
   }

@@ -6,16 +6,17 @@ import 'package:AIM/bottom_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class PostMenu extends StatefulWidget {
-  const PostMenu({super.key});
+class JobMenu extends StatefulWidget {
+  const JobMenu({super.key});
 
   @override
-  _PostMenuState createState() => _PostMenuState();
+  _JobMenuState createState() => _JobMenuState();
 }
 
-class _PostMenuState extends State<PostMenu> {
-  TextEditingController subjectController = TextEditingController();
+class _JobMenuState extends State<JobMenu> {
+  TextEditingController jobSubjectController = TextEditingController();
   TextEditingController contentController = TextEditingController();
+  // TextEditingController lastDateController = TextEditingController();
   File? selectedImage;
   
   Future<void> _requestPermissions() async {
@@ -56,21 +57,21 @@ class _PostMenuState extends State<PostMenu> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             TextField(
-              controller: subjectController,
+              controller: jobSubjectController,
               decoration: const InputDecoration(
                 hintText: 'Enter the subject...',
               ),
             ),
             const SizedBox(height: 20),
             const Text(
-              'Content:',
+              'job description:',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
             ),
             TextField(
               controller: contentController,
               maxLines: 5,
               decoration: const InputDecoration(
-                hintText: 'Enter the content...',
+                hintText: 'Enter the job description...',
               ),
             ),
             const SizedBox(height: 20),

@@ -4,7 +4,7 @@ import 'package:AIM/drawer.dart';
 import 'package:AIM/bottom_navigation_bar.dart';
 
 class Alumni extends StatelessWidget implements PreferredSizeWidget {
-  const Alumni({Key? key}) : super(key: key);
+  const Alumni({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: TextField(
+                    child: const TextField(
                       decoration: InputDecoration(
                         hintText: 'Search for names...',
                         prefixIcon: Icon(Icons.search),
@@ -37,7 +37,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   // Dropdowns and TextFields
                   Row(
@@ -61,14 +61,14 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text(value),
                                 );
                               }).toList(),
-                              hint: Text('Select Department'),
+                              hint: const Text('Select Department'),
                               onChanged: (String? value) {},
                             ),
                           ),
                         ),
                       ),
 
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
 
                       // Course Dropdown
                       Expanded(
@@ -88,7 +88,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                                   child: Text(value),
                                 );
                               }).toList(),
-                              hint: Text('Select Course'),
+                              hint: const Text('Select Course'),
                               onChanged: (String? value) {},
                             ),
                           ),
@@ -96,7 +96,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
 
                   // Batch TextFields
                   Row(
@@ -109,9 +109,9 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Padding(
+                          child: const Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                EdgeInsets.symmetric(horizontal: 8.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 labelText: 'Batch From',
@@ -122,7 +122,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
 
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
 
                       Expanded(
                         child: Container(
@@ -132,9 +132,9 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
-                          child: Padding(
+                          child: const Padding(
                             padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                EdgeInsets.symmetric(horizontal: 8.0),
                             child: TextField(
                               decoration: InputDecoration(
                                 labelText: 'Batch To',
@@ -146,7 +146,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                 ],
               ),
             ),
@@ -155,19 +155,19 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 return Container(
-                  margin: EdgeInsets.fromLTRB(16.0,0.0,16.0,8.0),
-                  padding: EdgeInsets.all(16.0),
+                  margin: const EdgeInsets.fromLTRB(16.0,0.0,16.0,8.0),
+                  padding: const EdgeInsets.all(16.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundColor: Colors.grey,
                         // Replace with user's profile picture
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Text('User $index'), // Replace with user's name
                     ],
                   ),

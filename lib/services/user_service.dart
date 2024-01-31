@@ -3,7 +3,7 @@ import 'package:dio/dio.dart';
 class UserService {
   static const String apiUrl = 'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
 
-  Dio _dio = Dio();
+  final Dio _dio = Dio();
 
   Future<List<Map<String, dynamic>>> getUsers() async {
     try {

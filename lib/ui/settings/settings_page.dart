@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../home_page.dart';
 
 class SettingsPage extends StatelessWidget {
-  const SettingsPage({Key? key}) : super(key: key);
+  const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +12,7 @@ class SettingsPage extends StatelessWidget {
         leading: Builder(
           builder: (BuildContext context) {
             return IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.white,
               ),
@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
             );
           },
         ),
-        title: Text('Settings', style: TextStyle(color: Colors.white)),
+        title: const Text('Settings', style: TextStyle(color: Colors.white)),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -31,9 +31,9 @@ class SettingsPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // _buildSettingsOption(context, 'Account', AccountSettingsPage()),
-            _buildSettingsOption(context, 'Security', SecuritySettingsPage()),
-            _buildSettingsOption(context, 'Notifications', NotificationsSettingsPage()),
-            _buildSettingsOption(context, 'Data Privacy', DataPrivacySettingsPage()),
+            _buildSettingsOption(context, 'Security', const SecuritySettingsPage()),
+            _buildSettingsOption(context, 'Notifications', const NotificationsSettingsPage()),
+            _buildSettingsOption(context, 'Data Privacy', const DataPrivacySettingsPage()),
           ],
         ),
       ),
@@ -58,13 +58,15 @@ class SettingsPage extends StatelessWidget {
 }
 
 class AccountSettingsPage extends StatelessWidget {
+  const AccountSettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account Settings'),
+        title: const Text('Account Settings'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Account Settings Page'),
       ),
     );
@@ -72,13 +74,15 @@ class AccountSettingsPage extends StatelessWidget {
 }
 
 class SecuritySettingsPage extends StatelessWidget {
+  const SecuritySettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Security Settings'),
+        title: const Text('Security Settings'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Security Settings Page'),
       ),
     );
@@ -86,13 +90,15 @@ class SecuritySettingsPage extends StatelessWidget {
 }
 
 class NotificationsSettingsPage extends StatelessWidget {
+  const NotificationsSettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications Settings'),
+        title: const Text('Notifications Settings'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Notifications Settings Page'),
       ),
     );
@@ -100,13 +106,15 @@ class NotificationsSettingsPage extends StatelessWidget {
 }
 
 class DataPrivacySettingsPage extends StatelessWidget {
+  const DataPrivacySettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Data Privacy Settings'),
+        title: const Text('Data Privacy Settings'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Data Privacy Settings Page'),
       ),
     );

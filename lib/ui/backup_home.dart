@@ -5,7 +5,7 @@ import '../bottom_navigation_bar.dart';
 
 class Home extends StatelessWidget implements PreferredSizeWidget {
   
-  const Home({Key? key}) : super(key: key);
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +18,11 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
       ),
       body: CustomScrollView(
         slivers: [
-          SliverAppBar(
+          const SliverAppBar(
             // expandedHeight: 110, // Height of the Suggestions Box
             floating: false,
             pinned: true,
-            flexibleSpace: const MyAppBar(),
+            flexibleSpace: MyAppBar(),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -41,7 +41,7 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
                       itemCount: 9,
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.all(8),
+                          margin: const EdgeInsets.all(8),
                           child: Column(
                             children: [
                               Container(
@@ -75,8 +75,8 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
                   // User Posts Box
                   int userIndex = index - 1; // Adjust index for posts
                   return Container(
-                    margin: EdgeInsets.all(8),
-                    padding: EdgeInsets.all(16),
+                    margin: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(10),
@@ -86,22 +86,22 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
                       children: [
                         Row(
                           children: [
-                            CircleAvatar(
+                            const CircleAvatar(
                               radius: 20,
-                              child: const Icon(Icons.person),
+                              child: Icon(Icons.person),
                             ),
-                            SizedBox(width: 8),
+                            const SizedBox(width: 8),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   'User $userIndex',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(height: 4),
-                                Text(
+                                const SizedBox(height: 4),
+                                const Text(
                                   'Placeholder Department and batch',
                                   style: TextStyle(
                                     fontSize: 12,
@@ -113,22 +113,22 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         // Placeholder image for user post
                         Container(
                           height: 250,
                           color: const Color.fromARGB(255, 150, 64, 64),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         // Placeholder text after the red-tinted container
-                        Text(
+                        const Text(
                           'Your placeholder text here',
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.black,
                           ),
                         ),
-                        SizedBox(height: 8),
+                        const SizedBox(height: 8),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [

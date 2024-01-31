@@ -5,7 +5,7 @@ import 'package:AIM/services/api_service.dart'; // Import your API service
 import 'package:AIM/backend/db_helper.dart'; // Import your SQLite database helper
 
 class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   _ProfilePageState createState() => _ProfilePageState();
@@ -43,7 +43,7 @@ class _ProfilePageState extends State<ProfilePage> {
         future: userDataFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Show a loading indicator while data is being fetched
+            return const CircularProgressIndicator(); // Show a loading indicator while data is being fetched
           } else if (snapshot.hasError) {
             return Text('Error: ${snapshot.error}');
           } else {
@@ -114,12 +114,12 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         Text(
           label,
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 8),
         Text(
           value,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
         const SizedBox(height: 16),
       ],
@@ -143,14 +143,14 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Current Status:',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   currentStatus,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 _buildUserInfo(
@@ -172,14 +172,14 @@ class _ProfilePageState extends State<ProfilePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
+                const Text(
                   'Current Status:',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   currentStatus,
-                  style: TextStyle(fontSize: 18),
+                  style: const TextStyle(fontSize: 18),
                 ),
                 const SizedBox(height: 16),
                 _buildUserInfo('Current Program:', userData['current_program']),
@@ -193,7 +193,7 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       // Add more cases as needed
       default:
-        return SizedBox.shrink(); // Return an empty widget for other cases or 'Not Working'
+        return const SizedBox.shrink(); // Return an empty widget for other cases or 'Not Working'
     }
   }
 }

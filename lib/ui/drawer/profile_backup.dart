@@ -3,7 +3,7 @@ import 'package:AIM/app_bar.dart';
 import 'package:AIM/drawer.dart';
 
 class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +17,7 @@ class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
           children: [
             const SizedBox(height: 24),
             // Profile Picture
-            CircleAvatar(
+            const CircleAvatar(
               radius: 90,
               backgroundImage: AssetImage('images/test.png'), // Replace with your actual image path
             ),
@@ -31,54 +31,54 @@ class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(24),
-                child: Column(
+                child: const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Name:',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       'John Doe', // Replace with actual name
                       style: TextStyle(fontSize: 18),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text(
                       'Program:',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       'Computer Science', // Replace with actual program
                       style: TextStyle(fontSize: 18),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text(
                       'Batch:',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       '2022 - 2026', // Replace with actual batch
                       style: TextStyle(fontSize: 18),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text(
                       'Email:',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       'john.doe@example.com', // Replace with actual email
                       style: TextStyle(fontSize: 18),
                     ),
-                    const SizedBox(height: 16),
+                    SizedBox(height: 16),
                     Text(
                       'Date of Birth:',
                       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    const SizedBox(height: 8),
+                    SizedBox(height: 8),
                     Text(
                       'January 1, 1990', // Replace with actual date of birth
                       style: TextStyle(fontSize: 18),

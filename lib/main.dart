@@ -5,9 +5,11 @@ import 'backend/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -20,11 +22,13 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.green,
         unselectedWidgetColor: Colors.white38,
       ),
-      home: AuthenticationWrapper(),
+      home: const AuthenticationWrapper(),
     );
   }
 }
 class AuthenticationWrapper extends StatelessWidget {
+  const AuthenticationWrapper({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<bool>(
@@ -33,7 +37,7 @@ class AuthenticationWrapper extends StatelessWidget {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           bool isLoggedIn = snapshot.data ?? false;
-          return isLoggedIn ? Home() : RegistrationPage();
+          return isLoggedIn ? const Home() : const RegistrationPage();
         } else {
           return const Scaffold(
             body: Center(

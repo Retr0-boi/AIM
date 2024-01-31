@@ -3,7 +3,7 @@ import 'package:AIM/app_bar.dart';
 import 'package:AIM/drawer.dart';
 import 'package:AIM/bottom_navigation_bar.dart';
 class Chat extends StatelessWidget implements PreferredSizeWidget {
-      Chat({Key? key}) : super(key: key);
+      Chat({super.key});
 
   // Remove 'const' since the list contains dynamic values
   final List<String> users = ['User 1', 'User 2', 'User 3'];
@@ -27,7 +27,7 @@ class Chat extends StatelessWidget implements PreferredSizeWidget {
           _showUserSelectionDialog(context);
         },
         tooltip: 'Start a new chat',
-        child: Icon(Icons.chat),
+        child: const Icon(Icons.chat),
       ),
     );
   }
@@ -40,7 +40,7 @@ class Chat extends StatelessWidget implements PreferredSizeWidget {
       context: context,
       builder: (BuildContext dialogContext) {
         return AlertDialog(
-          title: Text('Choose a user to chat with'),
+          title: const Text('Choose a user to chat with'),
           content: Column(
             children: [
               // Replace this with a ListView.builder to display your users

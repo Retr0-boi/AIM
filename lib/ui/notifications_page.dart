@@ -4,7 +4,7 @@ import '../drawer.dart';
 import '../bottom_navigation_bar.dart';
 
 class Notifications extends StatelessWidget implements PreferredSizeWidget {
-  const Notifications({Key? key}) : super(key: key);
+  const Notifications({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +66,7 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
             if (showHeader) _buildSectionDivider('Today'),
             _buildNotificationItem(notification),
             if (index < notifications.length - 1)
-              Divider(), // Add a divider between notifications
+              const Divider(), // Add a divider between notifications
           ],
         );
       },
@@ -84,10 +84,10 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _buildSectionDivider(String title) {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       child: Text(
         title,
-        style: TextStyle(fontWeight: FontWeight.bold),
+        style: const TextStyle(fontWeight: FontWeight.bold),
       ),
     );
   }
@@ -112,20 +112,20 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
     return Column(
       children: [
         ListTile(
-          leading: CircleAvatar(
+          leading: const CircleAvatar(
             backgroundImage: AssetImage('images/test.png'),
             backgroundColor: Colors.transparent,
           ),
           title: Text(
             '${notification['username']} sent a friend request',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
           onTap: () {
             // Handle friend request tap
           },
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15.0),
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
           child: Row(
             children: [
               Expanded(
@@ -135,10 +135,10 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green.shade300),
-                  child: Text('Approve'),
+                  child: const Text('Approve'),
                 ),
               ),
-              SizedBox(width: 16.0), // Add some spacing between the buttons
+              const SizedBox(width: 16.0), // Add some spacing between the buttons
               Expanded(
                 child: ElevatedButton(
                   onPressed: () {
@@ -146,7 +146,7 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
                   },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red.shade300),
-                  child: Text('Disapprove'),
+                  child: const Text('Disapprove'),
                 ),
               ),
             ],

@@ -9,7 +9,7 @@ import 'package:AIM/ui/drawer/profile_page.dart';
 import 'package:AIM/ui/drawer/connections_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  const MyDrawer({super.key});
 
   Widget _buildRoundedDrawerHeader(BuildContext context) {
     return Container(
@@ -86,7 +86,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ProfilePage()),
+                                builder: (context) => const ProfilePage()),
                           );
 
                           // Add your navigation logic or any actions you want to perform
@@ -109,7 +109,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => ConnectionsPage()
+                                builder: (context) => const ConnectionsPage()
                                 ),
                           );
                           // Add your navigation logic or any actions you want to perform
@@ -155,7 +155,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                     // Handle settings tap
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SettingsPage()),
+                      MaterialPageRoute(builder: (context) => const SettingsPage()),
                     );
                   },
                 ),
@@ -169,7 +169,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                     Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => RegistrationPage()),
+                          builder: (context) => const RegistrationPage()),
                       (route) => false,
                     );
                   },

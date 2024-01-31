@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:AIM/backend/db_helper.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Database Viewer App',
       home: DatabaseViewerPage(),
     );
@@ -16,6 +18,8 @@ class MyApp extends StatelessWidget {
 }
 
 class DatabaseViewerPage extends StatefulWidget {
+  const DatabaseViewerPage({super.key});
+
   @override
   _DatabaseViewerPageState createState() => _DatabaseViewerPageState();
 }
@@ -45,14 +49,14 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Database Viewer'),
+        title: const Text('Database Viewer'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Contents of users table:',
               style: TextStyle(
                 fontSize: 18.0,
@@ -63,10 +67,10 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
             for (var user in users)
               Text(
                 'Username: ${user['username']}, Email: ${user['email']}, password: ${user['password']},mongo_id: ${user['mongo_id']}',
-                style: TextStyle(fontSize: 16.0),
+                style: const TextStyle(fontSize: 16.0),
               ),
-            SizedBox(height: 16.0),
-            Text(
+            const SizedBox(height: 16.0),
+            const Text(
               'Contents of registered_user table:',
               style: TextStyle(
                 fontSize: 18.0,
@@ -81,7 +85,7 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
                 'Password: ${user['password']}, Account Status: ${user['account_status']}, '
                 'Identification: ${user['identification']}, '
                 'Updation Date: ${user['updation_date']}, Updation Time: ${user['updation_time']}, ',
-                style: TextStyle(fontSize: 16.0),
+                style: const TextStyle(fontSize: 16.0),
               ),
           ],
         ),

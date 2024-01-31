@@ -4,13 +4,15 @@ import 'package:AIM/services/api_service.dart';
 import 'package:AIM/backend/db_helper.dart';
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void dispose() {
@@ -23,7 +25,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Login Page',
           style: TextStyle(
             color: Colors.white,
@@ -38,19 +40,19 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             TextField(
               controller: _emailController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Email',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextField(
               controller: _passwordController,
               obscureText: true,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Password',
               ),
             ),
-            SizedBox(height: 32.0),
+            const SizedBox(height: 32.0),
             ElevatedButton(
               onPressed: () async {
                 // Perform user authentication
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                   // Navigate to the home page and pass the MongoDB object ID
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => Home()),
+                    MaterialPageRoute(builder: (context) => const Home()),
                   );
                 } else {
                   // Show an error dialog on failed login
@@ -86,14 +88,14 @@ class _LoginPageState extends State<LoginPage> {
                     context: context,
                     builder: (BuildContext context) {
                       return  AlertDialog(
-                        title: Text('Login Failed'),
+                        title: const Text('Login Failed'),
                         content: Text(authenticationResult['error'] ?? 'Unknown error'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('OK'),
+                            child: const Text('OK'),
                           ),
                         ],
                       );
@@ -101,9 +103,9 @@ class _LoginPageState extends State<LoginPage> {
                   );
                 }
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
-            SizedBox(height: 128.0),
+            const SizedBox(height: 128.0),
           ],
         ),
       ),

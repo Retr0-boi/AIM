@@ -5,6 +5,8 @@ import 'package:AIM/services/api_service.dart';
 import 'package:AIM/backend/db_helper.dart';
 
 class RegistrationPage extends StatefulWidget {
+  const RegistrationPage({super.key});
+
   @override
   _RegistrationPageState createState() => _RegistrationPageState();
 }
@@ -78,21 +80,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             TextField(
               controller: _currentInstitutionController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Current Institution',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextField(
               controller: _programmeController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Programme',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextField(
               controller: _expectedYearController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Expected Year of Passing',
               ),
             ),
@@ -105,21 +107,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
           children: [
             TextField(
               controller: _currentOrganisationController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Current Organisation',
               ),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             TextField(
               controller: _designationController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Designation',
               ),
             ),
           ],
         );
       default:
-        return SizedBox();
+        return const SizedBox();
     }
   }
 
@@ -127,7 +129,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Registration Page',
           style: TextStyle(
             color: Colors.white,
@@ -155,11 +157,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: Text(department),
                   );
                 }).toList(),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Department',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Program Dropdown
               DropdownButtonFormField<String>(
@@ -175,11 +177,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: Text(program),
                   );
                 }).toList(),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Program',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Current Status Dropdown
               DropdownButtonFormField<String>(
@@ -195,11 +197,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     child: Text(status),
                   );
                 }).toList(),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Current Status',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Batch (Two input boxes for years) with label
               Column(
@@ -207,13 +209,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 children: [
                   Row(
                     children: [
-                      Text(
+                      const Text(
                         'Batch',
                         style: TextStyle(
                           fontSize: 16.0,
                         ),
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: TextField(
                           controller: _batchYearController,
@@ -221,12 +223,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'From',
                           ),
                         ),
                       ),
-                      SizedBox(width: 16.0),
+                      const SizedBox(width: 16.0),
                       Expanded(
                         child: TextField(
                           controller: _batchYear2Controller,
@@ -234,7 +236,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           inputFormatters: <TextInputFormatter>[
                             FilteringTextInputFormatter.digitsOnly,
                           ],
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'To',
                           ),
                         ),
@@ -243,7 +245,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Name
               TextField(
@@ -254,11 +256,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     RegExp(r'[a-zA-Z\s]'),
                   ),
                 ],
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // DOB with Date Picker
               InkWell(
@@ -266,26 +268,26 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 child: IgnorePointer(
                   child: TextField(
                     controller: _dobController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       labelText: 'DOB',
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Additional Fields based on Status
               _buildAdditionalFieldsBasedOnStatus(),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Email
               TextField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Email',
                 ),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
 
               // Password
               TextField(
@@ -308,7 +310,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
               ),
 
-              SizedBox(height: 32.0),
+              const SizedBox(height: 32.0),
 
               // Register Button
               ElevatedButton(
@@ -359,7 +361,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => LoginPage(),
+                          builder: (context) => const LoginPage(),
                         ),
                       );
                     } else {
@@ -380,7 +382,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   // Navigate to the login page and replace the current page in the stack
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
                   );
                 },
                 child: const Text(

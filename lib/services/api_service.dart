@@ -5,7 +5,7 @@ class ApiService {
   static const String apiUrl =
       'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
 
-  Dio _dio = Dio();
+  final Dio _dio = Dio();
 
   ApiService() {
     _dio.interceptors.add(InterceptorsWrapper(
@@ -85,7 +85,7 @@ class ApiService {
   Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
       final response = await _dio.post(
-        apiUrl + '?action=login', // Include the login action in the URL
+        '$apiUrl?action=login', // Include the login action in the URL
         options: Options(headers: {
           'Content-Type': 'application/json',
         }),

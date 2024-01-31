@@ -6,14 +6,14 @@ import 'package:AIM/bottom_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class PostMenu extends StatefulWidget {
-  const PostMenu({super.key});
+class EventMenu extends StatefulWidget {
+  const EventMenu({super.key});
 
   @override
-  _PostMenuState createState() => _PostMenuState();
+  _EventMenuState createState() => _EventMenuState();
 }
 
-class _PostMenuState extends State<PostMenu> {
+class _EventMenuState extends State<EventMenu> {
   TextEditingController subjectController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   File? selectedImage;
