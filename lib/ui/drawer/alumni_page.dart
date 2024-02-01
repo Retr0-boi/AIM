@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/bottom_navigation_bar.dart';
+// import 'package:AIM/bottom_navigation_bar.dart';
 
 class Alumni extends StatelessWidget implements PreferredSizeWidget {
   const Alumni({super.key});
@@ -11,10 +11,10 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: const MyDrawer(),
-      bottomNavigationBar: MyBottomNavigationBar(
-        currentIndex: 1,
-        onItemTapped: (index) {},
-      ),
+      // bottomNavigationBar: MyBottomNavigationBar(
+      //   currentIndex: 1,
+      //   onItemTapped: (index) {},
+      // ),
       body: CustomScrollView(
         slivers: [
           

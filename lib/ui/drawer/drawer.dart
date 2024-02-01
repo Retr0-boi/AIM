@@ -2,7 +2,7 @@ import 'package:AIM/ui/drawer/alumni_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:AIM/models/theme_provider.dart';
-import 'package:AIM/ui/settings/settings_page.dart';
+import 'package:AIM/ui/drawer/settings/settings_page.dart';
 import 'package:AIM/models/auth_service.dart';
 import 'package:AIM/ui/registration_page.dart';
 import 'package:AIM/models/db_helper.dart';

@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/bottom_navigation_bar.dart';
+import 'package:AIM/ui/bottom_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 

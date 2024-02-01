@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'app_bar.dart';
 import 'drawer/drawer.dart';
-import '../bottom_navigation_bar.dart';
+import 'bottom_navigation_bar.dart';
 
 class Notifications extends StatelessWidget implements PreferredSizeWidget {
   const Notifications({super.key});

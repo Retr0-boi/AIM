@@ -3,7 +3,7 @@ import 'package:AIM/ui/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart';
 import 'package:AIM/models/db_helper.dart';
-
+import 'package:AIM/ui/bottom_navigation_bar.dart';
 class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
   const ConnectionsPage({super.key});
 
@@ -50,6 +50,10 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
     return Scaffold(
       appBar: const MyAppBar(),
       drawer: const MyDrawer(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 1,
+        onItemTapped: (index) {},
+      ),
       body: FutureBuilder(
         future: matchingUsersFuture,
         builder: (context, snapshot) {
