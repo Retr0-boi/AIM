@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'ui/home_page.dart';
 import 'ui/registration_page.dart';
-import 'backend/auth_service.dart';
+import 'models/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

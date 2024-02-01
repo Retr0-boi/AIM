@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/app_bar.dart';
-import 'package:AIM/drawer.dart';
+import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart'; // Import your API service
-import 'package:AIM/backend/db_helper.dart'; // Import your SQLite database helper
+import 'package:AIM/models/db_helper.dart'; // Import your SQLite database helper
 
 class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
   const ProfilePage({super.key});

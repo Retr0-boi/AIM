@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/app_bar.dart';
-import 'package:AIM/drawer.dart';
+import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/bottom_navigation_bar.dart';
 
 class Alumni extends StatelessWidget implements PreferredSizeWidget {

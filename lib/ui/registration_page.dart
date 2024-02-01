@@ -2,7 +2,7 @@ import 'package:AIM/ui/login_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/services/api_service.dart';
-import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/models/db_helper.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});

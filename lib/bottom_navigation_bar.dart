@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'ui/alumni_page.dart';
-import 'ui/home_page.dart';
-import 'ui/post_pages/post_page.dart';
-import 'ui/notifications_page.dart';
-import 'ui/chat_page.dart';
+import 'package:AIM/ui/connections_page.dart';
+import 'package:AIM/ui/home_page.dart';
+import 'package:AIM/ui/post_pages/post_page.dart';
+import 'package:AIM/ui/notifications_page.dart';
+import 'package:AIM/ui/chat_page.dart';
 import 'package:AIM/ui/post_pages/event_page.dart';
 import 'package:AIM/ui/post_pages/job_page.dart';
 
@@ -32,7 +32,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.group),
-          label: 'Alumni',
+          label: 'Connections',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.add_box_rounded),
@@ -65,7 +65,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("What would you like to post"),
+              title: const Text("What would you like to post"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -77,7 +77,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                             builder: (context) => const JobMenu()),
                       );
                     },
-                    child: Text("Jobs"),
+                    child: const Text("Jobs"),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -87,7 +87,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                             builder: (context) => const EventMenu()),
                       );
                     },
-                    child: Text("Events"),
+                    child: const Text("Events"),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -97,7 +97,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                             builder: (context) => const PostMenu()),
                       );
                     },
-                    child: Text("Post"),
+                    child: const Text("Post"),
                   ),
                 ],
               ),
@@ -111,7 +111,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             _navigateWithoutAnimation(context, const Home());
             break;
           case 1:
-            _navigateWithoutAnimation(context, const Alumni());
+            _navigateWithoutAnimation(context, const ConnectionsPage());
             break;
           case 3:
             _navigateWithoutAnimation(context, const Notifications());

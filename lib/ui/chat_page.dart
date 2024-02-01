@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/app_bar.dart';
-import 'package:AIM/drawer.dart';
+import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/bottom_navigation_bar.dart';
-import 'package:AIM/ui/drawer/connections_page.dart';
+import 'package:AIM/ui/connections_page.dart';
 
 class Chat extends StatelessWidget implements PreferredSizeWidget {
   Chat({super.key});

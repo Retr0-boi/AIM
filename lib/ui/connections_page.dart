@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/app_bar.dart';
-import 'package:AIM/drawer.dart';
+import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart';
-import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/models/db_helper.dart';
 
 class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
   const ConnectionsPage({super.key});
@@ -55,7 +55,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             // If the Future is still running, display a loading indicator
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else if (snapshot.hasError) {
             // If an error occurred, display an error message
             return Center(child: Text('Error: ${snapshot.error}'));
@@ -83,24 +83,24 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
         Map<String, dynamic> user = userList[index];
 
         return Container(
-          margin: EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
-          padding: EdgeInsets.all(16.0),
+          margin: const EdgeInsets.fromLTRB(16.0, 8.0, 16.0, 0.0),
+          padding: const EdgeInsets.all(16.0),
           decoration: BoxDecoration(
             border: Border.all(color: Colors.grey),
             borderRadius: BorderRadius.circular(8.0),
           ),
           child: Row(
             children: [
-              CircleAvatar(
+              const CircleAvatar(
                 backgroundColor: Colors.grey,
                 // Replace with user's profile picture
               ),
-              SizedBox(width: 16),
+              const SizedBox(width: 16),
               Expanded(
                 child: Text(
                   user['name'].toString(),
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
+                  style: const TextStyle(
                     // Adjust the style as needed
                   ),
                 ),
@@ -112,12 +112,12 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                   print('Chat button clicked for ${user['_id']}');
                 },
                 child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(8),
+                  decoration: const BoxDecoration(
                     color: Colors.blue, // Customize button color
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(
+                  child: const Icon(
                     Icons.chat, // Use the chat icon
                     color: Colors.white, // Customize icon color
                   ),
@@ -135,10 +135,10 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
 
   Widget _buildHeading(String heading) {
     return Container(
-      padding: EdgeInsets.all(10.0),
+      padding: const EdgeInsets.all(10.0),
       child: Text(
         heading,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 18.0,
           fontWeight: FontWeight.bold,
           color: Colors.black,

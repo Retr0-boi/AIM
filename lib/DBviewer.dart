@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/models/db_helper.dart';
 
 void main() {
   runApp(const MyApp());

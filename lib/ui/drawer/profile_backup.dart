@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/app_bar.dart';
-import 'package:AIM/drawer.dart';
+import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 
 class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
   const ProfilePage({super.key});

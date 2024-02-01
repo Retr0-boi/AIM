@@ -1,7 +1,7 @@
 import 'package:AIM/ui/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/services/api_service.dart';
-import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/models/db_helper.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});

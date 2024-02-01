@@ -1,12 +1,12 @@
+import 'package:AIM/ui/drawer/alumni_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AIM/theme_provider.dart';
+import 'package:AIM/models/theme_provider.dart';
 import 'package:AIM/ui/settings/settings_page.dart';
-import 'package:AIM/backend/auth_service.dart';
+import 'package:AIM/models/auth_service.dart';
 import 'package:AIM/ui/registration_page.dart';
-import 'package:AIM/backend/db_helper.dart';
+import 'package:AIM/models/db_helper.dart';
 import 'package:AIM/ui/drawer/profile_page.dart';
-import 'package:AIM/ui/drawer/connections_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({super.key});
@@ -103,13 +103,13 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                       ),
                       ListTile(
                         leading: const Icon(Icons.groups_2),
-                        title: const Text('Connection'),
+                        title: const Text('Alumni'),
                         onTap: () {
                           // Handle placeholder button tap
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const ConnectionsPage()
+                                builder: (context) => const Alumni()
                                 ),
                           );
                           // Add your navigation logic or any actions you want to perform
