@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:AIM/models/theme_provider.dart';
 import 'package:AIM/ui/drawer/settings/settings_page.dart';
 import 'package:AIM/models/auth_service.dart';
-import 'package:AIM/ui/registration_page.dart';
+import 'package:AIM/ui/redirects/registration_page.dart';
 import 'package:AIM/models/db_helper.dart';
 import 'package:AIM/ui/drawer/profile_page.dart';
 

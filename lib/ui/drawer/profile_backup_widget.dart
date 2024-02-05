@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
+
 import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart'; // Import your API service
 import 'package:AIM/models/db_helper.dart'; // Import your SQLite database helper
@@ -35,7 +36,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const ProfileAppBar(),
       drawer: const MyDrawer(),
       body: FutureBuilder(
         future: userDataFuture,

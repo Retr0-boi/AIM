@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bar.dart';
+
+import 'package:AIM/ui/app_bars/app_bar.dart';
+
 import 'package:AIM/ui/drawer/drawer.dart';
 
 class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
@@ -8,7 +10,7 @@ class ProfilePage extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const HomeAppBar(),
       drawer: const MyDrawer(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

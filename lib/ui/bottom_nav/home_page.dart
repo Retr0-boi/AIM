@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_bar.dart';
-import 'drawer/drawer.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
+import '../drawer/drawer.dart';
 import 'bottom_navigation_bar.dart';
 
 class Home extends StatelessWidget implements PreferredSizeWidget {
@@ -21,7 +21,7 @@ class Home extends StatelessWidget implements PreferredSizeWidget {
             // expandedHeight: 110, // Height of the Suggestions Box
             floating: false,
             pinned: true,
-            flexibleSpace: MyAppBar(),
+            flexibleSpace: HomeAppBar(),
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(

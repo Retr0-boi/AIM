@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'app_bar.dart';
-import 'drawer/drawer.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
+import '../drawer/drawer.dart';
 import 'bottom_navigation_bar.dart';
 
 class Notifications extends StatelessWidget implements PreferredSizeWidget {
@@ -9,7 +9,7 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const NotificationsAppBar(),
       drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 3,

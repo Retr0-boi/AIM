@@ -1,4 +1,4 @@
-import 'package:AIM/ui/home_page.dart';
+import 'package:AIM/ui/bottom_nav/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/services/api_service.dart';
 import 'package:AIM/models/db_helper.dart';

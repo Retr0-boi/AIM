@@ -1,8 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
+
 import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/ui/bottom_navigation_bar.dart';
+import 'package:AIM/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -41,7 +42,7 @@ class _JobMenuState extends State<JobMenu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const HomeAppBar(),
       drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 2,

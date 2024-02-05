@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/home_page.dart';
-import 'ui/registration_page.dart';
+import 'ui/bottom_nav/home_page.dart';
+import 'ui/redirects/registration_page.dart';
 import 'models/auth_service.dart';
 
 void main() async {

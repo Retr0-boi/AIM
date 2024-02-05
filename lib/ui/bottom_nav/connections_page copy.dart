@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart';
 import 'package:AIM/models/db_helper.dart';
-import 'package:AIM/ui/bottom_navigation_bar.dart';
+import 'package:AIM/ui/bottom_nav/bottom_navigation_bar.dart';
+
 class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
   const ConnectionsPage({super.key});
 
@@ -17,7 +18,7 @@ class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
 class _ConnectionsPageState extends State<ConnectionsPage> {
   late Future<Map<String, dynamic>> userDataFuture;
   late Future<List<Map<String, dynamic>>> matchingUsersFuture;
-
+  late String userProfilePictureUrl; // Add this line
   @override
   void initState() {
     super.initState();
@@ -39,7 +40,9 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
       String batchTo = userData['batch_to'] ?? '';
       String department = userData['department'] ?? '';
       String program = userData['program'] ?? '';
-
+      setState(() {
+        userProfilePictureUrl = userData['profile_picture_url'] ?? '';
+      });
       // Call the ApiService method to search for matching users
       return ApiService().searchUsers(batchFrom, batchTo, department, program);
     });
@@ -48,7 +51,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const HomeAppBar(),
       drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 1,
@@ -95,9 +98,14 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
           ),
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundColor: Colors.grey,
-                // Replace with user's profile picture
+              // Replace CircleAvatar with Image.network
+              ClipOval(
+                child: Image.asset('images/'+
+                  userProfilePictureUrl,
+                  width: 400, // Adjust the width as needed
+                  height: 40, // Adjust the height as needed
+                  fit: BoxFit.cover,
+                ),
               ),
               const SizedBox(width: 16),
               Expanded(
@@ -135,7 +143,6 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
     ),
   );
 }
-
 
   Widget _buildHeading(String heading) {
     return Container(

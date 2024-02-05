@@ -197,54 +197,137 @@ class ApiService {
         return {'success': false, 'error': 'Failed to fetch user data $SC'};
       }
     } catch (e) {
-
       // Handle general exception
       print('Exception api_service.dart: $e');
-      return {'success': false, 'error-api_services': 'Failed to fetch user data'};
+      return {
+        'success': false,
+        'error-api_services': 'Failed to fetch user data'
+      };
     }
   }
-  Future<List<Map<String, dynamic>>> searchUsers(
-    String batchFrom, String batchTo, String department, String program) async {
-  try {
-    final response = await _dio.get(
-      '$apiUrl?action=searchUsers&batchFrom=$batchFrom&batchTo=$batchTo&department=$department&program=$program',
-    );
 
-    dynamic responseData = response.data;
+  Future<List<Map<String, dynamic>>> searchUsers(String batchFrom,
+      String batchTo, String department, String program) async {
+    try {
+      final response = await _dio.get(
+        '$apiUrl?action=searchUsers&batchFrom=$batchFrom&batchTo=$batchTo&department=$department&program=$program',
+      );
 
-    if (responseData == null) {
-      print('Empty response received');
+      dynamic responseData = response.data;
+
+      if (responseData == null) {
+        print('Empty response received');
+        return [];
+      }
+
+      if (responseData is String) {
+        // Handle non-JSON response
+        try {
+          responseData = json.decode(responseData);
+        } catch (e) {
+          print('Invalid JSON response format: $responseData');
+          return [];
+        }
+      }
+
+      if (responseData.containsKey('success') &&
+          responseData['success'] == true) {
+        // Extract matched users data
+        List<dynamic> matchedUsersData = responseData['matchedUsers'];
+
+        // Convert the list of dynamic to List<Map<String, dynamic>>
+        List<Map<String, dynamic>> matchingUsers =
+            List<Map<String, dynamic>>.from(matchedUsersData);
+
+        return matchingUsers;
+      } else {
+        print('Error api_service.dart: ${response.statusMessage}');
+        return [];
+      }
+    } catch (e) {
+      print('Exception api_service.dart: $e');
       return [];
     }
+  }
 
-    if (responseData is String) {
-      // Handle non-JSON response
-      try {
-        responseData = json.decode(responseData);
-      } catch (e) {
-        print('Invalid JSON response format: $responseData');
-        return [];
+  Future<Map<String, dynamic>> fetchConversation(String mongoId) async {
+    try {
+      final response = await _dio.get(
+        '$apiUrl?action=getConversations&mongoId=$mongoId',
+      );
+
+      // Check if the request was successful
+      if (response.statusCode == 200) {
+        // Check if response data is not null
+        if (response.data != null) {
+          // Parse the JSON response
+          Map<String, dynamic> responseData = json.decode(response.data!);
+
+          // Check if the response indicates success
+          if (responseData['success'] == true) {
+            // Extract conversation data
+            List<dynamic> conversations = responseData['conversations'];
+
+            // Return the extracted data
+            return {'success': true, 'conversations': conversations};
+          } else {
+            // Handle case when the API indicates failure
+            return {'success': false, 'error': responseData['error']};
+          }
+        } else {
+          // Handle case when response data is null
+          return {'success': false, 'error': 'Response data is null'};
+        }
+      } else {
+        int? statusCode = response.statusCode;
+
+        // Handle HTTP error
+        return {
+          'success': false,
+          'error': 'Failed to fetch conversation data $statusCode'
+        };
+      }
+    } catch (e) {
+      // Handle general exception
+      print('Exception api_service.dart: $e');
+      return {
+        'success': false,
+        'error-api_services': 'Failed to fetch conversation data'
+      };
+    }
+  }
+
+  Future<String> initiateConversation(String senderId, String recipientId) async {
+  try {
+    final response = await _dio.post(
+      '$apiUrl?action=initiateConversation',
+      data: FormData.fromMap({
+        'senderId': senderId,
+        'recipientId': recipientId,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> responseData = json.decode(response.data!);
+
+      // Check if 'success' key exists in the responseData
+      if (responseData.containsKey('success')) {
+        if (responseData['success'] == true) {
+          // Handle successful initiation
+          return 'success';
+        } else {
+          // Handle case when the API indicates failure
+          return 'error: ${responseData['error']}';
+        }
       }
     }
 
-    if (responseData.containsKey('success') && responseData['success'] == true) {
-      // Extract matched users data
-      List<dynamic> matchedUsersData = responseData['matchedUsers'];
-
-      // Convert the list of dynamic to List<Map<String, dynamic>>
-      List<Map<String, dynamic>> matchingUsers =
-          List<Map<String, dynamic>>.from(matchedUsersData);
-
-      return matchingUsers;
-    } else {
-      print('Error api_service.dart: ${response.statusMessage}');
-      return [];
-    }
+    // Handle HTTP error or unexpected response format
+    return 'error: Failed to initiate conversation or unexpected response format';
   } catch (e) {
+    // Handle general exception
     print('Exception api_service.dart: $e');
-    return [];
+    return 'error: Failed to initiate conversation';
   }
 }
-
 }
-

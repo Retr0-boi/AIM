@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/connections_page.dart';
-import 'package:AIM/ui/home_page.dart';
+import 'package:AIM/ui/bottom_nav/connections_page.dart';
+import 'package:AIM/ui/bottom_nav/home_page.dart';
 import 'package:AIM/ui/post_pages/post_page.dart';
-import 'package:AIM/ui/notifications_page.dart';
-import 'package:AIM/ui/chat_page.dart';
+import 'package:AIM/ui/bottom_nav/notifications_page.dart';
+import 'package:AIM/ui/bottom_nav/chat_page/chat_page.dart';
 import 'package:AIM/ui/post_pages/event_page.dart';
 import 'package:AIM/ui/post_pages/job_page.dart';
 
@@ -117,7 +117,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
             _navigateWithoutAnimation(context, const Notifications());
             break;
           case 4:
-            _navigateWithoutAnimation(context, Chat());
+            _navigateWithoutAnimation(context, const Chat());
             break;
         }
       }

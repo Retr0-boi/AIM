@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../home_page.dart';
+import '../../bottom_nav/home_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bar.dart';
+import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 // import 'package:AIM/bottom_navigation_bar.dart';
 
@@ -9,7 +9,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppBar(),
+      appBar: const HomeAppBar(),
       drawer: const MyDrawer(),
       // bottomNavigationBar: MyBottomNavigationBar(
       //   currentIndex: 1,

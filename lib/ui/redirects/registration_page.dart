@@ -1,4 +1,4 @@
-import 'package:AIM/ui/login_page.dart';
+import 'package:AIM/ui/redirects/login_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/services/api_service.dart';
