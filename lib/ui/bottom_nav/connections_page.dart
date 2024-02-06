@@ -43,14 +43,14 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
       String department = userData['department'] ?? '';
       String program = userData['program'] ?? '';
       // Call the ApiService method to search for matching users
-      return ApiService().searchUsers(batchFrom, batchTo, department, program);
+      return ApiService().searchUsers(batchFrom, batchTo, department, program,mongoId);
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomeAppBar(),
+      appBar: const ConnectionsAppBar(),
       drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 1,
@@ -131,7 +131,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ChatScreen(userId: user['_id'].toString()),
+                              ChatScreen(),
                         ),
                       );
                     } else {

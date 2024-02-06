@@ -9,7 +9,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const HomeAppBar(),
+      appBar: const AlumniAppBar(),
       drawer: const MyDrawer(),
       // bottomNavigationBar: MyBottomNavigationBar(
       //   currentIndex: 1,

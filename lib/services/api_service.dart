@@ -207,10 +207,10 @@ class ApiService {
   }
 
   Future<List<Map<String, dynamic>>> searchUsers(String batchFrom,
-      String batchTo, String department, String program) async {
+      String batchTo, String department, String program, String mongoId) async {
     try {
       final response = await _dio.get(
-        '$apiUrl?action=searchUsers&batchFrom=$batchFrom&batchTo=$batchTo&department=$department&program=$program',
+        '$apiUrl?action=searchUsers&batchFrom=$batchFrom&batchTo=$batchTo&department=$department&program=$program&mongoId=$mongoId',
       );
 
       dynamic responseData = response.data;

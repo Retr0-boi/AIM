@@ -1,19 +1,147 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatelessWidget {
-  final String userId;
+class ChatScreen extends StatefulWidget {
+  @override
+  _ChatScreenState createState() => _ChatScreenState();
+}
 
-  const ChatScreen({required this.userId});
+class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _textController = TextEditingController();
+  final List<Map<String, String>> _messages = [
+    {"sender": "User", "message": "Hello!"},
+    {"sender": "Other", "message": "Hi there!"},
+    {"sender": "Other", "message": "How are you?"},
+    {"sender": "User", "message": "I'm good, thank you!"},
+    {"sender": "User", "message": "What are you up to?"},
+    {"sender": "Other", "message": "Just working on some Flutter code."},
+    {"sender": "User", "message": "That's cool!"},
+    {"sender": "Other", "message": "Yes, it's really fun!"},
+  ];
+
+  String? currentUser;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chat with User $userId'),
+        title: Text(
+          "Username/group name",
+          style: TextStyle(
+            color: Theme.of(context).focusColor,
+          ),
+        ),
+        backgroundColor: Theme.of(context).primaryColor,
+        leading: Builder(
+          builder: (BuildContext context) {
+            return IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                //logic to go back a page
+                Navigator.pop(context);
+              },
+            );
+          },
+        ),
       ),
-      body: Center(
-        child: Text('Chat content goes here.'),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            child: ListView.builder(
+              reverse: true,
+              itemCount: _messages.length,
+              itemBuilder: (BuildContext context, int index) {
+                return _buildMessage(_messages[index]);
+              },
+            ),
+          ),
+          Divider(height: 1.0),
+          _buildTextComposer(),
+        ],
       ),
     );
   }
+
+  Widget _buildTextComposer() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(
+        children: <Widget>[
+          Flexible(
+            child: TextField(
+              controller: _textController,
+              onSubmitted: _handleSubmitted,
+              decoration: InputDecoration.collapsed(
+                hintText: "Send a message",
+              ),
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.send),
+            onPressed: () => _handleSubmitted(_textController.text),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _handleSubmitted(String text) {
+    _textController.clear();
+    setState(() {
+      _messages.insert(0, {"sender": "User", "message": text});
+    });
+  }
+
+  Widget _buildMessage(Map<String, String> message) {
+  bool isCurrentUser = message["sender"] == "User";
+  bool isNewUser = currentUser != message["sender"];
+  currentUser = message["sender"];
+
+  return Container(
+    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        if (!isCurrentUser) ...[
+          isNewUser
+              ? CircleAvatar(child: Text(message["sender"]![0]))
+              : SizedBox(width: 40.0),
+          SizedBox(width: 10.0),
+        ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: isCurrentUser
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(10.0),
+                decoration: BoxDecoration(
+                  color: isCurrentUser ? Colors.blue[200] : Colors.grey[300],
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(12.0),
+                    topRight: Radius.circular(12.0),
+                    bottomLeft: isCurrentUser
+                        ? Radius.circular(12.0)
+                        : Radius.circular(0)
+                  ),
+                ),
+                child: Text(
+                  message["message"]!,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16.0, // Adjust font size here
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+        
+      ],
+    ),
+  );
+}
 }

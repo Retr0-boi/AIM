@@ -30,8 +30,9 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);  
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ChatAppBar({super.key});
 
@@ -62,8 +63,9 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);  
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class ConnectionsAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ConnectionsAppBar({super.key});
 
@@ -94,16 +96,18 @@ class ConnectionsAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);  
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
-class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget {
+
+class NotificationsAppBar extends StatelessWidget
+    implements PreferredSizeWidget {
   const NotificationsAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       title: Text(
-        "Notificatoins",
+        "Notifications",
         style: TextStyle(
           color: Theme.of(context).focusColor,
         ),
@@ -126,8 +130,9 @@ class NotificationsAppBar extends StatelessWidget implements PreferredSizeWidget
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);  
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   const ProfileAppBar({super.key});
 
@@ -145,11 +150,11 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
         builder: (BuildContext context) {
           return IconButton(
             icon: const Icon(
-              Icons.menu,
+              Icons.arrow_back,
               color: Colors.white,
             ),
             onPressed: () {
-              Scaffold.of(context).openDrawer();
+              Navigator.pop(context);
             },
           );
         },
@@ -158,5 +163,39 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);  
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class AlumniAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const AlumniAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "Alumni Search",
+        style: TextStyle(
+          color: Theme.of(context).focusColor,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
