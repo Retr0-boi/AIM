@@ -50,15 +50,25 @@ class AuthenticationWrapper extends StatelessWidget {
   }
 }
 
+// CLIENT SIDE
+
+// events set aakanam
+// alumni search set aakanam
+// drawer profile picture set aakanam
+// campus visit set aakanam
+// job request set aakanam
+// posts set aakanam on home apge 
+// share,like, comment set aakanam
+// connection page popup thingy for profiles
+// real time notifcations
+// actual messaging thingy
+// settings page enthelum aakanam (optional)
 
 
+// SERVER SIDE
 
-// gotta fix the home page drawer button
-// gotta set redirects and some exception handling
-// permission thingy + posts
-// networking page + filters
-// chat ui
-
-// Database Connection:
-// The database connection details should not be hard-coded in the API file. 
-//It's better to store these details in a configuration file, and possibly use environment variables for sensitive information.
+// REQUEST ID 
+// post management
+// request management
+// notifications 
+// login mysql aakanam

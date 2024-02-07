@@ -45,6 +45,7 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                 if (snapshot.connectionState == ConnectionState.done) {
                   String username =
                       snapshot.data?['username'] ?? 'Default Username';
+                      snapshot.data?['mongo_id'] ?? 'mongo id error';
 
                   return Text(
                     username,
@@ -115,15 +116,15 @@ class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
                           // Add your navigation logic or any actions you want to perform
                         },
                       ),
-                      ListTile(
-                        leading: const Icon(Icons.message_sharp),
-                        title: const Text('Contact'),
-                        onTap: () {
-                          // Handle placeholder button tap
-                          Navigator.pop(context);
-                          // Add your navigation logic or any actions you want to perform
-                        },
-                      ),
+                      // ListTile(
+                      //   leading: const Icon(Icons.message_sharp),
+                      //   title: const Text('Contact'),
+                      //   onTap: () {
+                      //     // Handle placeholder button tap
+                      //     Navigator.pop(context);
+                      //     // Add your navigation logic or any actions you want to perform
+                      //   },
+                      // ),
                       ListTile(
                         leading: const Icon(Icons.place),
                         title: const Text('Campus Visit'),
