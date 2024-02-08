@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
@@ -57,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
               },
             ),
           ),
-          Divider(height: 1.0),
+          const Divider(height: 1.0),
           _buildTextComposer(),
         ],
       ),
@@ -66,20 +68,20 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildTextComposer() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 8.0),
+      margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
         children: <Widget>[
           Flexible(
             child: TextField(
               controller: _textController,
               onSubmitted: _handleSubmitted,
-              decoration: InputDecoration.collapsed(
+              decoration: const InputDecoration.collapsed(
                 hintText: "Send a message",
               ),
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             onPressed: () => _handleSubmitted(_textController.text),
           ),
         ],
@@ -100,15 +102,15 @@ class _ChatScreenState extends State<ChatScreen> {
   currentUser = message["sender"];
 
   return Container(
-    margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
+    margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         if (!isCurrentUser) ...[
           isNewUser
               ? CircleAvatar(child: Text(message["sender"]![0]))
-              : SizedBox(width: 40.0),
-          SizedBox(width: 10.0),
+              : const SizedBox(width: 40.0),
+          const SizedBox(width: 10.0),
         ],
         Expanded(
           child: Column(
@@ -117,20 +119,20 @@ class _ChatScreenState extends State<ChatScreen> {
                 : CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(10.0),
                 decoration: BoxDecoration(
                   color: isCurrentUser ? Colors.blue[200] : Colors.grey[300],
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12.0),
-                    topRight: Radius.circular(12.0),
+                    topLeft: const Radius.circular(12.0),
+                    topRight: const Radius.circular(12.0),
                     bottomLeft: isCurrentUser
-                        ? Radius.circular(12.0)
-                        : Radius.circular(0)
+                        ? const Radius.circular(12.0)
+                        : const Radius.circular(0)
                   ),
                 ),
                 child: Text(
                   message["message"]!,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16.0, // Adjust font size here
                   ),

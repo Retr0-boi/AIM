@@ -7,7 +7,7 @@ import 'package:AIM/services/api_service.dart';
 import 'package:AIM/models/db_helper.dart';
 
 class Chat extends StatefulWidget implements PreferredSizeWidget {
-  const Chat({Key? key});
+  const Chat({super.key});
 
   @override
   _ChatState createState() => _ChatState();
@@ -109,7 +109,7 @@ class _ChatState extends State<Chat> {
                 // Handle the case when 'user_details' is empty or contains only null values
                 // Add debug print to see why user_details is empty
                 print('User details are empty or contain only null values');
-                return Card(
+                return const Card(
                   child: ListTile(
                     title: Text('User details not available'),
                   ),

@@ -32,7 +32,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _selectedProgram = "";
   String _selectedStatus = "";
 
-  final List<String> departments = ["MBA",];
+  final List<String> departments = [
+    "MBA",
+  ];
   final List<String> programs = ["MBA"];
   final List<String> statuses = [
     "Student",
@@ -156,6 +158,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Department',
                 ),
+                style: TextStyle(
+                    color: Colors.black), // change text color to white
+                dropdownColor: Colors.white,
               ),
               const SizedBox(height: 8.0),
 
@@ -176,6 +181,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Program',
                 ),
+                style: TextStyle(
+                    color: Colors.black), // change text color to white
+                dropdownColor: Colors.white,
               ),
               const SizedBox(height: 8.0),
 
@@ -196,6 +204,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Current Status',
                 ),
+                style: TextStyle(
+                    color: Colors.black), // change text color to white
+                dropdownColor: Colors.white,
               ),
               const SizedBox(height: 8.0),
 

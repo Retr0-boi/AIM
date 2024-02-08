@@ -131,7 +131,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                         context,
                         MaterialPageRoute(
                           builder: (context) =>
-                              ChatScreen(),
+                              const ChatScreen(),
                         ),
                       );
                     } else {

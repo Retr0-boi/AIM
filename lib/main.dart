@@ -52,15 +52,14 @@ class AuthenticationWrapper extends StatelessWidget {
 
 // CLIENT SIDE
 
-// events set aakanam
 // alumni search set aakanam
-// drawer profile picture set aakanam
 // campus visit set aakanam
 // job request set aakanam
-// posts set aakanam on home apge 
+// posts set aakanam on home page 
 // share,like, comment set aakanam
 // connection page popup thingy for profiles
 // real time notifcations
+// notifications page
 // actual messaging thingy
 // settings page enthelum aakanam (optional)
 
@@ -72,3 +71,4 @@ class AuthenticationWrapper extends StatelessWidget {
 // request management
 // notifications 
 // login mysql aakanam
+// email thingy

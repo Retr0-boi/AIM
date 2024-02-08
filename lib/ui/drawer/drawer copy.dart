@@ -1,6 +1,4 @@
 import 'package:AIM/ui/drawer/alumni_page.dart';
-import 'package:AIM/ui/drawer/event_page.dart';
-import 'package:AIM/ui/drawer/job_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:AIM/models/theme_provider.dart';
@@ -9,109 +7,79 @@ import 'package:AIM/models/auth_service.dart';
 import 'package:AIM/ui/redirects/registration_page.dart';
 import 'package:AIM/models/db_helper.dart';
 import 'package:AIM/ui/drawer/profile_page.dart';
-import 'package:AIM/services/api_service.dart'; // Import your API service
 
-class MyDrawer extends StatefulWidget implements PreferredSizeWidget {
+class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({super.key});
 
-  @override
-  _MyDrawerState createState() => _MyDrawerState();
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _MyDrawerState extends State<MyDrawer> {
-  late Future<Map<String, dynamic>> userDataFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    // Call the SQLite database helper function to get user data
-    userDataFuture = DBHelper.getUserData().then((userData) {
-      // Extract mongoId from the user data
-      String mongoId =
-          userData['mongo_id'] ?? ''; // Replace 'mongoId' with the actual key
-
-      // Create an instance of ApiService
-      ApiService apiService = ApiService();
-
-      // Call the instance method to fetch user data using the obtained mongoId
-      return apiService.fetchUserData(mongoId);
-    });
-  }
-Widget _buildRoundedDrawerHeader(
-    BuildContext context, Map<String, dynamic>? userData) {
-  if (userData == null) {
-    return const SizedBox.shrink(); // or any other loading indicator or placeholder widget
-  }
-  return Container(
-    height: 80,
-    clipBehavior: Clip.antiAlias,
-    decoration: BoxDecoration(
-      color: Theme.of(context).primaryColor,
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(14.0),
-        bottomRight: Radius.circular(14.0),
+  
+  Widget _buildRoundedDrawerHeader(BuildContext context) {
+    return Container(
+      height: 80,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(14.0),
+          bottomRight: Radius.circular(14.0),
+        ),
       ),
-    ),
-    child: DrawerHeader(
-      
-      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      child: Row(
-        
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.transparent,
-            backgroundImage:
-                AssetImage('images/' + (userData['profile_picture'] ?? '')),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            userData['name'] ?? 'Default Username',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
-
-        ],
-        
-      ),
-      
-    ),
-    
-  );
-}
-@override
-Widget build(BuildContext context) {
-  return Drawer(
-    child: ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Builder(
-        builder: (context) {
-          return Column(
-            children: <Widget>[
-              FutureBuilder<Map<String, dynamic>>(
-                future: userDataFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return _buildRoundedDrawerHeader(context, snapshot.data);
-                  } else {
-                    return const SizedBox.shrink(); // or any other loading indicator
-                  }
-                },
+      child: DrawerHeader(
+        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.white,
+              child: Icon(
+                Icons.person,
+                size: 30,
+                color: Theme.of(context).primaryColor,
               ),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-          const SizedBox(width: 8),
+            ),
+            const SizedBox(width: 8),
+            FutureBuilder<Map<String, dynamic>>(
+              // Fetch the user data from DBHelper
+              future: DBHelper.getUserData(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  String username =
+                      snapshot.data?['username'] ?? 'Default Username';
+                      snapshot.data?['mongo_id'] ?? 'mongo id error';
 
+                  return Text(
+                    username,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  );
+                } else {
+                  return const CircularProgressIndicator();
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: Builder(
+          builder: (context) {
+            return Column(
+              children: <Widget>[
+                _buildRoundedDrawerHeader(context),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
                       ListTile(
                         leading: const Icon(Icons.account_circle),
                         title: const Text('Profile'),
@@ -131,24 +99,7 @@ Widget build(BuildContext context) {
                         title: const Text('Events'),
                         onTap: () {
                           // Handle placeholder button tap
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const EventPage()),
-                          );
-                          // Add your navigation logic or any actions you want to perform
-                        },
-                      ),
-                      ListTile(
-                        leading: const Icon(Icons.work_rounded),
-                        title: const Text('Jobs'),
-                        onTap: () {
-                          // Handle placeholder button tap
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const JobPage()),
-                          );
+                          Navigator.pop(context);
                           // Add your navigation logic or any actions you want to perform
                         },
                       ),
@@ -160,7 +111,8 @@ Widget build(BuildContext context) {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const Alumni()),
+                                builder: (context) => const Alumni()
+                                ),
                           );
                           // Add your navigation logic or any actions you want to perform
                         },
@@ -205,8 +157,7 @@ Widget build(BuildContext context) {
                     // Handle settings tap
                     Navigator.push(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsPage()),
+                      MaterialPageRoute(builder: (context) => const SettingsPage()),
                     );
                   },
                 ),
@@ -232,4 +183,7 @@ Widget build(BuildContext context) {
       ),
     );
   }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

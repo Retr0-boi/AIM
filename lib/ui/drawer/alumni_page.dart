@@ -2,22 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 // import 'package:AIM/bottom_navigation_bar.dart';
+class Alumni extends StatefulWidget {
+  const Alumni({Key? key}) : super(key: key);
 
-class Alumni extends StatelessWidget implements PreferredSizeWidget {
-  const Alumni({super.key});
+  @override
+  _AlumniState createState() => _AlumniState();
+}
+
+class _AlumniState extends State<Alumni> {
+  String? selectedDepartment;
+  String? selectedCourse;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AlumniAppBar(),
       drawer: const MyDrawer(),
-      // bottomNavigationBar: MyBottomNavigationBar(
-      //   currentIndex: 1,
-      //   onItemTapped: (index) {},
-      // ),
       body: CustomScrollView(
         slivers: [
-          
           SliverPadding(
             padding: const EdgeInsets.all(16.0),
             sliver: SliverList(
@@ -54,7 +56,8 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton<String>(
-                              items: ['Department 1', 'Department 2', 'Department 3']
+                              value: selectedDepartment,
+                              items: ['MBA']
                                   .map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -62,7 +65,13 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                                 );
                               }).toList(),
                               hint: const Text('Select Department'),
-                              onChanged: (String? value) {},
+                              onChanged: (String? value) {
+                                setState(() {
+                                  selectedDepartment = value;
+                                });
+                              },
+                              style: TextStyle(color: Colors.black), // change text color to white
+                              dropdownColor: Colors.white, // change dropdown background color to black
                             ),
                           ),
                         ),
@@ -81,7 +90,8 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 8.0),
                             child: DropdownButton<String>(
-                              items: ['Course 1', 'Course 2', 'Course 3']
+                              value: selectedCourse,
+                              items: ['MBA']
                                   .map((String value) {
                                 return DropdownMenuItem<String>(
                                   value: value,
@@ -89,7 +99,13 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                                 );
                               }).toList(),
                               hint: const Text('Select Course'),
-                              onChanged: (String? value) {},
+                              onChanged: (String? value) {
+                                setState(() {
+                                  selectedCourse = value;
+                                });
+                              },
+                              style: TextStyle(color: Colors.black), // change text color to white
+                              dropdownColor: Colors.white, // change dropdown background color to black
                             ),
                           ),
                         ),
@@ -104,7 +120,6 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(8.0),
@@ -126,9 +141,7 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
 
                       Expanded(
                         child: Container(
-                          
                           decoration: BoxDecoration(
-                            
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(8.0),
                           ),
@@ -147,6 +160,17 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                   const SizedBox(height: 10),
+
+                  // Search Button
+                  ElevatedButton(
+                    onPressed: () {
+                      // Validate inputs
+                      // If batch search, ensure both batch from and to are provided
+                      // If not batch search, at least one query must be provided
+                      // Perform search based on inputs
+                    },
+                    child: Text('Search'),
+                  ),
                 ],
               ),
             ),
@@ -180,7 +204,4 @@ class Alumni extends StatelessWidget implements PreferredSizeWidget {
       ),
     );
   }
-
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

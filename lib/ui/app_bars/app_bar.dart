@@ -9,19 +9,19 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         "Home",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
-            icon: const Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              Scaffold.of(context).openDrawer();
+        icon: const Icon(
+          Icons.menu,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
             },
           );
         },
@@ -42,7 +42,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         "Chats",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
@@ -75,7 +75,7 @@ class ConnectionsAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         "Connections",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
@@ -109,7 +109,7 @@ class NotificationsAppBar extends StatelessWidget
       title: Text(
         "Notifications",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
@@ -142,7 +142,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         "Profile",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,
@@ -175,7 +175,139 @@ class AlumniAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         "Alumni Search",
         style: TextStyle(
-          color: Theme.of(context).focusColor,
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const PostAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "post",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+class JobAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const JobAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "job post",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+class JobPageAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const JobPageAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "Job Posts",
+        style: TextStyle(
+          color: Colors.white,
+        ),
+      ),
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+class EventPageAppBar extends StatelessWidget implements PreferredSizeWidget {
+  const EventPageAppBar({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(
+        "Events",
+        style: TextStyle(
+          color: Colors.white,
         ),
       ),
       backgroundColor: Theme.of(context).primaryColor,

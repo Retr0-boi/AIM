@@ -333,25 +333,20 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> postContent(
+   Future<Map<String, dynamic>> postContent(
       String subject, String content, String postedBy, String type,
       {File? image}) async {
+        
     try {
-      FormData formData = FormData.fromMap({
-        'subject': subject,
-        'content': content,
-        'posted_by': postedBy,
-        'type': type,
-        // if (image != null) 'image': await MultipartFile.fromFile(image.path),
-      });
-
-      // Log the form data before sending it
-      print('Sending post content with the following data:');
-      printFormData(formData);
-
       final response = await _dio.post(
         '$apiUrl?action=postContent',
-        data: formData,
+        data: FormData.fromMap({
+          'subject': subject,
+          'content': content,
+          'posted_by': postedBy,
+          'type': type,
+          if (image != null) 'image': await MultipartFile.fromFile(image.path),
+        }),
       );
 
       print('Post Content Response Status Code: ${response.statusCode}');
@@ -381,124 +376,9 @@ class ApiService {
         return {'success': false};
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      print('Exception in postContent: $e');
       return {'success': false};
     }
   }
-
-  void printFormData(FormData formData) {
-    for (var entry in formData.fields) {
-      print('${entry.key}: ${entry.value}');
-    }
-    for (var entry in formData.files) {
-      print('${entry.key}: ${entry.value.filename}');
-    }
-  }
-
-  Future<Map<String, dynamic>> postJobs(String subject, String jobDetails,
-      String postedBy, String type, String registrationLink,String status) async {
-    try {
-      final response = await _dio.post(
-        '$apiUrl?action=postJobsEvents',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }),
-        data: json.encode({
-          'posted_by': postedBy,
-          'subject': subject,
-          'job_details': jobDetails,
-          'type': type,
-          'link': registrationLink,
-          'status': status,
-        }),
-      );
-
-      print('Post Jobs Response Status Code: ${response.statusCode}');
-      print('Post Jobs Response Data: ${response.data}');
-
-      if (response.statusCode == 200) {
-        dynamic responseData = response.data;
-
-        if (response.data != null && response.data.isNotEmpty) {
-          // Parse response data
-          if (responseData is String) {
-            responseData = json.decode(responseData);
-          }
-
-          if (responseData.containsKey('success') &&
-              responseData['success'] != null) {
-            bool success = responseData['success'];
-            return {'success': success};
-          } else {
-            return {'success': false};
-          }
-        } else {
-          throw Exception('Empty response data');
-        }
-      } else {
-        print('Error api_service.dart: ${response.statusMessage}');
-        return {'success': false};
-      }
-    } catch (e) {
-      print('Exception api_service.dart: $e');
-      return {'success': false, 'error': e.toString()};
-    }
-  }
-
-  Future<List<Map<String, dynamic>>> getJobs() async {
-    try {
-      final response = await _dio.get('$apiUrl?action=getJobs');
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.data);
-        if (responseData['success'] == true) {
-          final List<dynamic> jobs = responseData['jobs'];
-          final List<Map<String, dynamic>> jobData = jobs
-              .cast<Map<String, dynamic>>() // Explicitly cast to correct type
-              .map((job) {
-            // Assuming 'created_at' is a String in the format 'yyyy-MM-dd HH:mm:ss'
-            DateTime createdAt = DateTime.parse(job['created_at']);
-            return {
-              ...job,
-              'created_at': createdAt,
-            };
-          }).toList();
-          return jobData;
-        } else {
-          throw Exception('Failed to fetch jobs: ${responseData['error']}');
-        }
-      } else {
-        throw Exception('Failed to fetch jobs: ${response.statusMessage}');
-      }
-    } catch (e) {
-      throw Exception('Failed to fetch jobs: $e');
-    }
-  }
-  Future<List<Map<String, dynamic>>> getEvents() async {
-    try {
-      final response = await _dio.get('$apiUrl?action=getEvents');
-      if (response.statusCode == 200) {
-        final responseData = json.decode(response.data);
-        if (responseData['success'] == true) {
-          final List<dynamic> jobs = responseData['jobs'];
-          final List<Map<String, dynamic>> jobData = jobs
-              .cast<Map<String, dynamic>>() // Explicitly cast to correct type
-              .map((job) {
-            // Assuming 'created_at' is a String in the format 'yyyy-MM-dd HH:mm:ss'
-            DateTime createdAt = DateTime.parse(job['created_at']);
-            return {
-              ...job,
-              'created_at': createdAt,
-            };
-          }).toList();
-          return jobData;
-        } else {
-          throw Exception('Failed to fetch events: ${responseData['error']}');
-        }
-      } else {
-        throw Exception('Failed to fetch events: ${response.statusMessage}');
-      }
-    } catch (e) {
-      throw Exception('Failed to fetch events: $e');
-    }
-  }
+  
 }
