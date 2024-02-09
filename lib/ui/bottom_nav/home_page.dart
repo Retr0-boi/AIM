@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'bottom_navigation_bar.dart';
+import 'package:AIM/ui/drawer/drawer.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key});
@@ -9,9 +9,28 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        flexibleSpace: const HomeAppBar(),
+      title: Text(
+        "Home",
+        style: TextStyle(
+          color: Colors.white,
+        ),
       ),
-      drawer: null, // Set to null to remove the drawer
+      backgroundColor: Theme.of(context).primaryColor,
+      leading: Builder(
+        builder: (BuildContext context) {
+          return IconButton(
+        icon: const Icon(
+          Icons.menu,
+          color: Colors.white,
+        ),
+        onPressed: () {
+          Scaffold.of(context).openDrawer();
+            },
+          );
+        },
+      ),
+    ),
+      drawer: MyDrawer(), // Set to null to remove the drawer
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onItemTapped: (index) {},
