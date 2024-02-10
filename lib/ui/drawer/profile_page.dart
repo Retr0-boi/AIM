@@ -1,6 +1,8 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bars/app_bar.dart';
-
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart'; // Import your API service
 import 'package:AIM/models/db_helper.dart'; // Import your SQLite database helper
@@ -17,22 +19,39 @@ class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late Future<Map<String, dynamic>> userDataFuture;
+  late File? selectedImage;
 
   @override
   void initState() {
     super.initState();
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
-      // Extract mongoId from the user data
       String mongoId =
           userData['mongo_id'] ?? ''; // Replace 'mongoId' with the actual key
 
-      // Create an instance of ApiService
       ApiService apiService = ApiService();
 
-      // Call the instance method to fetch user data using the obtained mongoId
       return apiService.fetchUserData(mongoId);
     });
+  }
+
+  Future<void> _requestPermissions() async {
+    var status = await Permission.storage.status;
+    if (!status.isGranted) {
+      await Permission.storage.request();
+    }
+  }
+
+  Future<void> _pickImage() async {
+    await _requestPermissions(); // Add this line
+    final imagePicker = ImagePicker();
+    final pickedFile = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = File(pickedFile.path);
+      });
+    }
   }
 
   @override
@@ -70,7 +89,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   // Profile Picture (Replace with your actual image path or URL)
                   CircleAvatar(
                     radius: 90,
-                    backgroundImage: AssetImage('images/'+userData['profile_picture']),
+                    backgroundImage:
+                        AssetImage('images/' + userData['profile_picture']),
                   ),
 
                   const SizedBox(height: 24),
@@ -89,7 +109,11 @@ class _ProfilePageState extends State<ProfilePage> {
                           _buildUserInfo('Name:', userData['name']),
                           _buildUserInfo('Department:', userData['department']),
                           _buildUserInfo('Program:', userData['program']),
-                          _buildUserInfo('Batch:', userData['batch_from'] +" - " + userData['batch_to']),
+                          _buildUserInfo(
+                              'Batch:',
+                              userData['batch_from'] +
+                                  " - " +
+                                  userData['batch_to']),
                           _buildUserInfo('Email:', userData['email']),
                           _buildUserInfo('Date of Birth:', userData['DOB']),
                           // Add other information as needed
@@ -194,7 +218,8 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       // Add more cases as needed
       default:
-        return const SizedBox.shrink(); // Return an empty widget for other cases or 'Not Working'
+        return const SizedBox
+            .shrink(); // Return an empty widget for other cases or 'Not Working'
     }
   }
 }
