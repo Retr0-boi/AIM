@@ -120,13 +120,13 @@ class _EventMenuState extends State<EventMenu> {
                     SnackBar(
                       content: Text(
                         'Failed to post job: ${response['error']}',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                       backgroundColor: Colors
                           .red, // Customize the background color if needed
                       behavior: SnackBarBehavior
                           .floating, // Choose the SnackBar behavior
-                      duration: Duration(
+                      duration: const Duration(
                           seconds:
                               5), // Set the duration for how long the SnackBar should be visible
                       action: SnackBarAction(

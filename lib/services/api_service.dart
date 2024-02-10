@@ -395,8 +395,13 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> postJobs(String subject, String jobDetails,
-      String postedBy, String type, String registrationLink,String status) async {
+  Future<Map<String, dynamic>> postJobs(
+      String subject,
+      String jobDetails,
+      String postedBy,
+      String type,
+      String registrationLink,
+      String status) async {
     try {
       final response = await _dio.post(
         '$apiUrl?action=postJobsEvents',
@@ -473,6 +478,7 @@ class ApiService {
       throw Exception('Failed to fetch jobs: $e');
     }
   }
+
   Future<List<Map<String, dynamic>>> getEvents() async {
     try {
       final response = await _dio.get('$apiUrl?action=getEvents');
@@ -499,6 +505,60 @@ class ApiService {
       }
     } catch (e) {
       throw Exception('Failed to fetch events: $e');
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> searchAlumni({
+    String? name,
+    String? department,
+    String? course,
+    String? batchFrom,
+    String? batchTo,
+  }) async {
+    try {
+      final requestData = {
+        if (name != null && name.isNotEmpty) 'name': name,
+        if (department != null && department.isNotEmpty)
+          'department': department,
+        if (course != null && course.isNotEmpty) 'course': course,
+        if (batchFrom != null && batchFrom.isNotEmpty) 'batchFrom': batchFrom,
+        if (batchTo != null && batchTo.isNotEmpty) 'batchTo': batchTo,
+      };
+
+      final response = await _dio.get(
+        '$apiUrl?action=searchAlumni',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+        data: requestData,
+      );
+
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final responseData = json.decode(response.data);
+        // Check if the response indicates success
+        if (responseData['success'] == true) {
+          // Extract the list of matched users
+          final List<dynamic> matchedUsers = responseData['matchedUsers'];
+          // Convert each matched user to a map
+          final List<Map<String, dynamic>> usersData =
+              matchedUsers.map((user) => user as Map<String, dynamic>).toList();
+          // Return the list of matched users
+          return usersData;
+        } else {
+          // Handle error from API
+          print(
+              'Failed to fetch alumni data. Reason: ${responseData['message']}');
+          return [];
+        }
+      } else {
+        print(
+            'Failed to fetch alumni data. Status code: ${response.statusCode}');
+        return [];
+      }
+    } catch (e) {
+      print('Exception api_service.dart: $e');
+      return [];
     }
   }
 }

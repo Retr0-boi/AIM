@@ -6,7 +6,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Home",
         style: TextStyle(
           color: Colors.white,
@@ -39,7 +39,7 @@ class ChatAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Chats",
         style: TextStyle(
           color: Colors.white,
@@ -72,7 +72,7 @@ class ConnectionsAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Connections",
         style: TextStyle(
           color: Colors.white,
@@ -106,7 +106,7 @@ class NotificationsAppBar extends StatelessWidget
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Notifications",
         style: TextStyle(
           color: Colors.white,
@@ -139,7 +139,7 @@ class ProfileAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Profile",
         style: TextStyle(
           color: Colors.white,
@@ -172,7 +172,7 @@ class AlumniAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Alumni Search",
         style: TextStyle(
           color: Colors.white,
@@ -205,7 +205,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "post",
         style: TextStyle(
           color: Colors.white,
@@ -238,7 +238,7 @@ class JobAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "job post",
         style: TextStyle(
           color: Colors.white,
@@ -271,7 +271,7 @@ class JobPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Job Posts",
         style: TextStyle(
           color: Colors.white,
@@ -304,7 +304,7 @@ class EventPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(
+      title: const Text(
         "Events",
         style: TextStyle(
           color: Colors.white,

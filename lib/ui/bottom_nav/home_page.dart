@@ -3,13 +3,13 @@ import 'bottom_navigation_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key});
+  const Home({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      title: Text(
+      title: const Text(
         "Home",
         style: TextStyle(
           color: Colors.white,
@@ -30,7 +30,7 @@ class Home extends StatelessWidget {
         },
       ),
     ),
-      drawer: MyDrawer(), // Set to null to remove the drawer
+      drawer: const MyDrawer(), // Set to null to remove the drawer
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onItemTapped: (index) {},

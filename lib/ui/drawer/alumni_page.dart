@@ -1,207 +1,278 @@
+import 'package:AIM/services/api_service.dart';
+import 'package:AIM/ui/drawer/profile_details_page.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bars/app_bar.dart';
-import 'package:AIM/ui/drawer/drawer.dart';
-// import 'package:AIM/bottom_navigation_bar.dart';
+import 'package:flutter/services.dart';
+
 class Alumni extends StatefulWidget {
-  const Alumni({Key? key}) : super(key: key);
+  const Alumni({super.key});
 
   @override
   _AlumniState createState() => _AlumniState();
 }
 
 class _AlumniState extends State<Alumni> {
+  final ApiService apiService = ApiService();
+
+  TextEditingController searchTextController = TextEditingController();
   String? selectedDepartment;
   String? selectedCourse;
+  String? batchFrom;
+  String? batchTo;
+  List<Map<String, dynamic>> alumniData = [];
+  @override
+  void dispose() {
+    searchTextController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const AlumniAppBar(),
-      drawer: const MyDrawer(),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.all(16.0),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  // Search Bar
-                  Container(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Search Bar
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: TextField(
+                controller: searchTextController,
+                decoration: const InputDecoration(
+                  hintText: 'Search for names...',
+                  prefixIcon: Icon(Icons.search),
+                  border: InputBorder.none,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Department Dropdown
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: DropdownButton<String>(
+                  value: selectedDepartment,
+                  items: [
+                    'MBA',
+                  ] // Replace with your department options
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: const Text('Select Department'),
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedDepartment = value;
+                    });
+                  },
+                  style: const TextStyle(color: Colors.black),
+                  dropdownColor: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Course Dropdown
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: DropdownButton<String>(
+                  value: selectedCourse,
+                  items: [
+                    'MBA',
+                  ] // Replace with your course options
+                      .map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                  hint: const Text('Select Course'),
+                  onChanged: (String? value) {
+                    setState(() {
+                      selectedCourse = value;
+                    });
+                  },
+                  style: const TextStyle(color: Colors.black),
+                  dropdownColor: Colors.white,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Batch TextFields
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Container(
                     decoration: BoxDecoration(
                       border: Border.all(color: Colors.grey),
                       borderRadius: BorderRadius.circular(8.0),
                     ),
-                    child: const TextField(
-                      decoration: InputDecoration(
-                        hintText: 'Search for names...',
-                        prefixIcon: Icon(Icons.search),
-                        border: InputBorder.none,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Batch From',
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          LengthLimitingTextInputFormatter(4),
+                        ],
+                        onChanged: (value) {
+                          batchFrom = value;
+                        },
                       ),
                     ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Dropdowns and TextFields
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Department Dropdown
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton<String>(
-                              value: selectedDepartment,
-                              items: ['MBA']
-                                  .map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              hint: const Text('Select Department'),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedDepartment = value;
-                                });
-                              },
-                              style: TextStyle(color: Colors.black), // change text color to white
-                              dropdownColor: Colors.white, // change dropdown background color to black
-                            ),
-                          ),
+                ),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          labelText: 'Batch To',
+                          border: InputBorder.none,
                         ),
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
+                          LengthLimitingTextInputFormatter(4),
+                        ],
+                        onChanged: (value) {
+                          batchTo = value;
+                        },
                       ),
-
-                      const SizedBox(width: 16),
-
-                      // Course Dropdown
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 8.0),
-                            child: DropdownButton<String>(
-                              value: selectedCourse,
-                              items: ['MBA']
-                                  .map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              hint: const Text('Select Course'),
-                              onChanged: (String? value) {
-                                setState(() {
-                                  selectedCourse = value;
-                                });
-                              },
-                              style: TextStyle(color: Colors.black), // change text color to white
-                              dropdownColor: Colors.white, // change dropdown background color to black
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                  const SizedBox(height: 20),
-
-                  // Batch TextFields
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: const Padding(
-                            padding:
-                                EdgeInsets.symmetric(horizontal: 8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Batch From',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(width: 16),
-
-                      Expanded(
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: const Padding(
-                            padding:
-                                EdgeInsets.symmetric(horizontal: 8.0),
-                            child: TextField(
-                              decoration: InputDecoration(
-                                labelText: 'Batch To',
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 10),
-
-                  // Search Button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Validate inputs
-                      // If batch search, ensure both batch from and to are provided
-                      // If not batch search, at least one query must be provided
-                      // Perform search based on inputs
+                ),
+              ],
+            ),
+            const SizedBox(height: 20),
+            // Search Button
+            ElevatedButton(
+              onPressed: () async {
+                // Call the API service method
+                List<Map<String, dynamic>> data = await apiService.searchAlumni(
+                  name: searchTextController.text,
+                  department: selectedDepartment,
+                  course: selectedCourse,
+                  batchFrom: batchFrom,
+                  batchTo: batchTo,
+                );
+                print("RECIEEVED DATA: $data");
+                setState(() {
+                  alumniData = data;
+                });
+              },
+              child: const Text('Search'),
+            ),
+            const SizedBox(height: 20),
+            // Display Search Results
+            Expanded(
+              child: ListView.builder(
+                itemCount: alumniData.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ListTile(
+                    onTap: () {
+                      // print('Clicked Alumni ID: ${alumniData[index]['_id']}');
+                      // Call the method to fetch and display user data when ListTile is clicked
+                      _fetchAndDisplayUserData('${alumniData[index]['_id']}');
                     },
-                    child: Text('Search'),
-                  ),
-                ],
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(
+                        'images/' + alumniData[index]['profile_picture'],
+                      ),
+                    ),
+                    title: Text('${alumniData[index]['name'] ?? 'Unknown'}'),
+                    // Add more fields as needed
+                  );
+                },
               ),
             ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return Container(
-                  margin: const EdgeInsets.fromLTRB(16.0,0.0,16.0,8.0),
-                  padding: const EdgeInsets.all(16.0),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.grey,
-                        // Replace with user's profile picture
-                      ),
-                      const SizedBox(width: 16),
-                      Text('User $index'), // Replace with user's name
-                    ],
-                  ),
-                );
-              },
-              childCount: 10, // Replace with the actual number of users
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
+  }
+
+  void _fetchAndDisplayUserData(String mongoId) async {
+    try {
+      // Call the API service method to fetch user data
+      Map<String, dynamic> userData = await apiService.fetchUserData(mongoId);
+
+      // Check if the request was successful
+      if (userData['success'] == true) {
+        // Navigate to the profile details page and pass the user data
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ProfileDetailsPage(userData: userData),
+          ),
+        );
+      } else {
+        // Handle case when the API indicates failure
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Error'),
+              content: Text(
+                'Failed to fetch user data. Reason: $mongoId',
+              ),
+              actions: <Widget>[
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('OK'),
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      // Handle general exception
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Error'),
+            content: Text('Exception occurred while fetching user data: $e'),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
 }

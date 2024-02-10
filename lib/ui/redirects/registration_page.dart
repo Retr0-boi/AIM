@@ -158,7 +158,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Department',
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black), // change text color to white
                 dropdownColor: Colors.white,
               ),
@@ -181,7 +181,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Program',
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black), // change text color to white
                 dropdownColor: Colors.white,
               ),
@@ -204,7 +204,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 decoration: const InputDecoration(
                   labelText: 'Current Status',
                 ),
-                style: TextStyle(
+                style: const TextStyle(
                     color: Colors.black), // change text color to white
                 dropdownColor: Colors.white,
               ),
