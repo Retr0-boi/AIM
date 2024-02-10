@@ -21,7 +21,8 @@ class ProfileDetailsPage extends StatelessWidget {
             CircleAvatar(
               radius: 90,
               backgroundImage:
-                  AssetImage('images/' + userData['profile_picture']),
+                          NetworkImage('http://192.168.56.1/' + userData['profile_picture']),
+
             ),
             const SizedBox(height: 24),
             // User Information Card

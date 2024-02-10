@@ -201,9 +201,11 @@ class _AlumniState extends State<Alumni> {
                       // Call the method to fetch and display user data when ListTile is clicked
                       _fetchAndDisplayUserData('${alumniData[index]['_id']}');
                     },
+
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage(
-                        'images/' + alumniData[index]['profile_picture'],
+                      backgroundImage: NetworkImage(
+                        'http://192.168.56.1/' + alumniData[index]['profile_picture'],
+                        
                       ),
                     ),
                     title: Text('${alumniData[index]['name'] ?? 'Unknown'}'),

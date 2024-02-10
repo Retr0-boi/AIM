@@ -85,8 +85,8 @@ class _ChatState extends State<Chat> {
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-                      child: Image.asset(
-                    'images/' + profilePicUrl,
+                      child: Image. network(
+                    'http://192.168.56.1/' + profilePicUrl,
                     width: 40, // Adjust the width as needed
                     height: 40, // Adjust the height as needed
                     fit: BoxFit.cover,

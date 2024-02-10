@@ -98,9 +98,10 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
             child: Row(
               children: [
                 // Replace CircleAvatar with Image.asset
+
                 ClipOval(
-                  child: Image.asset(
-                    'images/' + user['profile_picture'],
+                  child: Image.network(
+                    'http://192.168.56.1/' + user['profile_picture'],
                     width: 40, // Adjust the width as needed
                     height: 40, // Adjust the height as needed
                     fit: BoxFit.cover,

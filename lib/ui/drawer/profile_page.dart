@@ -20,14 +20,14 @@ class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
 class _ProfilePageState extends State<ProfilePage> {
   late Future<Map<String, dynamic>> userDataFuture;
   late File? selectedImage;
+  late String mongoId; // Declare mongoId here
 
   @override
   void initState() {
     super.initState();
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
-      String mongoId =
-          userData['mongo_id'] ?? ''; // Replace 'mongoId' with the actual key
+      mongoId = userData['mongo_id'] ?? ''; // Assign value to mongoId
 
       ApiService apiService = ApiService();
 
@@ -51,6 +51,64 @@ class _ProfilePageState extends State<ProfilePage> {
       setState(() {
         selectedImage = File(pickedFile.path);
       });
+      _showConfirmationDialog();
+    }
+  }
+
+  Future<void> _showConfirmationDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button for close dialog
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Update Profile Picture'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Do you want to update your profile picture?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Save'),
+              onPressed: () {
+                // Call API service to update profile picture
+                _updateProfilePicture(selectedImage!, mongoId);
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _updateProfilePicture(File imageFile, String mongoId) async {
+    if (mongoId.isNotEmpty) {
+      // Call your API service method here
+      ApiService apiService = ApiService();
+      // Replace 'userId' with the actual user ID
+      Map<String, dynamic> response =
+          await apiService.updateProfileImage(mongoId, imageFile);
+      if (response['success']) {
+        // Handle success
+        print('Profile picture updated successfully');
+        Navigator.of(context).pop();
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => ProfilePage()));
+      } else {
+        // Handle failure
+        print('Failed to update profile picture');
+      }
+    } else {
+      print('Error: mongoId is empty or not initialized');
     }
   }
 
@@ -87,10 +145,13 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   const SizedBox(height: 24),
                   // Profile Picture (Replace with your actual image path or URL)
-                  CircleAvatar(
-                    radius: 90,
-                    backgroundImage:
-                        AssetImage('images/' + userData['profile_picture']),
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: CircleAvatar(
+                      radius: 90,
+                      backgroundImage: NetworkImage(
+                          'http://192.168.56.1/' + userData['profile_picture']),
+                    ),
                   ),
 
                   const SizedBox(height: 24),

@@ -561,4 +561,57 @@ class ApiService {
       return [];
     }
   }
+
+  Future<Map<String, dynamic>> updateProfileImage(
+      String mongoId, File imageFile) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'mongoId': mongoId,
+        'profile_image': await MultipartFile.fromFile(imageFile.path),
+      });
+
+      final response = await _dio.post(
+        '$apiUrl?action=updateProfilePicture',
+        data: formData,
+      );
+
+      print(
+          'Update Profile Image Response Status Code: ${response.statusCode}');
+      print('Update Profile Image Response Data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        // Check if response data is empty
+        if (response.data == null || response.data.isEmpty) {
+          return {'success': false, 'error': 'Empty response data'};
+        }
+
+        dynamic responseData = response.data;
+
+        // Parse response data if it's a string
+        if (responseData is String) {
+          responseData = json.decode(responseData);
+        }
+
+        // Check if response data contains success key
+        if (responseData.containsKey('success')) {
+          bool success = responseData['success'];
+          return {'success': success};
+        } else {
+          return {
+            'success': false,
+            'error': 'Response data does not contain success key'
+          };
+        }
+      } else {
+        // Handle non-200 status codes
+        return {
+          'success': false,
+          'error': 'HTTP error: ${response.statusCode}'
+        };
+      }
+    } catch (e) {
+      print('Exception api_service.dart: $e');
+      return {'success': false, 'error': 'Exception occurred: $e'};
+    }
+  }
 }

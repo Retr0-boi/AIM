@@ -40,77 +40,74 @@ class _MyDrawerState extends State<MyDrawer> {
       return apiService.fetchUserData(mongoId);
     });
   }
-Widget _buildRoundedDrawerHeader(
-    BuildContext context, Map<String, dynamic>? userData) {
-  if (userData == null) {
-    return const SizedBox.shrink(); // or any other loading indicator or placeholder widget
-  }
-  return Container(
-    height: 80,
-    clipBehavior: Clip.antiAlias,
-    decoration: BoxDecoration(
-      color: Theme.of(context).primaryColor,
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(14.0),
-        bottomRight: Radius.circular(14.0),
-      ),
-    ),
-    child: DrawerHeader(
-      
-      padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-      child: Row(
-        
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          
-          CircleAvatar(
-            radius: 20,
-            backgroundColor: Colors.transparent,
-            backgroundImage:
-                AssetImage('images/' + (userData['profile_picture'] ?? '')),
-          ),
-          const SizedBox(width: 8),
-          Text(
-            userData['name'] ?? 'Default Username',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 18,
-            ),
-          ),
 
-        ],
-        
+  Widget _buildRoundedDrawerHeader(
+      BuildContext context, Map<String, dynamic>? userData) {
+    if (userData == null) {
+      return const SizedBox
+          .shrink(); // or any other loading indicator or placeholder widget
+    }
+    return Container(
+      height: 80,
+      clipBehavior: Clip.antiAlias,
+      decoration: BoxDecoration(
+        color: Theme.of(context).primaryColor,
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(14.0),
+          bottomRight: Radius.circular(14.0),
+        ),
       ),
-      
-    ),
-    
-  );
-}
-@override
-Widget build(BuildContext context) {
-  return Drawer(
-    child: ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      child: Builder(
-        builder: (context) {
-          return Column(
-            children: <Widget>[
-              FutureBuilder<Map<String, dynamic>>(
-                future: userDataFuture,
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return _buildRoundedDrawerHeader(context, snapshot.data);
-                  } else {
-                    return const SizedBox.shrink(); // or any other loading indicator
-                  }
-                },
+      child: DrawerHeader(
+        padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: 20,
+              backgroundColor: Colors.transparent,
+              backgroundImage: NetworkImage(
+                  'http://192.168.56.1/' + userData['profile_picture']),
+            ),
+            const SizedBox(width: 8),
+            Text(
+              userData['name'] ?? 'Default Username',
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 18,
               ),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.zero,
-                  children: <Widget>[
-          const SizedBox(width: 8),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ChangeNotifierProvider(
+        create: (context) => ThemeProvider(),
+        child: Builder(
+          builder: (context) {
+            return Column(
+              children: <Widget>[
+                FutureBuilder<Map<String, dynamic>>(
+                  future: userDataFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return _buildRoundedDrawerHeader(context, snapshot.data);
+                    } else {
+                      return const SizedBox
+                          .shrink(); // or any other loading indicator
+                    }
+                  },
+                ),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
+                    children: <Widget>[
+                      const SizedBox(width: 8),
 
                       ListTile(
                         leading: const Icon(Icons.account_circle),
