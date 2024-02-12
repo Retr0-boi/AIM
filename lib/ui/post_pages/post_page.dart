@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
+import 'package:AIM/ui/bottom_nav/home_page.dart';
 class PostMenu extends StatefulWidget {
   const PostMenu({super.key});
 
@@ -151,6 +151,13 @@ class _PostMenuState extends State<PostMenu> {
                     setState(() {
                       selectedImage = null;
                     });
+
+                    Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Home(),
+                    ),
+                  );
                   } else {
                     // Show a snackbar or dialog indicating failure
                     ScaffoldMessenger.of(context).showSnackBar(

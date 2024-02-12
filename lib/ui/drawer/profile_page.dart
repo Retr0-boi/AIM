@@ -61,8 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
       barrierDismissible: false, // user must tap button for close dialog
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Update Profile Picture'),
-          content: SingleChildScrollView(
+          title: const Text('Update Profile Picture'),
+          content: const SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
                 Text('Do you want to update your profile picture?'),
@@ -71,13 +71,13 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
               onPressed: () {
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('Save'),
+              child: const Text('Save'),
               onPressed: () {
                 // Call API service to update profile picture
                 _updateProfilePicture(selectedImage!, mongoId);
@@ -102,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
         print('Profile picture updated successfully');
         Navigator.of(context).pop();
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => ProfilePage()));
+            MaterialPageRoute(builder: (context) => const ProfilePage()));
       } else {
         // Handle failure
         print('Failed to update profile picture');

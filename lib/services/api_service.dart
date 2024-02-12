@@ -333,59 +333,6 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> postContent(
-      String subject, String content, String postedBy, String type,
-      {File? image}) async {
-    try {
-      FormData formData = FormData.fromMap({
-        'subject': subject,
-        'content': content,
-        'posted_by': postedBy,
-        'type': type,
-        // if (image != null) 'image': await MultipartFile.fromFile(image.path),
-      });
-
-      // Log the form data before sending it
-      print('Sending post content with the following data:');
-      printFormData(formData);
-
-      final response = await _dio.post(
-        '$apiUrl?action=postContent',
-        data: formData,
-      );
-
-      print('Post Content Response Status Code: ${response.statusCode}');
-      print('Post Content Response Data: ${response.data}');
-
-      if (response.statusCode == 200) {
-        dynamic responseData = response.data;
-
-        if (response.data != null && response.data.isNotEmpty) {
-          // Parse response data
-          if (responseData is String) {
-            responseData = json.decode(responseData);
-          }
-
-          if (responseData.containsKey('success') &&
-              responseData['success'] != null) {
-            bool success = responseData['success'];
-            return {'success': success};
-          } else {
-            return {'success': false};
-          }
-        } else {
-          throw Exception('Empty response data');
-        }
-      } else {
-        print('Error api_service.dart: ${response.statusMessage}');
-        return {'success': false};
-      }
-    } catch (e) {
-      print('Exception api_service.dart: $e');
-      return {'success': false};
-    }
-  }
-
   void printFormData(FormData formData) {
     for (var entry in formData.fields) {
       print('${entry.key}: ${entry.value}');
@@ -612,6 +559,81 @@ class ApiService {
     } catch (e) {
       print('Exception api_service.dart: $e');
       return {'success': false, 'error': 'Exception occurred: $e'};
+    }
+  }
+
+  Future<Map<String, dynamic>> postContent(
+      String subject, String content, String postedBy, String type,
+      {File? image}) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'subject': subject,
+        'content': content,
+        'posted_by': postedBy,
+        'type': type,
+        if (image != null) 'image': await MultipartFile.fromFile(image.path),
+      });
+
+      print('Sending post content with the following data:');
+      printFormData(formData);
+
+      final response = await _dio.post(
+        '$apiUrl?action=postContent',
+        options: Options(
+          headers: {'Content-Type': 'application/json'},
+        ),
+        data: formData,
+      );
+
+      print('Post Content Response Status Code: ${response.statusCode}');
+      print('Post Content Response Data: ${response.data}');
+
+      if (response.statusCode == 200) {
+        dynamic responseData = response.data;
+
+        if (response.data != null && response.data.isNotEmpty) {
+          // Parse response data
+          if (responseData is String) {
+            responseData = json.decode(responseData);
+          }
+
+          if (responseData.containsKey('success') &&
+              responseData['success'] != null) {
+            bool success = responseData['success'];
+            return {'success': success};
+          } else {
+            return {'success': false};
+          }
+        } else {
+          throw Exception('Empty response data');
+        }
+      } else {
+        print('Error api_service.dart: ${response.statusMessage}');
+        return {'success': false};
+      }
+    } catch (e) {
+      print('Exception api_service.dart: $e');
+      return {'success': false};
+    }
+  }
+  Future<List<Map<String, dynamic>>> getAllPosts() async {
+    try {
+      final response = await _dio.get(
+        '$apiUrl?action=getAllPosts',
+      );
+
+      if (response.statusCode == 200) {
+        List<dynamic> responseData = json.decode(response.data);
+
+        List<Map<String, dynamic>> posts = responseData.cast<Map<String, dynamic>>();
+
+        return posts;
+      } else {
+        throw Exception('Failed to load posts');
+      }
+    } catch (e) {
+      print('Exception occurred: $e');
+      throw Exception('Failed to load posts: $e');
     }
   }
 }
