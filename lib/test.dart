@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:AIM/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
 import 'package:AIM/services/api_service.dart';
-import 'package:photo_view/photo_view.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -95,8 +94,8 @@ class _HomeState extends State<Home> {
                             Row(
                               children: [
                                 Container(
-                                  width: 50, // Set the desired width
-                                  height: 50, // Set the desired height
+                                  width: 45, // Set the desired width
+                                  height: 45, // Set the desired height
                                   child: CircleAvatar(
                                     radius: 90,
                                     backgroundImage: NetworkImage(
@@ -118,12 +117,7 @@ class _HomeState extends State<Home> {
                                     ),
                                     const SizedBox(height: 4),
                                     Text(
-                                      user['department'] +
-                                              " " +
-                                              user['batch_from'] +
-                                              ' - ' +
-                                              user['batch_to'] ??
-                                          '',
+                                      user['department'] ?? '',
                                       style: const TextStyle(
                                         fontSize: 12,
                                         color: Colors.grey,
@@ -143,20 +137,8 @@ class _HomeState extends State<Home> {
                             const SizedBox(height: 8),
                             // Placeholder image for user post
                             if (post.containsKey('image'))
-                              GestureDetector(
-                                onTap: () {
-                                  // Navigate to fullscreen image view
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => FullScreenImage(
-                                      imageUrl: 'http://192.168.56.1/' +
-                                          post['image'],
-                                    ),
-                                  ));
-                                },
-                                child: Image.network(
-                                  'http://192.168.56.1/' + post['image'],
-                                ),
-                              ),
+                              Image.network(
+                                  'http://192.168.56.1/' + post['image']),
                             const SizedBox(height: 8),
                             Text(
                               post['content'] ?? '',
@@ -205,22 +187,9 @@ class _HomeState extends State<Home> {
     );
   }
 }
-class FullScreenImage extends StatelessWidget {
-  final String imageUrl;
 
-  const FullScreenImage({Key? key, required this.imageUrl}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: PhotoView(
-          imageProvider: NetworkImage(imageUrl),
-          minScale: PhotoViewComputedScale.contained * 0.8,
-          maxScale: PhotoViewComputedScale.covered * 2,
-          initialScale: PhotoViewComputedScale.contained,
-        ),
-      ),
-    );
-  }
+void main() {
+  runApp(MaterialApp(
+    home: Home(),
+  ));
 }

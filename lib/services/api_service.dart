@@ -616,24 +616,35 @@ class ApiService {
       return {'success': false};
     }
   }
-  Future<List<Map<String, dynamic>>> getAllPosts() async {
-    try {
-      final response = await _dio.get(
-        '$apiUrl?action=getAllPosts',
-      );
-
-      if (response.statusCode == 200) {
-        List<dynamic> responseData = json.decode(response.data);
-
-        List<Map<String, dynamic>> posts = responseData.cast<Map<String, dynamic>>();
-
-        return posts;
+  
+  Future<List<Map<String, dynamic>>> getPosts() async {
+  try {
+    final response = await _dio.get('$apiUrl?action=getPosts');
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.data);
+      if (responseData['success'] == true) {
+        final List<dynamic> posts = responseData['posts'];
+        final List<Map<String, dynamic>> postData = posts
+            .cast<Map<String, dynamic>>() // Explicitly cast to correct type
+            .map((post) {
+          // Extract user information from the post
+          final Map<String, dynamic> user = post['user'];
+          final Map<String, dynamic> postWithoutUser = Map.from(post);
+          postWithoutUser.remove('user'); // Remove user information from the post
+          return {
+            ...postWithoutUser,
+            'user': user, // Add user information to the post
+          };
+        }).toList();
+        return postData;
       } else {
-        throw Exception('Failed to load posts');
+        throw Exception('Failed to fetch posts: ${responseData['error']}');
       }
-    } catch (e) {
-      print('Exception occurred: $e');
-      throw Exception('Failed to load posts: $e');
+    } else {
+      throw Exception('Failed to fetch posts: ${response.statusMessage}');
     }
+  } catch (e) {
+    throw Exception('Failed to fetch posts: $e');
   }
+}
 }
