@@ -57,10 +57,12 @@ class DBHelper {
     return result.isNotEmpty;
   }
 
-  static Future<void> deleteUser() async {
+  static Future<void> deleteTables() async {
     final Database db = await initDatabase();
     await db.delete('users');
+    await db.delete('registered_user');
   }
+
 
   static Future<void> insertRegistrationData(
       Map<String, dynamic> registrationData) async {

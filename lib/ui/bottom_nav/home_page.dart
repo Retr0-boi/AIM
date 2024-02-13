@@ -101,8 +101,7 @@ class _HomeState extends State<Home> {
                                     radius: 90,
                                     backgroundImage: NetworkImage(
                                       'http://192.168.56.1/' +
-                                          (user['profile_picture'] ??
-                                              ''), // Ensure to handle null profile picture
+                                          (user['profile_picture'] ?? ''),
                                     ),
                                   ),
                                 ),
@@ -166,29 +165,29 @@ class _HomeState extends State<Home> {
                               ),
                             ),
                             const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Handle comment button
-                                  },
-                                  child: const Icon(Icons.comment_outlined),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Handle placeholder button
-                                  },
-                                  child: const Icon(Icons.thumb_up_off_alt),
-                                ),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    // Handle placeholder button
-                                  },
-                                  child: const Icon(Icons.share),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            //   children: [
+                            //     ElevatedButton(
+                            //       onPressed: () {
+                            //         // Handle comment button
+                            //       },
+                            //       child: const Icon(Icons.comment_outlined),
+                            //     ),
+                            //     ElevatedButton(
+                            //       onPressed: () {
+                            //         // Handle placeholder button
+                            //       },
+                            //       child: const Icon(Icons.thumb_up_off_alt),
+                            //     ),
+                            //     ElevatedButton(
+                            //       onPressed: () {
+                            //         // Handle placeholder button
+                            //       },
+                            //       child: const Icon(Icons.share),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       );
@@ -205,6 +204,7 @@ class _HomeState extends State<Home> {
     );
   }
 }
+
 class FullScreenImage extends StatelessWidget {
   final String imageUrl;
 

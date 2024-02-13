@@ -23,6 +23,6 @@ class AuthService {
   }
 
     static Future<void> logout() async {
-    await DBHelper.deleteUser();
+    await DBHelper.deleteTables();
   }
 }

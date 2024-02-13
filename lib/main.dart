@@ -54,7 +54,6 @@ class AuthenticationWrapper extends StatelessWidget {
 
 // campus visit set aakanam
 // job request set aakanam
-// posts set aakanam on home page 
 // share,like, comment set aakanam
 // real time notifcations
 // notifications page
