@@ -43,7 +43,8 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
       String department = userData['department'] ?? '';
       String program = userData['program'] ?? '';
       // Call the ApiService method to search for matching users
-      return ApiService().searchUsers(batchFrom, batchTo, department, program,mongoId);
+      return ApiService()
+          .searchUsers(batchFrom, batchTo, department, program, mongoId);
     });
   }
 
@@ -119,26 +120,21 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    // Handle chat button click for the specific user
-                    print('Chat button clicked for ${user['_id']}');
+                    print('Chat button clicked for ${user['_id']} by $mongoId');
                     String recipientId = user['_id']['\$oid'].toString();
-                    // Call the API to initiate a conversation using the logged-in user ID
-                    String initiationResult =
-                        await ApiService().initiateConversation(mongoId,recipientId);
+                    Map<String, dynamic> initiationResult = await ApiService()
+                        .initiateConversation(mongoId, recipientId);
 
-                    if (initiationResult == 'success') {
-                      // If conversation initiation is successful, navigate to the ChatScreen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              const ChatScreen(),
-                        ),
-                      );
+                    if (initiationResult['success'] == true) {
+                      // Access the conversationId from the response map
+                      String conversationId =
+                          initiationResult['conversationId']['\$oid'];
+                      _navigateToChatScreen(mongoId, recipientId, user['name'],
+                          user['profile_picture'], conversationId);
                     } else {
-                      // Handle error in conversation initiation
-                      print('Error initiating conversation: $initiationResult');
-                      // You can show an error message to the user if needed
+                      print(
+                          'Error initiating conversation: ${initiationResult['error']}');
+                      // Handle error
                     }
                   },
                   child: Container(
@@ -158,6 +154,22 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
           );
         },
         childCount: userList.length,
+      ),
+    );
+  }
+
+  void _navigateToChatScreen(String mongoId, String recipientId, String name,
+      String profilePicture, String conversationId) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChatScreen(
+          mongoId: mongoId,
+          receiverMongoId: recipientId,
+          name: name,
+          profilePicture: profilePicture,
+          conversationId: conversationId,
+        ),
       ),
     );
   }

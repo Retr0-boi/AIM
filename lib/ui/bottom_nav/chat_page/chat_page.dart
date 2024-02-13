@@ -1,3 +1,4 @@
+import 'package:AIM/ui/bottom_nav/chat_page/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:AIM/ui/app_bars/app_bar.dart';
 import 'package:AIM/ui/drawer/drawer.dart';
@@ -18,11 +19,18 @@ class Chat extends StatefulWidget implements PreferredSizeWidget {
 
 class _ChatState extends State<Chat> {
   late Future<Map<String, dynamic>> conversationsFuture;
+  late String mongoId;
 
   @override
   void initState() {
     super.initState();
+    _fetchUserData();
     conversationsFuture = _fetchConversations();
+  }
+
+  Future<void> _fetchUserData() async {
+    final userData = await DBHelper.getUserData();
+    mongoId = userData['mongo_id'] ?? '';
   }
 
   Future<Map<String, dynamic>> _fetchConversations() async {
@@ -66,18 +74,19 @@ class _ChatState extends State<Chat> {
                 child: Text('No chats. Click the button to start a chat.'));
           }
 
+          // Extract user data from the snapshot
+          // final userData = snapshot.data?['userData'];
+
           // Build the UI with the list of conversations
           return ListView.builder(
             itemCount: conversations.length,
             itemBuilder: (context, index) {
               final conversation = conversations[index];
               final latestMessage = conversation['latest_message'] ?? '';
-              final latestTimestamp = conversation['latest_timestamp'] ?? '';
-
-              // Check if 'user_details' is not empty and contains non-null values
               final userDetailList = conversation['user_details'] ?? [];
 
-              if (userDetailList.isNotEmpty && userDetailList.any((user) => user != null)) {
+              if (userDetailList.isNotEmpty &&
+                  userDetailList.any((user) => user != null)) {
                 final user = userDetailList.firstWhere((user) => user != null);
                 final userName = user['name'] ?? '';
                 final profilePicUrl = user['profile_picture'] ?? '';
@@ -85,30 +94,66 @@ class _ChatState extends State<Chat> {
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-                      child: Image. network(
-                    'http://192.168.56.1/' + profilePicUrl,
-                    width: 40, // Adjust the width as needed
-                    height: 40, // Adjust the height as needed
-                    fit: BoxFit.cover,
-                  ),
+                      child: Image.network(
+                        'http://192.168.56.1/' + profilePicUrl,
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                    title: Text(userName),
+                    title: Text('$userName'),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text('Latest Message: $latestMessage'),
-                        Text('Timestamp: $latestTimestamp'),
                       ],
                     ),
+                    // onTap: () {
+                    //   // Handle tapping on the conversation
+                    //   print(
+                    //       'Chat button clicked for ${user['_id']} with conversation id${conversation['_id']}');
+                    //   String recipientId = user['_id']['\$oid'].toString();
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => ChatScreen(
+                    //           mongoId: mongoId, // Pass the MongoID of the user
+                    //           receiverMongoId:
+                    //               recipientId, // Pass the MongoID of the receiver
+                    //           name: user['name'], // Pass the name
+                    //           profilePicture: user[
+                    //               'profile_picture'], // Pass the profile picture URL
+                    //           conversationId: conversation['_id']),
+                    //     ),
+                    //   );
+                    // },
                     onTap: () {
                       // Handle tapping on the conversation
+                      print(
+                          'Chat button clicked for ${user['_id']} with conversation id ${conversation['_id']}');
+                      String recipientId = user['_id']['\$oid']
+                          .toString(); // Access ObjectId correctly
+                      String conversationId = conversation['_id']['\$oid']
+                          .toString(); // Access ObjectId correctly
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ChatScreen(
+                            mongoId: mongoId, // Pass the MongoID of the user
+                            receiverMongoId:
+                                recipientId, // Pass the MongoID of the receiver
+                            name: user['name'], // Pass the name
+                            profilePicture: user[
+                                'profile_picture'], // Pass the profile picture URL
+                            conversationId:
+                                conversationId, // Pass the conversation ID
+                          ),
+                        ),
+                      );
                     },
                   ),
                 );
               } else {
-                // Handle the case when 'user_details' is empty or contains only null values
-                // Add debug print to see why user_details is empty
-                print('User details are empty or contain only null values');
                 return const Card(
                   child: ListTile(
                     title: Text('User details not available'),
