@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 // import 'package:url_launcher/url_launcher.dart';
 import 'package:clipboard/clipboard.dart';
+
 class EventPage extends StatelessWidget {
   const EventPage({super.key});
 
@@ -57,11 +58,16 @@ class EventPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Linkify(
-              onOpen: (link) => _launchURL(context, link.url), // Pass context to _launchURL
+              onOpen: (link) =>
+                  _launchURL(context, link.url), // Pass context to _launchURL
               text: job['job_details'] ?? '',
               linkStyle: const TextStyle(color: Colors.blue),
             ),
             const SizedBox(height: 8),
+            // Image.network(
+            //   'http://192.168.56.1/' + job['image'],
+            // ),
+            // const SizedBox(height: 8),
             const Text(
               'Registration Link:',
               style: TextStyle(fontWeight: FontWeight.bold),
@@ -80,7 +86,8 @@ class EventPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              _formatDate(job['created_at']), // Assuming 'created_at' is a DateTime field
+              _formatDate(job[
+                  'created_at']), // Assuming 'created_at' is a DateTime field
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],

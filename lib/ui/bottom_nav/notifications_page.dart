@@ -113,7 +113,7 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
       children: [
         ListTile(
           leading: const CircleAvatar(
-            backgroundImage: AssetImage('images/test.png'),
+            backgroundImage: AssetImage('images/DefaultUserIcon.png'),
             backgroundColor: Colors.transparent,
           ),
           title: Text(

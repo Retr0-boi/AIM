@@ -152,8 +152,10 @@ class _HomeState extends State<Home> {
                                     ),
                                   ));
                                 },
-                                child: Image.network(
-                                  'http://192.168.56.1/' + post['image'],
+                                child: Center(
+                                  child: Image.network(
+                                    'http://192.168.56.1/' + post['image'],
+                                  ),
                                 ),
                               ),
                             const SizedBox(height: 8),
