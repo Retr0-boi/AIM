@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
-import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/services/api_service.dart';
+import 'package:albertians/ui/app_bars/app_bar.dart';
+import 'package:albertians/ui/drawer/drawer.dart';
+import 'package:albertians/services/api_service.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 // import 'package:url_launcher/url_launcher.dart';

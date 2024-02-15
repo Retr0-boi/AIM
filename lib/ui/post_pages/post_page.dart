@@ -1,11 +1,11 @@
 import 'dart:io';
-import 'package:AIM/models/db_helper.dart';
-import 'package:AIM/services/api_service.dart';
+import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/services/api_service.dart';
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
+import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:AIM/ui/bottom_nav/home_page.dart';
+import 'package:albertians/ui/bottom_nav/home_page.dart';
 class PostMenu extends StatefulWidget {
   const PostMenu({super.key});
 

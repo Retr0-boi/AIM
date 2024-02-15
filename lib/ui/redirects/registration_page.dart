@@ -1,8 +1,8 @@
-import 'package:AIM/ui/redirects/login_page.dart';
+import 'package:albertians/ui/redirects/login_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
-import 'package:AIM/services/api_service.dart';
-import 'package:AIM/models/db_helper.dart';
+import 'package:albertians/services/api_service.dart';
+import 'package:albertians/models/db_helper.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});

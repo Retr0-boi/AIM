@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/bottom_nav/connections_page.dart';
-import 'package:AIM/ui/bottom_nav/home_page.dart';
-import 'package:AIM/ui/post_pages/post_page.dart';
-import 'package:AIM/ui/bottom_nav/notifications_page.dart';
-import 'package:AIM/ui/bottom_nav/chat_page/chat_page.dart';
-import 'package:AIM/ui/post_pages/event_page.dart';
-import 'package:AIM/ui/post_pages/job_page.dart';
+import 'package:albertians/ui/bottom_nav/connections_page.dart';
+import 'package:albertians/ui/bottom_nav/home_page.dart';
+import 'package:albertians/ui/post_pages/post_page.dart';
+import 'package:albertians/ui/bottom_nav/notifications_page.dart';
+import 'package:albertians/ui/bottom_nav/chat_page/chat_page.dart';
+import 'package:albertians/ui/post_pages/event_page.dart';
+import 'package:albertians/ui/post_pages/job_page.dart';
 
 class MyBottomNavigationBar extends StatefulWidget {
   final int currentIndex;

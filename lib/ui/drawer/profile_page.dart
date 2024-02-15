@@ -1,11 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
+import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/services/api_service.dart'; // Import your API service
-import 'package:AIM/models/db_helper.dart'; // Import your SQLite database helper
+import 'package:albertians/ui/drawer/drawer.dart';
+import 'package:albertians/services/api_service.dart'; // Import your API service
+import 'package:albertians/models/db_helper.dart'; // Import your SQLite database helper
 
 class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
   const ProfilePage({super.key});

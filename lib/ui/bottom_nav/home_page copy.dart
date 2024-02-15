@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/bottom_nav/bottom_navigation_bar.dart';
-import 'package:AIM/ui/drawer/drawer.dart';
-import 'package:AIM/services/api_service.dart';
+import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
+import 'package:albertians/ui/drawer/drawer.dart';
+import 'package:albertians/services/api_service.dart';
 import 'package:photo_view/photo_view.dart';
 
 class Home extends StatefulWidget {

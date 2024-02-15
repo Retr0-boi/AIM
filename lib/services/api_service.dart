@@ -689,4 +689,38 @@ class ApiService {
       };
     }
   }
+
+  Future<Map<String, dynamic>> sendMessage(
+      String conversationId, String message, String receiverMongoId, String senderMongoId) async {
+    try {
+      FormData formData = FormData.fromMap({
+        'conversationId': conversationId,
+        'message': message,
+        'receiverMongoId': receiverMongoId,
+        'senderMongoId': senderMongoId,
+      });
+      final response = await _dio.post(
+        '$apiUrl?action=sendMessage',
+        data: formData,
+      );
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> responseData = json.decode(response.data!);
+        if (responseData['success'] == true) {
+          return {'success': true};
+        } else {
+          return {'success': false, 'error': responseData['error']};
+        }
+      } else {
+        int? statusCode = response.statusCode;
+        return {
+          'success': false,
+          'error': 'Failed to send message $statusCode'
+        };
+      }
+    } catch (e) {
+      print('Exception api_service.dart: $e');
+      return {'success': false, 'error-api_services': 'Failed to send message'};
+    }
+  }
 }

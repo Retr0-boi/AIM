@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/models/db_helper.dart';
+import 'package:albertians/models/db_helper.dart';
 
 void main() {
   runApp(const MyApp());

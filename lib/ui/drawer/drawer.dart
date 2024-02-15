@@ -1,15 +1,15 @@
-import 'package:AIM/ui/drawer/alumni_page.dart';
-import 'package:AIM/ui/drawer/event_page.dart';
-import 'package:AIM/ui/drawer/job_page.dart';
+import 'package:albertians/ui/drawer/alumni_page.dart';
+import 'package:albertians/ui/drawer/event_page.dart';
+import 'package:albertians/ui/drawer/job_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AIM/models/theme_provider.dart';
-import 'package:AIM/ui/drawer/settings/settings_page.dart';
-import 'package:AIM/models/auth_service.dart';
-import 'package:AIM/ui/redirects/registration_page.dart';
-import 'package:AIM/models/db_helper.dart';
-import 'package:AIM/ui/drawer/profile_page.dart';
-import 'package:AIM/services/api_service.dart'; // Import your API service
+import 'package:albertians/models/theme_provider.dart';
+import 'package:albertians/ui/drawer/settings/settings_page.dart';
+import 'package:albertians/models/auth_service.dart';
+import 'package:albertians/ui/redirects/registration_page.dart';
+import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/ui/drawer/profile_page.dart';
+import 'package:albertians/services/api_service.dart'; // Import your API service
 
 class MyDrawer extends StatefulWidget implements PreferredSizeWidget {
   const MyDrawer({super.key});

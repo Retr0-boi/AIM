@@ -1,12 +1,12 @@
-import 'package:AIM/ui/drawer/alumni_page.dart';
+import 'package:albertians/ui/drawer/alumni_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:AIM/models/theme_provider.dart';
-import 'package:AIM/ui/drawer/settings/settings_page.dart';
-import 'package:AIM/models/auth_service.dart';
-import 'package:AIM/ui/redirects/registration_page.dart';
-import 'package:AIM/models/db_helper.dart';
-import 'package:AIM/ui/drawer/profile_page.dart';
+import 'package:albertians/models/theme_provider.dart';
+import 'package:albertians/ui/drawer/settings/settings_page.dart';
+import 'package:albertians/models/auth_service.dart';
+import 'package:albertians/ui/redirects/registration_page.dart';
+import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/ui/drawer/profile_page.dart';
 
 class MyDrawer extends StatelessWidget implements PreferredSizeWidget {
   const MyDrawer({super.key});

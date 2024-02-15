@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
+import 'package:albertians/ui/app_bars/app_bar.dart';
 import '../drawer/drawer.dart';
 import 'bottom_navigation_bar.dart';
 

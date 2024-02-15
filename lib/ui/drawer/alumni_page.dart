@@ -1,7 +1,7 @@
-import 'package:AIM/services/api_service.dart';
-import 'package:AIM/ui/drawer/profile_details_page.dart';
+import 'package:albertians/services/api_service.dart';
+import 'package:albertians/ui/drawer/profile_details_page.dart';
 import 'package:flutter/material.dart';
-import 'package:AIM/ui/app_bars/app_bar.dart';
+import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:flutter/services.dart';
 
 class Alumni extends StatefulWidget {
