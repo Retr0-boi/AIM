@@ -8,7 +8,7 @@ class DBHelper {
       onCreate: (db, version) {
         // Create 'users' table
         db.execute(
-          'CREATE TABLE users(username TEXT, email TEXT, mongo_id TEXT,password TEXT)',
+          'CREATE TABLE users(username TEXT, email TEXT, mongo_id TEXT,password TEXT, department TEXT, batch_from TEXT, batch_to TEXT)',
         );
         // Create 'registered_user' table
         db.execute(
@@ -31,9 +31,11 @@ class DBHelper {
           'identification TEXT,'
           'updation_date TEXT,'
           'updation_time TEXT,'
+          'profile_picture TEXT,'
           'obj_id TEXT,'
           'programme TEXT,'
-          'expected_year_of_passing TEXT' // Add this line for the 'expected_year_of_passing' field
+          'expected_year_of_passing TEXT,'
+          'phone TEXT'
           ')',
         );
       },
@@ -84,7 +86,7 @@ class DBHelper {
     print('Contents of users table:');
     for (var user in users) {
       print(
-          'Username: ${user['username']}, Email: ${user['email']},Password: ${user['password']},mongo_id: ${user['mongo_id']}');
+          'userame: ${user['username']}, Email: ${user['email']},Password: ${user['password']},mongo_id: ${user['mongo_id']},Dept: ${user['department']}');
     }
   }
 
@@ -107,7 +109,8 @@ class DBHelper {
         'Current Institution: ${user['current_institution']}, '
         'Expected Pass Year: ${user['expected_pass_year']}, '
         'Current Organisation: ${user['current_organisation']}, '
-        'Designation: ${user['designation']}',
+        'Designation: ${user['designation']},'
+        'phone: ${user['phone']}',
       );
     }
   }
@@ -133,5 +136,16 @@ class DBHelper {
       return {}; // Return an empty map if no user data found
     }
   }
-  
+  static Future<String?> getDepartment() async {
+    final Database db = await initDatabase();
+    List<Map<String, dynamic>> result = await db.query(
+      'users',
+    );
+
+    if (result.isNotEmpty) {
+      return result.first['department']; // Return department value if found
+    } else {
+      return null; // Return null if user not found or department is not available
+    }
+  }
 }

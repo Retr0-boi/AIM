@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
 import '../drawer/drawer.dart';
 import 'bottom_navigation_bar.dart';
+import 'package:albertians/models/userData.dart';
 
 class Notifications extends StatelessWidget implements PreferredSizeWidget {
-  const Notifications({super.key});
+  final UserData? userData; // Update the type to UserData
+
+  const Notifications({Key? key, this.userData}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +17,7 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 3,
         onItemTapped: (index) {},
+        userData: userData, // Pass userData here
       ),
       body: _buildNotificationsList(),
     );

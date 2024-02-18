@@ -1,29 +1,43 @@
+import 'package:albertians/models/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:albertians/ui/drawer/drawer.dart';
 import 'package:albertians/services/api_service.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:albertians/models/userData.dart';
+// import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
-  const Home({Key? key}) : super(key: key);
+  final UserData? userData;
+
+  const Home({Key? key, this.userData}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
+  late String department = ''; 
   final ApiService _apiService = ApiService();
   List<Map<String, dynamic>> _posts = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchPosts();
+    _fetchDepartment();
   }
 
-  Future<void> _fetchPosts() async {
+  Future<void> _fetchDepartment() async {
+    final userData = await DBHelper.getUserData();
+    setState(() {
+      department = userData['department'] ?? '';
+    });
+    _fetchPosts(department);
+  }
+
+  Future<void> _fetchPosts(String department) async {
     try {
-      List<Map<String, dynamic>> posts = await _apiService.getPosts();
+      List<Map<String, dynamic>> posts = await _apiService.getPosts(department);
       setState(() {
         _posts = posts;
       });
@@ -35,6 +49,9 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final userData = widget.userData;
+    print("CHECKING IF THIS WORKS $userData");
+    userData?.printUserData();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -58,150 +75,116 @@ class _HomeState extends State<Home> {
           },
         ),
       ),
-      drawer: const MyDrawer(), // Set to null to remove the drawer
+      drawer: MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onItemTapped: (index) {},
+        userData: userData,
       ),
-      body: Builder(
-        builder: (context) {
-          return CustomScrollView(
-            slivers: [
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    // User Posts Box
-                    if (index == 0) {
-                      // Suggestions Box
-                      return Container(
-                          // Build the suggestions box
-                          // You can customize this part as needed
-                          );
-                    } else {
-                      // User Post
-                      final postIndex = index - 1; // Adjust index for posts
-                      final post = _posts[postIndex];
-                      final user = post['user'];
-                      return Container(
-                        margin: const EdgeInsets.all(8),
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+      body: CustomScrollView(
+        slivers: [
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
+                if (index == 0) {
+                  // Suggestions Box
+                  return Container();
+                } else {
+                  final postIndex = index - 1;
+                  final post = _posts[postIndex];
+                  final user = post['user'];
+                  return Container(
+                    margin: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
                           children: [
-                            Row(
+                            Container(
+                              width: 50,
+                              height: 50,
+                              child: CircleAvatar(
+                                radius: 90,
+                                backgroundImage: NetworkImage(
+                                  'http://192.168.56.1/' +
+                                      (user['profile_picture'] ?? ''),
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 8),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
-                                  width: 50, // Set the desired width
-                                  height: 50, // Set the desired height
-                                  child: CircleAvatar(
-                                    radius: 90,
-                                    backgroundImage: NetworkImage(
-                                      'http://192.168.56.1/' +
-                                          (user['profile_picture'] ?? ''),
-                                    ),
+                                Text(
+                                  user['name'] ?? '',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                const SizedBox(width: 8),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      user['name'] ?? '',
-                                      style: const TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 4),
-                                    Text(
-                                      user['department'] +
-                                              " " +
-                                              user['batch_from'] +
-                                              ' - ' +
-                                              user['batch_to'] ??
-                                          '',
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
+                                const SizedBox(height: 4),
+                                Text(
+                                  user['department'] +
+                                          " " +
+                                          user['batch_from'] +
+                                          ' - ' +
+                                          user['batch_to'] ??
+                                      '',
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                  ),
                                 ),
                               ],
                             ),
-                            Text(
-                              post['subject'] ?? '',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            // Placeholder image for user post
-                            if (post.containsKey('image'))
-                              GestureDetector(
-                                onTap: () {
-                                  // Navigate to fullscreen image view
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => FullScreenImage(
-                                      imageUrl: 'http://192.168.56.1/' +
-                                          post['image'],
-                                    ),
-                                  ));
-                                },
-                                child: Center(
-                                  child: Image.network(
-                                    'http://192.168.56.1/' + post['image'],
-                                  ),
-                                ),
-                              ),
-                            const SizedBox(height: 8),
-                            Text(
-                              post['content'] ?? '',
-                              style: const TextStyle(
-                                fontSize: 16,
-                                color: Colors.black,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            //   children: [
-                            //     ElevatedButton(
-                            //       onPressed: () {
-                            //         // Handle comment button
-                            //       },
-                            //       child: const Icon(Icons.comment_outlined),
-                            //     ),
-                            //     ElevatedButton(
-                            //       onPressed: () {
-                            //         // Handle placeholder button
-                            //       },
-                            //       child: const Icon(Icons.thumb_up_off_alt),
-                            //     ),
-                            //     ElevatedButton(
-                            //       onPressed: () {
-                            //         // Handle placeholder button
-                            //       },
-                            //       child: const Icon(Icons.share),
-                            //     ),
-                            //   ],
-                            // ),
                           ],
                         ),
-                      );
-                    }
-                  },
-                  childCount: _posts.length +
-                      1, // Total number of items (1 Suggestions Box + n User Posts)
-                ),
-              ),
-            ],
-          );
-        },
+                        Text(
+                          post['subject'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        if (post.containsKey('image'))
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => FullScreenImage(
+                                  imageUrl:
+                                      'http://192.168.56.1/' + post['image'],
+                                ),
+                              ));
+                            },
+                            child: Center(
+                              child: Image.network(
+                                'http://192.168.56.1/' + post['image'],
+                              ),
+                            ),
+                          ),
+                        const SizedBox(height: 8),
+                        Text(
+                          post['content'] ?? '',
+                          style: const TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                      ],
+                    ),
+                  );
+                }
+              },
+              childCount: _posts.length + 1,
+            ),
+          ),
+        ],
       ),
     );
   }

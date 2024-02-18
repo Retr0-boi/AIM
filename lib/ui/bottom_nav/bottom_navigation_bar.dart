@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:albertians/models/userData.dart';
 import 'package:albertians/ui/bottom_nav/connections_page.dart';
 import 'package:albertians/ui/bottom_nav/home_page.dart';
 import 'package:albertians/ui/post_pages/post_page.dart';
@@ -10,20 +11,31 @@ import 'package:albertians/ui/post_pages/job_page.dart';
 class MyBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final ValueChanged<int> onItemTapped;
+  final UserData? userData; // Add userData parameter
 
   const MyBottomNavigationBar({
     required this.currentIndex,
     required this.onItemTapped,
-    super.key,
-  });
+    required this.userData, // Make it nullable
+    Key? key,
+  }) : super(key: key);
 
   @override
-  createState() => _MyBottomNavigationBarState();
+  _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
 }
 
 class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
+  late UserData? userData; // Define userData here
+
+  @override
+  void initState() {
+    super.initState();
+    userData = widget.userData; // Assign the value from the widget to userData
+          }
+
   @override
   Widget build(BuildContext context) {
+    print('userData in nav bar: $userData');
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
@@ -57,47 +69,45 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
 
   void _onItemTapped(BuildContext context, int index) {
     if (widget.currentIndex != index) {
-      widget.onItemTapped(index);
-
-      if (index == 2) {
-        // Show a dialog to choose between "Jobs," "Events," or "Post"
+      if (index == 2) { // Check if the "Post" button is tapped
+        // Show a dialog to choose between job, events, or regular posts
         showDialog(
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("What would you like to post"),
+              title: Text("Select post type"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context); // Close the dialog
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const JobMenu()),
+                        MaterialPageRoute(builder: (context) => JobMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: const Text("Jobs"),
+                    child: Text("Job"),
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context); // Close the dialog
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const EventMenu()),
+                        MaterialPageRoute(builder: (context) => EventMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: const Text("Events"),
+                    child: Text("Event"),
                   ),
                   ElevatedButton(
                     onPressed: () {
+                      Navigator.pop(context); // Close the dialog
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const PostMenu()),
+                        MaterialPageRoute(builder: (context) => PostMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: const Text("Post"),
+                    child: Text("Post"),
                   ),
                 ],
               ),
@@ -105,31 +115,35 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           },
         );
       } else {
-        // Navigate to the selected page
+        // Handle other bottom navigation items
+        widget.onItemTapped(index);
         switch (index) {
           case 0:
-            _navigateWithoutAnimation(context, const Home());
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Home(userData: userData)), // Pass userData here
+            );
             break;
           case 1:
-            _navigateWithoutAnimation(context, const ConnectionsPage());
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => ConnectionsPage(userData: userData)), // Pass userData here
+            );
             break;
           case 3:
-            _navigateWithoutAnimation(context, const Notifications());
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Notifications(userData: userData)), // Pass userData here
+            );
             break;
           case 4:
-            _navigateWithoutAnimation(context, const Chat());
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => Chat(userData: userData)), // Pass userData here
+            );
             break;
         }
       }
     }
-  }
-
-  void _navigateWithoutAnimation(BuildContext context, Widget page) {
-    Navigator.push(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-      ),
-    );
   }
 }

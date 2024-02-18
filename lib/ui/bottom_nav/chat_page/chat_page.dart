@@ -6,9 +6,12 @@ import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:albertians/ui/bottom_nav/connections_page.dart';
 import 'package:albertians/services/api_service.dart';
 import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/models/userData.dart'; // Import the UserData class
 
 class Chat extends StatefulWidget implements PreferredSizeWidget {
-  const Chat({super.key});
+  final UserData? userData; // Update the type to UserData
+
+  const Chat({Key? key,required this.userData}) : super(key: key);
 
   @override
   _ChatState createState() => _ChatState();
@@ -18,6 +21,7 @@ class Chat extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _ChatState extends State<Chat> {
+  UserData? userData;
   late Future<Map<String, dynamic>> conversationsFuture;
   late String mongoId;
 
@@ -48,10 +52,12 @@ class _ChatState extends State<Chat> {
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 4,
         onItemTapped: (index) {},
+        userData: userData,
+        
       ),
       body: _buildConversationList(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToConnectionsPage(context),
+        onPressed: () => _navigateToConnectionsPage(context, userData),
         tooltip: 'Start a new chat',
         child: const Icon(Icons.add),
       ),
@@ -94,7 +100,6 @@ class _ChatState extends State<Chat> {
                 return Card(
                   child: ListTile(
                     leading: CircleAvatar(
-
                       child: Image.network(
                         'http://192.168.56.1/' + profilePicUrl,
                         width: 40,
@@ -168,10 +173,10 @@ class _ChatState extends State<Chat> {
     );
   }
 
-  void _navigateToConnectionsPage(BuildContext context) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const ConnectionsPage()),
-    );
-  }
+  void _navigateToConnectionsPage(BuildContext context, UserData? userData) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => ConnectionsPage(userData: userData)),
+  );
+}
 }

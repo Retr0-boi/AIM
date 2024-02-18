@@ -177,6 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   userData['batch_to']),
                           _buildUserInfo('Email:', userData['email']),
                           _buildUserInfo('Date of Birth:', userData['DOB']),
+                          _buildUserInfo('Phone:', userData['phone']),
                           // Add other information as needed
                         ],
                       ),

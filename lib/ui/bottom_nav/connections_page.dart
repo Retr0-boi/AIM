@@ -6,8 +6,12 @@ import 'package:albertians/models/db_helper.dart';
 import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:albertians/ui/bottom_nav/chat_page/chat_screen.dart'; // Import the ChatScreen
 
+import 'package:albertians/models/userData.dart'; // Import the UserData class
+
 class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
-  const ConnectionsPage({super.key});
+  final UserData? userData; // Update the type to UserData
+
+  const ConnectionsPage({Key? key,required this.userData}) : super(key: key);
 
   @override
   _ConnectionsPageState createState() => _ConnectionsPageState();
@@ -17,6 +21,7 @@ class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _ConnectionsPageState extends State<ConnectionsPage> {
+  UserData? userData;
   late Future<Map<String, dynamic>> userDataFuture;
   late Future<List<Map<String, dynamic>>> matchingUsersFuture;
   late String mongoId;
@@ -24,6 +29,11 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   void initState() {
     super.initState();
+    print("PRINTING USER DATA");
+    if (widget.userData != null)
+      widget.userData!.printUserData();
+    else
+      print("NULL USER DATA");
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
       // Extract mongoId from the user data
@@ -56,6 +66,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 1,
         onItemTapped: (index) {},
+        userData: userData,
       ),
       body: FutureBuilder(
         future: matchingUsersFuture,

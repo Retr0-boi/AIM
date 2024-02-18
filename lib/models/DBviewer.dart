@@ -23,6 +23,7 @@ class DatabaseViewerPage extends StatefulWidget {
   @override
   _DatabaseViewerPageState createState() => _DatabaseViewerPageState();
 }
+
 class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
   List<Map<String, dynamic>> users = [];
   List<Map<String, dynamic>> registeredUsers = [];
@@ -66,7 +67,10 @@ class _DatabaseViewerPageState extends State<DatabaseViewerPage> {
             ),
             for (var user in users)
               Text(
-                'Username: ${user['username']}, Email: ${user['email']}, password: ${user['password']},mongo_id: ${user['mongo_id']}',
+                'Username: ${user['username']},'
+                ' Email: ${user['email']}, password: ${user['password']},'
+                'mongo_id: ${user['mongo_id']},department: ${user['department']},'
+                'batch_fromt: ${user['batch_fromt']},batch_to: ${user['batch_to']}',
                 style: const TextStyle(fontSize: 16.0),
               ),
             const SizedBox(height: 16.0),

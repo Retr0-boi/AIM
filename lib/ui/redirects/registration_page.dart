@@ -26,16 +26,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController _currentOrganisationController =
       TextEditingController();
   final TextEditingController _designationController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   DateTime? selectedDate;
   String _selectedDepartment = "";
   String _selectedProgram = "";
   String _selectedStatus = "";
 
-  final List<String> departments = [
-    "MBA",
-  ];
-  final List<String> programs = ["MBA"];
+  final List<String> departments = [];
+  final List<String> programs = [];
   final List<String> statuses = [
     "Student",
     "Working (Govt)",
@@ -47,11 +46,53 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   void initState() {
     super.initState();
-
-    // Initialize dropdown values
+    _fetchDepartments(); // Fetch departments from API
     _selectedDepartment = departments.isNotEmpty ? departments[0] : "";
     _selectedProgram = programs.isNotEmpty ? programs[0] : "";
     _selectedStatus = statuses.isNotEmpty ? statuses[0] : "";
+  }
+
+  Future<void> _fetchDepartments() async {
+    try {
+      final Map<String, dynamic> data =
+          await apiService.fetchDepartmentsAndPrograms();
+      if (data['success']) {
+        setState(() {
+          departments
+              .clear(); // Clear existing departments before adding new ones
+          data['departments'].forEach((dept) {
+            departments.add(dept
+                .toString()); // Convert to String and add to departments list
+          });
+          _selectedDepartment = departments.isNotEmpty
+              ? departments[0]
+              : ""; // Initialize selected department here
+        });
+      } else {
+        print("Failed to fetch departments: ${data['error']}");
+      }
+    } catch (e) {
+      print("Error fetching departments: $e");
+    }
+  }
+
+  Future<void> _fetchCoursesByDepartment(String department) async {
+    try {
+      final Map<String, dynamic> data =
+          await apiService.fetchCoursesByDepartment(department);
+      if (data['success']) {
+        setState(() {
+          programs.clear(); // Clear existing programs
+          programs.addAll(
+              data['courses'].map<String>((course) => course.toString()));
+          _selectedProgram = programs.isNotEmpty ? programs[0] : "";
+        });
+      } else {
+        print("Failed to fetch courses: ${data['error']}");
+      }
+    } catch (e) {
+      print("Error fetching courses: $e");
+    }
   }
 
   Future<void> _selectDate(BuildContext context) async {
@@ -92,6 +133,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
             const SizedBox(height: 8.0),
             TextField(
               controller: _expectedYearController,
+              keyboardType: TextInputType.number,
+              inputFormatters: <TextInputFormatter>[
+                FilteringTextInputFormatter.digitsOnly,
+              ],
               decoration: const InputDecoration(
                 labelText: 'Expected Year of Passing',
               ),
@@ -128,7 +173,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Registration Page',
+          'Albertians registration',
           style: TextStyle(
             color: Colors.white,
           ),
@@ -141,12 +186,21 @@ class _RegistrationPageState extends State<RegistrationPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // const SizedBox(height: 8.0),
+              Image.asset(
+                'images/Alberts.png',
+                width: 200, // Adjust width as needed
+                height: 200, // Adjust height as needed
+              ),
+              const SizedBox(height: 8.0),
+
               // Department Dropdown
               DropdownButtonFormField<String>(
                 value: _selectedDepartment,
                 onChanged: (value) {
                   setState(() {
                     _selectedDepartment = value!;
+                    _fetchCoursesByDepartment(_selectedDepartment);
                   });
                 },
                 items: departments.map((department) {
@@ -168,9 +222,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
               DropdownButtonFormField<String>(
                 value: _selectedProgram,
                 onChanged: (value) {
-                  setState(() {
-                    _selectedProgram = value!;
-                  });
+                  if (_selectedDepartment.isEmpty) {
+                    // If department is not selected, show temporary message
+                    setState(() {
+                      _selectedProgram = ""; // Reset selected program
+                    });
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Select a department to continue'),
+                      ),
+                    );
+                  } else {
+                    // If department is selected, update selected program
+                    setState(() {
+                      _selectedProgram = value!;
+                    });
+                  }
                 },
                 items: programs.map((program) {
                   return DropdownMenuItem(
@@ -286,7 +353,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
               // Additional Fields based on Status
               _buildAdditionalFieldsBasedOnStatus(),
               const SizedBox(height: 8.0),
-
+              // Phone
+              TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.number,
+                inputFormatters: <TextInputFormatter>[
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                decoration: const InputDecoration(
+                  labelText: 'Phone',
+                ),
+              ),
+              const SizedBox(height: 8.0),
               // Email
               TextField(
                 controller: _emailController,
@@ -337,7 +415,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       'identification': 'none',
                       'updation_date': 'none',
                       'updation_time': 'none',
-                      'profile_picture': '../../AIM/Alumni/user_management/assets/profile_pictures/DefaultUserIcon.png',
+                      'profile_picture':
+                          '../../AIM/Alumni/user_management/assets/profile_pictures/DefaultUserIcon.png',
                       'current_status':
                           _selectedStatus, // Add this line for the 'current_status' field
                       'current_institution': _currentInstitutionController
@@ -350,6 +429,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           .text, // Add this line if applicable
                       'designation': _designationController
                           .text, // Add this line if applicable
+                      'phone':
+                          _phoneController.text, // Add this line if applicable
                     };
 
                     Map<String, dynamic> registrationResult =
@@ -368,7 +449,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const LoginPage(),
+                          builder: (context) => LoginPage(),
                         ),
                       );
                     } else {
@@ -389,7 +470,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   // Navigate to the login page and replace the current page in the stack
                   Navigator.pushReplacement(
                     context,
-                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                    MaterialPageRoute(builder: (context) => LoginPage()),
                   );
                 },
                 child: const Text(
@@ -443,6 +524,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     _expectedYearController.dispose();
     _currentOrganisationController.dispose();
     _designationController.dispose();
+    _emailController.dispose();
 
     super.dispose();
   }

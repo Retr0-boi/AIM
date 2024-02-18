@@ -28,6 +28,15 @@ class ApiService {
     ));
   }
 
+  void printFormData(FormData formData) {
+    for (var entry in formData.fields) {
+      print('${entry.key}: ${entry.value}');
+    }
+    for (var entry in formData.files) {
+      print('${entry.key}: ${entry.value.filename}');
+    }
+  }
+
   Future<Map<String, dynamic>> registerUser(
       Map<String, dynamic> userData) async {
     try {
@@ -107,14 +116,23 @@ class ApiService {
         if (responseData.containsKey('success') &&
             responseData['success'] != null) {
           bool success = responseData['success'];
-          String mongoId = responseData[
-              'mongo_id']; // Add this line to get the MongoDB object ID
-          String userName = responseData[
-              'name']; // Add this line to get the MongoDB object ID
+          String mongoId = responseData['mongo_id']; // Add this line to get the MongoDB object ID
+          String userName = responseData['name']; 
+          String email = responseData['email']; 
+          String password = responseData['password']; 
+          String department = responseData['department']; 
+          String batchFrom = responseData['batch_from']; 
+          String batchTo = responseData['batch_to']; 
+
           return {
             'success': success,
             'mongo_id': mongoId,
-            'userName': userName
+            'userName': userName,
+            'email': email,
+            'password': password,
+            'department': department,
+            'batch_from': batchFrom,
+            'batch_to': batchTo,
           };
         } else {
           return {'success': false};
@@ -164,6 +182,7 @@ class ApiService {
             String currentOrg = userData['current_organisation'];
             String currentDesignation = userData['designation'];
             String profilePic = userData['profile_picture'];
+            String phone = userData['phone'];
 
             // Return the extracted data
             return {
@@ -182,6 +201,7 @@ class ApiService {
               'current_org': currentOrg,
               'current_designation': currentDesignation,
               'profile_picture': profilePic,
+              'phone': phone,
             };
           } else {
             // Handle case when the API indicates failure
@@ -339,20 +359,12 @@ class ApiService {
     }
   }
 
-  void printFormData(FormData formData) {
-    for (var entry in formData.fields) {
-      print('${entry.key}: ${entry.value}');
-    }
-    for (var entry in formData.files) {
-      print('${entry.key}: ${entry.value.filename}');
-    }
-  }
-
   Future<Map<String, dynamic>> postJobs(
       String subject,
       String jobDetails,
       String postedBy,
       String type,
+      String department,
       String registrationLink,
       String status) async {
     try {
@@ -366,6 +378,7 @@ class ApiService {
           'subject': subject,
           'job_details': jobDetails,
           'type': type,
+          'department': department,
           'link': registrationLink,
           'status': status,
         }),
@@ -569,7 +582,7 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> postContent(
-      String subject, String content, String postedBy, String type,
+      String subject, String content, String postedBy, String type,String department,
       {File? image}) async {
     try {
       FormData formData = FormData.fromMap({
@@ -577,6 +590,7 @@ class ApiService {
         'content': content,
         'posted_by': postedBy,
         'type': type,
+        'department': department,
         if (image != null) 'image': await MultipartFile.fromFile(image.path),
       });
 
@@ -623,9 +637,10 @@ class ApiService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getPosts() async {
+  Future<List<Map<String, dynamic>>> getPosts(String department) async {
     try {
-      final response = await _dio.get('$apiUrl?action=getPosts');
+    final response = await _dio.get('$apiUrl?action=getPosts&department=$department');
+    
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
@@ -690,8 +705,8 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> sendMessage(
-      String conversationId, String message, String receiverMongoId, String senderMongoId) async {
+  Future<Map<String, dynamic>> sendMessage(String conversationId,
+      String message, String receiverMongoId, String senderMongoId) async {
     try {
       FormData formData = FormData.fromMap({
         'conversationId': conversationId,
@@ -721,6 +736,47 @@ class ApiService {
     } catch (e) {
       print('Exception api_service.dart: $e');
       return {'success': false, 'error-api_services': 'Failed to send message'};
+    }
+  }
+
+  Future<Map<String, dynamic>> fetchDepartmentsAndPrograms() async {
+  try {
+    final response = await _dio.get('$apiUrl?action=getDepartmentsAndPrograms');
+
+    if (response.statusCode == 200) {
+      final responseData = json.decode(response.data);
+      if (responseData['success'] == true) {
+        List<dynamic> departments = responseData['departments'];
+        return {'success': true, 'departments': departments};
+      } else {
+        return {'success': false, 'error': responseData['error']};
+      }
+    } else {
+      int? statusCode = response.statusCode;
+      return {
+        'success': false,
+        'error': 'Failed to fetch departments data $statusCode'
+      };
+    }
+  } catch (e) {
+    print('Exception api_service.dart: $e');
+    return {'success': false, 'error': 'Failed to fetch departments data'};
+  }
+}
+
+  Future<Map<String, dynamic>> fetchCoursesByDepartment(
+      String department) async {
+    try {
+      final response =
+          await _dio.get('$apiUrl?action=getCourses&department=$department');
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.data);
+        return {'success': true, 'courses': responseData['courses']};
+      } else {
+        return {'success': false, 'error': 'Failed to fetch courses'};
+      }
+    } catch (e) {
+      return {'success': false, 'error': 'Failed to connect to the server'};
     }
   }
 }

@@ -1,19 +1,26 @@
 import 'dart:io';
 import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/models/userData.dart';
 import 'package:albertians/services/api_service.dart';
+import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:albertians/ui/bottom_nav/home_page.dart';
-class PostMenu extends StatefulWidget {
-  const PostMenu({super.key});
 
+
+class PostMenu extends StatefulWidget {
+  final UserData? userData;
+  const PostMenu({Key? key, this.userData}) : super(key: key);
   @override
   _PostMenuState createState() => _PostMenuState();
 }
 
+
 class _PostMenuState extends State<PostMenu> {
+  UserData? userData;
+
   TextEditingController subjectController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   File? selectedImage;
@@ -62,6 +69,11 @@ class _PostMenuState extends State<PostMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const PostAppBar(),
+      bottomNavigationBar: MyBottomNavigationBar(
+        currentIndex: 2,
+        onItemTapped: (index) {},
+        userData: userData,
+      ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -126,7 +138,7 @@ class _PostMenuState extends State<PostMenu> {
                   print('Content: ${contentController.text}');
                   print('User ID: ${userData['mongo_id']}');
                   print('Image: $selectedImage');
-
+                  String dept = userData['department'];
                   // Call the postContent method from an instance of ApiService
                   ApiService apiService = ApiService();
                   Map<String, dynamic> result = await apiService.postContent(
@@ -134,6 +146,7 @@ class _PostMenuState extends State<PostMenu> {
                     contentController.text,
                     userData['mongo_id'],
                     'post',
+                    dept,
                     image: selectedImage,
                   );
 

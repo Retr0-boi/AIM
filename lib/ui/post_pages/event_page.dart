@@ -1,4 +1,5 @@
 import 'package:albertians/models/db_helper.dart';
+import 'package:albertians/models/userData.dart';
 import 'package:albertians/services/api_service.dart';
 import 'package:albertians/ui/drawer/event_page.dart';
 import 'package:flutter/material.dart';
@@ -6,14 +7,16 @@ import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:albertians/ui/drawer/drawer.dart';
 import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 
-class EventMenu extends StatefulWidget {
-  const EventMenu({super.key});
 
+class EventMenu extends StatefulWidget {
+  final UserData? userData;
+  const EventMenu({Key? key, this.userData}) : super(key: key);
   @override
   _EventMenuState createState() => _EventMenuState();
 }
 
 class _EventMenuState extends State<EventMenu> {
+  UserData? userData;
   TextEditingController jobSubjectController = TextEditingController();
   TextEditingController contentController = TextEditingController();
   TextEditingController registrationLinkController = TextEditingController();
@@ -47,6 +50,7 @@ class _EventMenuState extends State<EventMenu> {
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 2,
         onItemTapped: (index) {},
+        userData: userData,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -94,12 +98,14 @@ class _EventMenuState extends State<EventMenu> {
                 String registrationLink = registrationLinkController.text;
 
                 Map<String, dynamic> userData = await userDataFuture;
+                  String dept = userData['department'];
 
                 Map<String, dynamic> response = await ApiService().postJobs(
                     subject,
                     jobDetails,
                     userData['mongo_id'],
                     'event',
+                    dept,
                     registrationLink,
                     'approved');
 
