@@ -19,6 +19,62 @@ class _AlumniState extends State<Alumni> {
   String? selectedCourse;
   String? batchFrom;
   String? batchTo;
+
+
+   String _selectedDepartment = "";
+  String _selectedProgram = "";
+
+  final List<String> departments = [];
+  final List<String> programs = [];
+
+    @override
+  void initState() {
+    super.initState();
+    _fetchDepartments(); // Fetch departments from API
+    _selectedDepartment = departments.isNotEmpty ? departments[0] : "";
+    _selectedProgram = programs.isNotEmpty ? programs[0] : "";
+  }
+Future<void> _fetchDepartments() async {
+    try {
+      final Map<String, dynamic> data =
+          await apiService.fetchDepartmentsAndPrograms();
+      if (data['success']) {
+        setState(() {
+          departments
+              .clear(); // Clear existing departments before adding new ones
+          data['departments'].forEach((dept) {
+            departments.add(dept
+                .toString()); // Convert to String and add to departments list
+          });
+          _selectedDepartment = departments.isNotEmpty
+              ? departments[0]
+              : ""; // Initialize selected department here
+        });
+      } else {
+        print("Failed to fetch departments: ${data['error']}");
+      }
+    } catch (e) {
+      print("Error fetching departments: $e");
+    }
+  }
+ Future<void> _fetchCoursesByDepartment(String department) async {
+    try {
+      final Map<String, dynamic> data =
+          await apiService.fetchCoursesByDepartment(department);
+      if (data['success']) {
+        setState(() {
+          programs.clear(); // Clear existing programs
+          programs.addAll(
+              data['courses'].map<String>((course) => course.toString()));
+          _selectedProgram = programs.isNotEmpty ? programs[0] : "";
+        });
+      } else {
+        print("Failed to fetch courses: ${data['error']}");
+      }
+    } catch (e) {
+      print("Error fetching courses: $e");
+    }
+  }
   List<Map<String, dynamic>> alumniData = [];
   @override
   void dispose() {

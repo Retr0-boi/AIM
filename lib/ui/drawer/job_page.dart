@@ -4,10 +4,30 @@ import 'package:albertians/ui/drawer/drawer.dart';
 import 'package:albertians/services/api_service.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:albertians/models/db_helper.dart';
 import 'package:clipboard/clipboard.dart';
-class JobPage extends StatelessWidget {
+
+class JobPage extends StatefulWidget {
   const JobPage({super.key});
+  @override
+  _JobPage createState() => _JobPage();
+}
+
+class _JobPage extends State<JobPage> {
+  late String department = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDepartment();
+  }
+
+  Future<void> _fetchDepartment() async {
+    final userData = await DBHelper.getUserData();
+    setState(() {
+      department = userData['department'] ?? '';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +35,7 @@ class JobPage extends StatelessWidget {
       appBar: const JobPageAppBar(),
       drawer: const MyDrawer(),
       body: FutureBuilder(
-        future: ApiService().getJobs(),
+        future: ApiService().getJobs(department),
         builder: (BuildContext context,
             AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
@@ -57,7 +77,8 @@ class JobPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Linkify(
-              onOpen: (link) => _launchURL(context, link.url), // Pass context to _launchURL
+              onOpen: (link) =>
+                  _launchURL(context, link.url), // Pass context to _launchURL
               text: job['job_details'] ?? '',
               linkStyle: const TextStyle(color: Colors.blue),
             ),
@@ -80,7 +101,8 @@ class JobPage extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Text(
-              _formatDate(job['created_at']), // Assuming 'created_at' is a DateTime field
+              _formatDate(job[
+                  'created_at']), // Assuming 'created_at' is a DateTime field
               style: const TextStyle(fontSize: 12, color: Colors.grey),
             ),
           ],

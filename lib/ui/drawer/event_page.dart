@@ -4,19 +4,39 @@ import 'package:albertians/ui/drawer/drawer.dart';
 import 'package:albertians/services/api_service.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-// import 'package:url_launcher/url_launcher.dart';
+import 'package:albertians/models/db_helper.dart';
 import 'package:clipboard/clipboard.dart';
 
-class EventPage extends StatelessWidget {
+class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
+  @override
+  _EventPage createState() => _EventPage();
+}
+
+class _EventPage extends State<EventPage> {
+  late String department = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchDepartment();
+  }
+
+  Future<void> _fetchDepartment() async {
+    final userData = await DBHelper.getUserData();
+    setState(() {
+      department = userData['department'] ?? '';
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const EventPageAppBar(),
       drawer: const MyDrawer(),
       body: FutureBuilder(
-        future: ApiService().getEvents(),
+        future: ApiService().getEvents(department),
         builder: (BuildContext context,
             AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

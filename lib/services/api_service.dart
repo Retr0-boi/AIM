@@ -416,9 +416,9 @@ class ApiService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getJobs() async {
+  Future<List<Map<String, dynamic>>> getJobs(String department) async {
     try {
-      final response = await _dio.get('$apiUrl?action=getJobs');
+      final response = await _dio.get('$apiUrl?action=getJobs&department=$department');
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
@@ -445,9 +445,9 @@ class ApiService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getEvents() async {
+  Future<List<Map<String, dynamic>>> getEvents(String department) async {
     try {
-      final response = await _dio.get('$apiUrl?action=getEvents');
+      final response = await _dio.get('$apiUrl?action=getEvents&department=$department');
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
