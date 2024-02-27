@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 class ApiService {
-  static const String apiUrl =
-      'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
-
+  static const String apiUrl = 'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
   final Dio _dio = Dio();
 
   ApiService() {
