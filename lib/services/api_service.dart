@@ -116,13 +116,14 @@ class ApiService {
         if (responseData.containsKey('success') &&
             responseData['success'] != null) {
           bool success = responseData['success'];
-          String mongoId = responseData['mongo_id']; // Add this line to get the MongoDB object ID
-          String userName = responseData['name']; 
-          String email = responseData['email']; 
-          String password = responseData['password']; 
-          String department = responseData['department']; 
-          String batchFrom = responseData['batch_from']; 
-          String batchTo = responseData['batch_to']; 
+          String mongoId = responseData[
+              'mongo_id']; // Add this line to get the MongoDB object ID
+          String userName = responseData['name'];
+          String email = responseData['email'];
+          String password = responseData['password'];
+          String department = responseData['department'];
+          String batchFrom = responseData['batch_from'];
+          String batchTo = responseData['batch_to'];
 
           return {
             'success': success,
@@ -418,7 +419,8 @@ class ApiService {
 
   Future<List<Map<String, dynamic>>> getJobs(String department) async {
     try {
-      final response = await _dio.get('$apiUrl?action=getJobs&department=$department');
+      final response =
+          await _dio.get('$apiUrl?action=getJobs&department=$department');
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
@@ -447,7 +449,8 @@ class ApiService {
 
   Future<List<Map<String, dynamic>>> getEvents(String department) async {
     try {
-      final response = await _dio.get('$apiUrl?action=getEvents&department=$department');
+      final response =
+          await _dio.get('$apiUrl?action=getEvents&department=$department');
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
@@ -581,8 +584,8 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> postContent(
-      String subject, String content, String postedBy, String type,String department,
+  Future<Map<String, dynamic>> postContent(String subject, String content,
+      String postedBy, String type, String department,
       {File? image}) async {
     try {
       FormData formData = FormData.fromMap({
@@ -639,8 +642,9 @@ class ApiService {
 
   Future<List<Map<String, dynamic>>> getPosts(String department) async {
     try {
-    final response = await _dio.get('$apiUrl?action=getPosts&department=$department');
-    
+      final response =
+          await _dio.get('$apiUrl?action=getPosts&department=$department');
+
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         if (responseData['success'] == true) {
@@ -740,29 +744,30 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> fetchDepartmentsAndPrograms() async {
-  try {
-    final response = await _dio.get('$apiUrl?action=getDepartmentsAndPrograms');
+    try {
+      final response =
+          await _dio.get('$apiUrl?action=getDepartmentsAndPrograms');
 
-    if (response.statusCode == 200) {
-      final responseData = json.decode(response.data);
-      if (responseData['success'] == true) {
-        List<dynamic> departments = responseData['departments'];
-        return {'success': true, 'departments': departments};
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.data);
+        if (responseData['success'] == true) {
+          List<dynamic> departments = responseData['departments'];
+          return {'success': true, 'departments': departments};
+        } else {
+          return {'success': false, 'error': responseData['error']};
+        }
       } else {
-        return {'success': false, 'error': responseData['error']};
+        int? statusCode = response.statusCode;
+        return {
+          'success': false,
+          'error': 'Failed to fetch departments data $statusCode'
+        };
       }
-    } else {
-      int? statusCode = response.statusCode;
-      return {
-        'success': false,
-        'error': 'Failed to fetch departments data $statusCode'
-      };
+    } catch (e) {
+      print('Exception api_service.dart: $e');
+      return {'success': false, 'error': 'Failed to fetch departments data'};
     }
-  } catch (e) {
-    print('Exception api_service.dart: $e');
-    return {'success': false, 'error': 'Failed to fetch departments data'};
   }
-}
 
   Future<Map<String, dynamic>> fetchCoursesByDepartment(
       String department) async {
@@ -772,6 +777,31 @@ class ApiService {
       if (response.statusCode == 200) {
         final responseData = json.decode(response.data);
         return {'success': true, 'courses': responseData['courses']};
+      } else {
+        return {'success': false, 'error': 'Failed to fetch courses'};
+      }
+    } catch (e) {
+      return {'success': false, 'error': 'Failed to connect to the server'};
+    }
+  }
+
+  Future<Map<String, dynamic>> campusVisit(
+      String mongoId, DateTime date, String department) async {
+    try {
+      final response = await _dio.post(
+        '$apiUrl?action=campusVisit',
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+        }),
+        data: json.encode({
+          'mongoId': mongoId,
+          'date': date,
+          'department': department,
+        }),
+      );
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.data);
+        return {'success': true};
       } else {
         return {'success': false, 'error': 'Failed to fetch courses'};
       }

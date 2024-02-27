@@ -22,23 +22,52 @@ class MyDrawer extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _MyDrawerState extends State<MyDrawer> {
-  late Future<Map<String, dynamic>> userDataFuture;
+  late String department = '';
 
+  late Future<Map<String, dynamic>> userDataFuture;
+  late DateTime selectedDate;
+  late String mongoId = '';
   @override
   void initState() {
     super.initState();
+    _fetchDepartment();
+
+    selectedDate = DateTime.now();
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
       // Extract mongoId from the user data
-      String mongoId =
+      mongoId =
           userData['mongo_id'] ?? ''; // Replace 'mongoId' with the actual key
 
       // Create an instance of ApiService
-      ApiService apiService = ApiService();
+  ApiService apiService = ApiService();
 
       // Call the instance method to fetch user data using the obtained mongoId
       return apiService.fetchUserData(mongoId);
     });
+  }
+
+  Future<void> _fetchDepartment() async {
+    final userData = await DBHelper.getUserData();
+    setState(() {
+      department = userData['department'] ?? '';
+    });
+  }
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate,
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+       ApiService apiService = ApiService();
+      await apiService.campusVisit(mongoId, selectedDate, department);
+    }
   }
 
   Widget _buildRoundedDrawerHeader(
@@ -172,13 +201,17 @@ class _MyDrawerState extends State<MyDrawer> {
                       //   },
                       // ),
                       ListTile(
-                        leading: const Icon(Icons.place),
-                        title: const Text('Campus Visit'),
+                        leading: Icon(Icons.place),
+                        title: Text('Campus Visit'),
                         onTap: () {
-                          // Handle placeholder button tap
-                          Navigator.pop(context);
-                          // Add your navigation logic or any actions you want to perform
+                          _selectDate(context); // Show date picker dialog
                         },
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Call your API service method with selected date
+                        },
+                        child: Text('Save'),
                       ),
                       ListTile(
                         leading: const Icon(Icons.work),

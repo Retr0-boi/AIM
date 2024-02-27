@@ -15,13 +15,12 @@ class _AlumniState extends State<Alumni> {
   final ApiService apiService = ApiService();
 
   TextEditingController searchTextController = TextEditingController();
-  String? selectedDepartment;
-  String? selectedCourse;
+  // String? selectedDepartment;
   String? batchFrom;
   String? batchTo;
 
 
-   String _selectedDepartment = "";
+  String _selectedDepartment = "";
   String _selectedProgram = "";
 
   final List<String> departments = [];
@@ -115,26 +114,28 @@ Future<void> _fetchDepartments() async {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: DropdownButton<String>(
-                  value: selectedDepartment,
-                  items: [
-                    'MBA',
-                  ] // Replace with your department options
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  hint: const Text('Select Department'),
-                  onChanged: (String? value) {
-                    setState(() {
-                      selectedDepartment = value;
-                    });
-                  },
-                  style: const TextStyle(color: Colors.black),
-                  dropdownColor: Colors.white,
+                child:
+                 DropdownButtonFormField<String>(
+                value: _selectedDepartment,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedDepartment = value!;
+                    _fetchCoursesByDepartment(_selectedDepartment);
+                  });
+                },
+                items: departments.map((department) {
+                  return DropdownMenuItem(
+                    value: department,
+                    child: Text(department),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Department',
                 ),
+                style: const TextStyle(
+                    color: Colors.black), // change text color to white
+                dropdownColor: Colors.white,
+              ),
               ),
             ),
             const SizedBox(height: 20),
@@ -146,26 +147,40 @@ Future<void> _fetchDepartments() async {
               ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: DropdownButton<String>(
-                  value: selectedCourse,
-                  items: [
-                    'MBA',
-                  ] // Replace with your course options
-                      .map((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                  hint: const Text('Select Course'),
-                  onChanged: (String? value) {
+                child: 
+                DropdownButtonFormField<String>(
+                value: _selectedProgram,
+                onChanged: (value) {
+                  if (_selectedDepartment.isEmpty) {
+                    // If department is not selected, show temporary message
                     setState(() {
-                      selectedCourse = value;
+                      _selectedProgram = ""; // Reset selected program
                     });
-                  },
-                  style: const TextStyle(color: Colors.black),
-                  dropdownColor: Colors.white,
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Select a department to continue'),
+                      ),
+                    );
+                  } else {
+                    // If department is selected, update selected program
+                    setState(() {
+                      _selectedProgram = value!;
+                    });
+                  }
+                },
+                items: programs.map((program) {
+                  return DropdownMenuItem(
+                    value: program,
+                    child: Text(program),
+                  );
+                }).toList(),
+                decoration: const InputDecoration(
+                  labelText: 'Program',
                 ),
+                style: const TextStyle(
+                    color: Colors.black), // change text color to white
+                dropdownColor: Colors.white,
+              ),
               ),
             ),
             const SizedBox(height: 20),
@@ -233,8 +248,8 @@ Future<void> _fetchDepartments() async {
                 // Call the API service method
                 List<Map<String, dynamic>> data = await apiService.searchAlumni(
                   name: searchTextController.text,
-                  department: selectedDepartment,
-                  course: selectedCourse,
+                  department: _selectedDepartment,
+                  course: _selectedProgram,
                   batchFrom: batchFrom,
                   batchTo: batchTo,
                 );
