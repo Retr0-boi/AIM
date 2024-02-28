@@ -17,8 +17,8 @@ class MyBottomNavigationBar extends StatefulWidget {
     required this.currentIndex,
     required this.onItemTapped,
     required this.userData, // Make it nullable
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _MyBottomNavigationBarState createState() => _MyBottomNavigationBarState();
@@ -75,7 +75,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text("Select post type"),
+              title: const Text("Select post type"),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -87,7 +87,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                         MaterialPageRoute(builder: (context) => JobMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: Text("Job"),
+                    child: const Text("Job"),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -97,7 +97,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                         MaterialPageRoute(builder: (context) => EventMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: Text("Event"),
+                    child: const Text("Event"),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -107,7 +107,7 @@ class _MyBottomNavigationBarState extends State<MyBottomNavigationBar> {
                         MaterialPageRoute(builder: (context) => PostMenu(userData: userData)), // Pass userData here
                       );
                     },
-                    child: Text("Post"),
+                    child: const Text("Post"),
                   ),
                 ],
               ),

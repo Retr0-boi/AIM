@@ -157,7 +157,7 @@ Future<void> _fetchDepartments() async {
                       _selectedProgram = ""; // Reset selected program
                     });
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                         content: Text('Select a department to continue'),
                       ),
                     );

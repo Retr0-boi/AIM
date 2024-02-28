@@ -11,7 +11,7 @@ import 'package:albertians/models/userData.dart'; // Import the UserData class
 class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
   final UserData? userData; // Update the type to UserData
 
-  const ConnectionsPage({Key? key,required this.userData}) : super(key: key);
+  const ConnectionsPage({super.key,required this.userData});
 
   @override
   _ConnectionsPageState createState() => _ConnectionsPageState();
@@ -30,10 +30,11 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   void initState() {
     super.initState();
     print("PRINTING USER DATA");
-    if (widget.userData != null)
+    if (widget.userData != null) {
       widget.userData!.printUserData();
-    else
+    } else {
       print("NULL USER DATA");
+    }
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
       // Extract mongoId from the user data

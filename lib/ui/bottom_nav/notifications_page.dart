@@ -1,16 +1,36 @@
+import 'package:albertians/models/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
 import '../drawer/drawer.dart';
 import 'bottom_navigation_bar.dart';
 import 'package:albertians/models/userData.dart';
 
-class Notifications extends StatelessWidget implements PreferredSizeWidget {
+class Notifications extends StatefulWidget {
   final UserData? userData; // Update the type to UserData
 
-  const Notifications({Key? key, this.userData}) : super(key: key);
+  const Notifications({super.key, this.userData});
 
   @override
+  _NotificationsPage createState() => _NotificationsPage();
+
+}
+class _NotificationsPage extends State<Notifications>{
+  late String department = ''; 
+  
+   @override
+  void initState() {
+    super.initState();
+    _fetchDepartment();
+  }
+  Future<void> _fetchDepartment() async {
+    final userData = await DBHelper.getUserData();
+    setState(() {
+      department = userData['department'] ?? '';
+    });
+  }
+  @override
   Widget build(BuildContext context) {
+    final userData = widget.userData;
     return Scaffold(
       appBar: const NotificationsAppBar(),
       drawer: const MyDrawer(),
@@ -160,6 +180,5 @@ class Notifications extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+
 }

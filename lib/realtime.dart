@@ -3,6 +3,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class NotificationsPage extends StatefulWidget {
+  const NotificationsPage({super.key});
+
   @override
   _NotificationsPageState createState() => _NotificationsPageState();
 }
@@ -40,7 +42,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Notifications'),
+        title: const Text('Notifications'),
       ),
       body: ListView.builder(
         itemCount: notifications.length,
@@ -54,7 +56,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   }
 }
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: NotificationsPage(),
   ));
 }

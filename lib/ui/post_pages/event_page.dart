@@ -10,7 +10,7 @@ import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 
 class EventMenu extends StatefulWidget {
   final UserData? userData;
-  const EventMenu({Key? key, this.userData}) : super(key: key);
+  const EventMenu({super.key, this.userData});
   @override
   _EventMenuState createState() => _EventMenuState();
 }

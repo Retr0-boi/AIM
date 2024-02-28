@@ -16,9 +16,10 @@ import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
 class JobMenu extends StatefulWidget {
   final UserData? userData;
 
-  const JobMenu({Key? key, this.userData}) : super(key: key);
+  const JobMenu({super.key, this.userData});
 
-    _JobMenuState createState() => _JobMenuState();
+    @override
+  _JobMenuState createState() => _JobMenuState();
 
 }
 

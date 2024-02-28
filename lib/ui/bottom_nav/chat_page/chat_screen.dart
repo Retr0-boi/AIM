@@ -9,13 +9,13 @@ class ChatScreen extends StatefulWidget {
   final String conversationId;
 
   const ChatScreen({
-    Key? key,
+    super.key,
     required this.mongoId,
     required this.receiverMongoId,
     required this.name,
     required this.profilePicture,
     required this.conversationId,
-  }) : super(key: key);
+  });
 
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -24,7 +24,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _textController = TextEditingController();
   final List<Map<String, String>> _messages = [];
-  ApiService _apiService = ApiService(); // Initialize your ApiService
+  final ApiService _apiService = ApiService(); // Initialize your ApiService
   String? currentUser; // Define currentUser variable
 
   @override
@@ -85,7 +85,7 @@ void _fetchMessages() async {
                         12), // Add spacing between back icon and profile picture
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      'http://192.168.56.1/' + widget.profilePicture),
+                      'http://192.168.56.1/${widget.profilePicture}'),
                   radius: 16, // Adjust the radius as needed
                 ),
                 const SizedBox(
@@ -105,7 +105,7 @@ void _fetchMessages() async {
         children: <Widget>[
           Flexible(
             child: _messages.isEmpty
-                ? Center(
+                ? const Center(
                     child: Text('This place looks empty. Send a hi!'),
                   )
                 : ListView.builder(
@@ -196,7 +196,7 @@ void _handleSubmitted(String text) async {
           CircleAvatar(
             // Use appropriate avatar for the receiver
             backgroundImage: NetworkImage(
-              'http://192.168.56.1/' + widget.profilePicture,
+              'http://192.168.56.1/${widget.profilePicture}',
             ),
             radius: 16, // Adjust the radius as needed
           ),
@@ -213,14 +213,14 @@ void _handleSubmitted(String text) async {
                 decoration: BoxDecoration(
                   color: isCurrentUser ? Colors.blue[200] : Colors.grey[300],
                   borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(12.0),
-                    topRight: Radius.circular(12.0),
+                    topLeft: const Radius.circular(12.0),
+                    topRight: const Radius.circular(12.0),
                     bottomLeft: isCurrentUser
-                        ? Radius.circular(12.0)
-                        : Radius.circular(0),
+                        ? const Radius.circular(12.0)
+                        : const Radius.circular(0),
                     bottomRight: isCurrentUser
-                        ? Radius.circular(0)
-                        : Radius.circular(12.0),
+                        ? const Radius.circular(0)
+                        : const Radius.circular(12.0),
                   ),
                 ),
                 child: Text(

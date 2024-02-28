@@ -11,7 +11,7 @@ import 'package:albertians/models/userData.dart'; // Import the UserData class
 class Chat extends StatefulWidget implements PreferredSizeWidget {
   final UserData? userData; // Update the type to UserData
 
-  const Chat({Key? key,required this.userData}) : super(key: key);
+  const Chat({super.key,required this.userData});
 
   @override
   _ChatState createState() => _ChatState();

@@ -798,7 +798,7 @@ class ApiService {
         }),
       );
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.data);
+        // final responseData = json.decode(response.data);
         return {'success': true};
       } else {
         return {'success': false, 'error': 'Failed to fetch courses'};

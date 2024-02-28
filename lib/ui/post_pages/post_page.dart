@@ -12,7 +12,7 @@ import 'package:albertians/ui/bottom_nav/home_page.dart';
 
 class PostMenu extends StatefulWidget {
   final UserData? userData;
-  const PostMenu({Key? key, this.userData}) : super(key: key);
+  const PostMenu({super.key, this.userData});
   @override
   _PostMenuState createState() => _PostMenuState();
 }

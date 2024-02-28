@@ -10,7 +10,7 @@ import 'package:albertians/models/userData.dart';
 class Home extends StatefulWidget {
   final UserData? userData;
 
-  const Home({Key? key, this.userData}) : super(key: key);
+  const Home({super.key, this.userData});
 
   @override
   _HomeState createState() => _HomeState();
@@ -75,7 +75,7 @@ class _HomeState extends State<Home> {
           },
         ),
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
       bottomNavigationBar: MyBottomNavigationBar(
         currentIndex: 0,
         onItemTapped: (index) {},
@@ -105,7 +105,7 @@ class _HomeState extends State<Home> {
                       children: [
                         Row(
                           children: [
-                            Container(
+                            SizedBox(
                               width: 50,
                               height: 50,
                               child: CircleAvatar(
@@ -193,7 +193,7 @@ class _HomeState extends State<Home> {
 class FullScreenImage extends StatelessWidget {
   final String imageUrl;
 
-  const FullScreenImage({Key? key, required this.imageUrl}) : super(key: key);
+  const FullScreenImage({super.key, required this.imageUrl});
 
   @override
   Widget build(BuildContext context) {

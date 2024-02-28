@@ -7,11 +7,11 @@ import 'models/auth_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +27,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           unselectedWidgetColor: Colors.white38,
         ),
-        home: AuthenticationWrapper(),
+        home: const AuthenticationWrapper(),
       ),
     );
   }
 }
 
 class AuthenticationWrapper extends StatelessWidget {
-  const AuthenticationWrapper({Key? key});
+  const AuthenticationWrapper({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +48,10 @@ class AuthenticationWrapper extends StatelessWidget {
           if (isLoggedIn) {
             return Home(userData: userData);
           } else {
-            return RegistrationPage();
+            return const RegistrationPage();
           }
         } else {
-          return Scaffold(
+          return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
