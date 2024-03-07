@@ -49,7 +49,7 @@ class _NotificationsPage extends State<Notifications> {
     );
   }
 
- Widget _buildNotificationsList() {
+Widget _buildNotificationsList() {
   return FutureBuilder<List<Map<String, dynamic>>>(
     future: apiService.getNotifications(department),
     builder: (context, snapshot) {
@@ -60,19 +60,15 @@ class _NotificationsPage extends State<Notifications> {
       } else if (snapshot.hasData) {
         List<Map<String, dynamic>> notifications = snapshot.data!;
         notifications.sort((a, b) {
-          // Extract the DateTime objects from the 'timestamp' field
-          final aTimestamp = a['timestamp'] != null
+          final DateTime? aTimestamp = a['timestamp'] != null
               ? DateTime.parse(a['timestamp'])
               : null;
-          final bTimestamp = b['timestamp'] != null
+          final DateTime? bTimestamp = b['timestamp'] != null
               ? DateTime.parse(b['timestamp'])
               : null;
-          // Compare the DateTime objects if they are not null
           if (aTimestamp != null && bTimestamp != null) {
             return bTimestamp.compareTo(aTimestamp);
-          }
-          // If either timestamp is null, prioritize the non-null one
-          else if (aTimestamp != null) {
+          } else if (aTimestamp != null) {
             return 1; // Move 'a' after 'b'
           } else if (bTimestamp != null) {
             return -1; // Move 'b' after 'a'
@@ -97,7 +93,7 @@ class _NotificationsPage extends State<Notifications> {
 
             return Column(
               children: [
-                if (showHeader) _buildSectionDivider('Today'),
+                // if (showHeader) _buildSectionDivider('Today'),
                 _buildNotificationItem(notification),
                 if (index < notifications.length - 1) const Divider(),
               ],
