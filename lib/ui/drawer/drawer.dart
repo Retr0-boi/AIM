@@ -206,21 +206,42 @@ class _MyDrawerState extends State<MyDrawer> {
                         },
                       ),
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           ApiService apiService = ApiService();
-                          apiService.campusVisit(mongoId, selectedDate, department);
+                          Map<String, dynamic> response = await apiService
+                              .campusVisit(mongoId, selectedDate, department);
+                          if (response['success']) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text('Date has been updated.'),
+                                duration: Duration(
+                                    seconds:
+                                        8), // Adjust the duration as needed
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(response['error'] ??
+                                    'Failed to update date.'),
+                                duration: Duration(
+                                    seconds:
+                                        2), // Adjust the duration as needed
+                              ),
+                            );
+                          }
                         },
                         child: const Text('Save'),
                       ),
-                      ListTile(
-                        leading: const Icon(Icons.work),
-                        title: const Text('Request Job'),
-                        onTap: () {
-                          // Handle placeholder button tap
-                          Navigator.pop(context);
-                          // Add your navigation logic or any actions you want to perform
-                        },
-                      ),
+                      // ListTile(
+                      //   leading: const Icon(Icons.work),
+                      //   title: const Text('Request Job'),
+                      //   onTap: () {
+                      //     // Handle placeholder button tap
+                      //     Navigator.pop(context);
+                      //     // Add your navigation logic or any actions you want to perform
+                      //   },
+                      // ),
                     ],
                   ),
                 ),

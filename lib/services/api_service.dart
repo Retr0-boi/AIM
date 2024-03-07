@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 class ApiService {
-  static const String apiUrl = 'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
+  static const String apiUrl =
+      'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
   final Dio _dio = Dio();
 
   ApiService() {
@@ -785,23 +786,52 @@ class ApiService {
 
   Future<Map<String, dynamic>> campusVisit(
       String mongoId, DateTime date, String department) async {
-        print("the datas are:\n $mongoId\n $department \n$date");
+    print("the datas are:\n $mongoId\n $department \n$date");
     try {
-        print("Inside the try block");
-
-      final response = await _dio.post('$apiUrl?action=campusVisit&department=$department&mongoId=$mongoId&date=$date',
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-        }),
+      print("Inside the try block");
+      FormData formData = FormData.fromMap({
+        'mongoId': mongoId,
+        'date': date,
+        'department': department,
+      });
+      final response = await _dio.post(
+        '$apiUrl?action=campusVisit',
+        data: formData,
       );
       if (response.statusCode == 200) {
-        final responseData = json.decode(response.data);
+        // final responseData = json.decode(response.data);
         return {'success': true};
       } else {
         return {'success': false, 'error': 'Failed to fetch courses'};
       }
     } catch (e) {
       return {'success': false, 'error': 'Failed to connect to the server'};
+    }
+  }
+
+  Future<List<Map<String, dynamic>>> getNotifications(String department) async {
+    try {
+      final response = await _dio
+          .get('$apiUrl?action=getNotifications&department=$department');
+
+      if (response.statusCode == 200) {
+        final responseData = json.decode(response.data);
+        if (responseData != null) {
+          final List<dynamic> notifications = responseData;
+          final List<Map<String, dynamic>> parsedNotifications = notifications
+              .map((notification) => Map<String, dynamic>.from(notification))
+              .toList();
+          return parsedNotifications;
+        } else {
+          throw Exception(
+              'Failed to fetch notifications: Response data is null');
+        }
+      } else {
+        throw Exception(
+            'Failed to fetch notifications: ${response.statusMessage}');
+      }
+    } catch (e) {
+      throw Exception('Failed to fetch notifications: $e');
     }
   }
 }
