@@ -40,7 +40,7 @@ class _MyDrawerState extends State<MyDrawer> {
           userData['mongo_id'] ?? ''; // Replace 'mongoId' with the actual key
 
       // Create an instance of ApiService
-  ApiService apiService = ApiService();
+      ApiService apiService = ApiService();
 
       // Call the instance method to fetch user data using the obtained mongoId
       return apiService.fetchUserData(mongoId);
@@ -65,8 +65,6 @@ class _MyDrawerState extends State<MyDrawer> {
       setState(() {
         selectedDate = picked;
       });
-       ApiService apiService = ApiService();
-      await apiService.campusVisit(mongoId, selectedDate, department);
     }
   }
 
@@ -209,7 +207,8 @@ class _MyDrawerState extends State<MyDrawer> {
                       ),
                       ElevatedButton(
                         onPressed: () {
-                          // Call your API service method with selected date
+                          ApiService apiService = ApiService();
+                          apiService.campusVisit(mongoId, selectedDate, department);
                         },
                         child: const Text('Save'),
                       ),

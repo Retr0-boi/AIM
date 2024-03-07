@@ -181,7 +181,7 @@ class ApiService {
             String currentOrg = userData['current_organisation'];
             String currentDesignation = userData['designation'];
             String profilePic = userData['profile_picture'];
-            String phone = userData['phone'];
+            String phone = userData['phone'] ?? "none";
 
             // Return the extracted data
             return {
@@ -785,20 +785,17 @@ class ApiService {
 
   Future<Map<String, dynamic>> campusVisit(
       String mongoId, DateTime date, String department) async {
+        print("the datas are:\n $mongoId\n $department \n$date");
     try {
-      final response = await _dio.post(
-        '$apiUrl?action=campusVisit',
+        print("Inside the try block");
+
+      final response = await _dio.post('$apiUrl?action=campusVisit&department=$department&mongoId=$mongoId&date=$date',
         options: Options(headers: {
           'Content-Type': 'application/json',
         }),
-        data: json.encode({
-          'mongoId': mongoId,
-          'date': date,
-          'department': department,
-        }),
       );
       if (response.statusCode == 200) {
-        // final responseData = json.decode(response.data);
+        final responseData = json.decode(response.data);
         return {'success': true};
       } else {
         return {'success': false, 'error': 'Failed to fetch courses'};

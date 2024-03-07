@@ -17,7 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  late String department = ''; 
+  late String department; 
   final ApiService _apiService = ApiService();
   List<Map<String, dynamic>> _posts = [];
 
@@ -31,12 +31,14 @@ class _HomeState extends State<Home> {
     final userData = await DBHelper.getUserData();
     setState(() {
       department = userData['department'] ?? '';
+      print("department is $department");
     });
     _fetchPosts(department);
   }
 
   Future<void> _fetchPosts(String department) async {
     try {
+      print("department is $department");
       List<Map<String, dynamic>> posts = await _apiService.getPosts(department);
       setState(() {
         _posts = posts;

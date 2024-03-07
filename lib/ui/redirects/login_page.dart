@@ -1,3 +1,4 @@
+import 'package:albertians/models/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/models/userData.dart';
 import 'package:albertians/ui/bottom_nav/home_page.dart';
@@ -6,13 +7,12 @@ import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   LoginPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -58,6 +58,16 @@ class LoginPage extends StatelessWidget {
                   // Access user data from the response
                   UserData userData = UserData.fromJson(authenticationResult);
 
+                  Map<String, dynamic> AuthUserData = {
+                    "mongo_id": userData.mongoId,
+                    "username": userData.username,
+                    "email": userData.email,
+                    "password": userData.password,
+                    "department": userData.department,
+                    "batch_from": userData.batchFrom,
+                    "batch_to": userData.batchTo,
+                  };
+                  DBHelper.insertUserData(AuthUserData);
                   // Update user data in the app state
                   Provider.of<UserData>(context, listen: false).updateUserData(
                     mongoId: userData.mongoId,
