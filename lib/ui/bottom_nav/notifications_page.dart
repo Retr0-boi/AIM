@@ -166,13 +166,29 @@ Widget _buildNotificationItem(Map<String, dynamic> notification) {
         title: Text(notificationMessage),
         subtitle: Text(notification['timestamp'] ?? ''),
         onTap: () {
-          // Handle notification tap
+          _handleNotificationTap(notification);
         },
       ),
     ),
   );
 }
-
+void _handleNotificationTap(Map<String, dynamic> notification) {
+  String notificationType = notification['type'];
+  switch (notificationType) {
+    case 'job':
+      // Navigate to job page
+      Navigator.pushNamed(context, '/jobPage');
+      break;
+    case 'event':
+      // Navigate to event page
+      Navigator.pushNamed(context, '/eventPage');
+      break;
+    // Add more cases as needed
+    default:
+      // Handle other notification types
+      break;
+  }
+}
 Widget _buildFriendRequestItem(Map<String, dynamic> notification) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),

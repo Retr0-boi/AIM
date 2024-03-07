@@ -26,8 +26,14 @@ class LoginPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
+            Image.asset(
+                'images/Alberts.png',
+                width: 200, // Adjust width as needed
+                height: 200, // Adjust height as needed
+              ),
+              const SizedBox(height: 8.0),
             TextField(
               controller: _emailController,
               decoration: const InputDecoration(
