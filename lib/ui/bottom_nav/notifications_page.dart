@@ -76,29 +76,21 @@ Widget _buildNotificationsList() {
           return 0; // Both timestamps are null, leave them in their current order
         });
 
-        bool printedTodayHeader = false;
+        Map<String, List<Map<String, dynamic>>> groupedNotifications =
+            groupNotificationsByDate(notifications);
 
-        return ListView.builder(
-          itemCount: notifications.length,
-          itemBuilder: (context, index) {
-            final notification = notifications[index];
-            final isToday = notification['timestamp'] != null
-                ? _isToday(DateTime.parse(notification['timestamp']))
-                : false;
-            final showHeader = isToday && !printedTodayHeader;
-
-            if (showHeader) {
-              printedTodayHeader = true;
-            }
-
-            return Column(
-              children: [
-                // if (showHeader) _buildSectionDivider('Today'),
-                _buildNotificationItem(notification),
-                if (index < notifications.length - 1) const Divider(),
-              ],
-            );
-          },
+        return ListView(
+          children: groupedNotifications.entries
+              .map((entry) => Column(
+                    children: [
+                      _buildSectionDivider(entry.key),
+                      ...entry.value
+                          .map((notification) =>
+                              _buildNotificationItem(notification))
+                          .toList(),
+                    ],
+                  ))
+              .toList(),
         );
       } else {
         return Center(child: Text('No notifications available'));
@@ -107,6 +99,18 @@ Widget _buildNotificationsList() {
   );
 }
 
+Map<String, List<Map<String, dynamic>>> groupNotificationsByDate(
+    List<Map<String, dynamic>> notifications) {
+  Map<String, List<Map<String, dynamic>>> groupedNotifications = {};
+  notifications.forEach((notification) {
+    String date = notification['timestamp'] ?? 'Unknown Date';
+    if (!groupedNotifications.containsKey(date)) {
+      groupedNotifications[date] = [];
+    }
+    groupedNotifications[date]!.add(notification);
+  });
+  return groupedNotifications;
+}
   bool _isToday(DateTime? timestamp) {
     if (timestamp == null) return false;
 
