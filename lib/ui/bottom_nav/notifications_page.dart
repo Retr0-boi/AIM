@@ -126,7 +126,7 @@ Widget _buildNotificationsList() {
     );
   }
 
-  Widget _buildNotificationItem(Map<String, dynamic> notification) {
+Widget _buildNotificationItem(Map<String, dynamic> notification) {
   if (notification['type'] == 'friend_request') {
     return _buildFriendRequestItem(notification);
   }
@@ -136,10 +136,10 @@ Widget _buildNotificationsList() {
   // Handle different notification types
   switch (notification['type']) {
     case 'job':
-      notificationMessage = 'New job';
+      notificationMessage = 'New job available';
       break;
     case 'event':
-      notificationMessage = 'New event';
+      notificationMessage = 'New event available';
       break;
     case 'admin':
       notificationMessage = 'New admin notification';
@@ -151,63 +151,81 @@ Widget _buildNotificationsList() {
       break;
   }
 
-  return ListTile(
-    title: Text(notificationMessage),
-    subtitle: Text(notification['timestamp'] ?? ''),
-    onTap: () {
-      // Handle notification tap
-    },
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+    child: Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: ListTile(
+        title: Text(notificationMessage),
+        subtitle: Text(notification['timestamp'] ?? ''),
+        onTap: () {
+          // Handle notification tap
+        },
+      ),
+    ),
   );
 }
 
-  Widget _buildFriendRequestItem(Map<String, dynamic> notification) {
-    return Column(
-      children: [
-        ListTile(
-          leading: const CircleAvatar(
-            backgroundImage: AssetImage('images/DefaultUserIcon.png'),
-            backgroundColor: Colors.transparent,
+Widget _buildFriendRequestItem(Map<String, dynamic> notification) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+    child: Card(
+      elevation: 3,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          ListTile(
+            leading: const CircleAvatar(
+              backgroundImage: AssetImage('images/DefaultUserIcon.png'),
+              backgroundColor: Colors.transparent,
+            ),
+            title: Text(
+              '${notification['username']} sent a friend request',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+            onTap: () {
+              // Handle friend request tap
+            },
           ),
-          title: Text(
-            '${notification['username']} sent a friend request',
-            style: const TextStyle(fontWeight: FontWeight.bold),
-          ),
-          onTap: () {
-            // Handle friend request tap
-          },
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle approve button tap
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green.shade300,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle approve button tap
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green.shade300,
+                    ),
+                    child: const Text('Approve'),
                   ),
-                  child: const Text('Approve'),
                 ),
-              ),
-              const SizedBox(
-                  width: 16.0), // Add some spacing between the buttons
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Handle disapprove button tap
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red.shade300,
+                const SizedBox(
+                    width: 16.0), // Add some spacing between the buttons
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Handle disapprove button tap
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red.shade300,
+                    ),
+                    child: const Text('Disapprove'),
                   ),
-                  child: const Text('Disapprove'),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-      ],
-    );
-  }
+        ],
+      ),
+    ),
+  );
+}
 }
