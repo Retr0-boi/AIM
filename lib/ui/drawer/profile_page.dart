@@ -150,7 +150,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: CircleAvatar(
                       radius: 90,
                       backgroundImage: NetworkImage(
-                          'http://192.168.56.1/' + userData['profile_picture']),
+                          // 'http://192.168.56.1/' + userData['profile_picture']),
+                          'http://192.168.45.72/' + userData['profile_picture']),
                     ),
                   ),
 

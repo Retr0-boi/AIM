@@ -113,7 +113,8 @@ class _HomeState extends State<Home> {
                               child: CircleAvatar(
                                 radius: 90,
                                 backgroundImage: NetworkImage(
-                                  'http://192.168.56.1/' +
+                                  // 'http://192.168.56.1/' +
+                                  'http://192.168.45.72/' +
                                       (user['profile_picture'] ?? ''),
                                 ),
                               ),
@@ -159,13 +160,15 @@ class _HomeState extends State<Home> {
                               Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => FullScreenImage(
                                   imageUrl:
-                                      'http://192.168.56.1/' + post['image'],
+                                      // 'http://192.168.56.1/' + post['image'],
+                                      'http://192.168.45.72/' + post['image'],
                                 ),
                               ));
                             },
                             child: Center(
                               child: Image.network(
-                                'http://192.168.56.1/' + post['image'],
+                                // 'http://192.168.56.1/' + post['image'],
+                                'http://192.168.45.72/' + post['image'],
                               ),
                             ),
                           ),

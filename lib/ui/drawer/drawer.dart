@@ -94,7 +94,8 @@ class _MyDrawerState extends State<MyDrawer> {
               radius: 20,
               backgroundColor: Colors.transparent,
               backgroundImage: NetworkImage(
-                  'http://192.168.56.1/' + userData['profile_picture']),
+                  // 'http://192.168.56.1/' + userData['profile_picture']),
+                  'http://192.168.45.72/' + userData['profile_picture']),
             ),
             const SizedBox(width: 8),
             Text(

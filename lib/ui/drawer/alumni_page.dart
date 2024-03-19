@@ -275,7 +275,8 @@ Future<void> _fetchDepartments() async {
 
                     leading: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        'http://192.168.56.1/' + alumniData[index]['profile_picture'],
+                        // 'http://192.168.56.1/' + alumniData[index]['profile_picture'],
+                        'http://192.168.45.72/' + alumniData[index]['profile_picture'],
                         
                       ),
                     ),
