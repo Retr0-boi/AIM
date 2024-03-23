@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously, prefer_interpolation_to_compose_strings
+
 import 'dart:io';
 import 'package:albertians/ui/bottom_nav/home_page.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +14,7 @@ class ProfilePage extends StatefulWidget implements PreferredSizeWidget {
   const ProfilePage({super.key});
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  State<ProfilePage> createState() => _ProfilePageState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -104,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
           await apiService.updateProfileImage(mongoId, imageFile,email,password);
       if (response['success']) {
         // Handle success
-        print('Profile picture updated successfully');
+        // print('Profile picture updated successfully');
         // Navigator.of(context).pop();
         Navigator.pushReplacement(
           context,
@@ -114,10 +116,10 @@ class _ProfilePageState extends State<ProfilePage> {
         );
       } else {
         // Handle failure
-        print('Failed to update profile picture');
+        // print('Failed to update profile picture');
       }
     } else {
-      print('Error: mongoId is empty or not initialized');
+      // print('Error: mongoId is empty or not initialized');
     }
   }
 
@@ -139,7 +141,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 snapshot.data as Map<String, dynamic>;
 
             // Print the raw data
-            print(userData);
+            // print(userData);
 
             // Extract additional information based on current status
             String currentStatus = userData['current_status'];

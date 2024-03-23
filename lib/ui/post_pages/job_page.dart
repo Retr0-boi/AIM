@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:albertians/models/db_helper.dart';
 import 'package:albertians/models/userData.dart';
 import 'package:albertians/services/api_service.dart';
@@ -19,7 +21,7 @@ class JobMenu extends StatefulWidget {
   const JobMenu({super.key, this.userData});
 
     @override
-  _JobMenuState createState() => _JobMenuState();
+  State<JobMenu> createState() => _JobMenuState();
 
 }
 
@@ -47,7 +49,7 @@ class _JobMenuState extends State<JobMenu> {
         userDataFuture = Future.value(userData);
       });
     } catch (e) {
-      print('Error initializing user data: $e');
+      // print('Error initializing user data: $e');
       setState(() {
         userDataFuture = Future.error(e);
       });

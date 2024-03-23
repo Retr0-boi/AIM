@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import 'package:albertians/models/db_helper.dart';
 
@@ -21,7 +23,7 @@ class DatabaseViewerPage extends StatefulWidget {
   const DatabaseViewerPage({super.key});
 
   @override
-  _DatabaseViewerPageState createState() => _DatabaseViewerPageState();
+  State<DatabaseViewerPage> createState() => _DatabaseViewerPageState();
 }
 
 class _DatabaseViewerPageState extends State<DatabaseViewerPage> {

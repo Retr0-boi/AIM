@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:albertians/models/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/models/userData.dart';
@@ -64,7 +66,7 @@ class LoginPage extends StatelessWidget {
                   // Access user data from the response
                   UserData userData = UserData.fromJson(authenticationResult);
 
-                  Map<String, dynamic> AuthUserData = {
+                  Map<String, dynamic> authUserData = {
                     "mongo_id": userData.mongoId,
                     "username": userData.username,
                     "email": userData.email,
@@ -73,7 +75,7 @@ class LoginPage extends StatelessWidget {
                     "batch_from": userData.batchFrom,
                     "batch_to": userData.batchTo,
                   };
-                  DBHelper.insertUserData(AuthUserData);
+                  DBHelper.insertUserData(authUserData);
                   // Update user data in the app state
                   Provider.of<UserData>(context, listen: false).updateUserData(
                     mongoId: userData.mongoId,

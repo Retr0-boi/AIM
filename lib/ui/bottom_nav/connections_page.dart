@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:albertians/ui/drawer/drawer.dart';
@@ -14,7 +16,7 @@ class ConnectionsPage extends StatefulWidget implements PreferredSizeWidget {
   const ConnectionsPage({super.key,required this.userData});
 
   @override
-  _ConnectionsPageState createState() => _ConnectionsPageState();
+  State<ConnectionsPage> createState() => _ConnectionsPageState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -133,7 +135,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                 ),
                 GestureDetector(
                   onTap: () async {
-                    print('Chat button clicked for ${user['_id']} by $mongoId');
+                    // print('Chat button clicked for ${user['_id']} by $mongoId');
                     String recipientId = user['_id']['\$oid'].toString();
                     Map<String, dynamic> initiationResult = await ApiService()
                         .initiateConversation(mongoId, recipientId);
@@ -145,8 +147,7 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
                       _navigateToChatScreen(mongoId, recipientId, user['name'],
                           user['profile_picture'], conversationId);
                     } else {
-                      print(
-                          'Error initiating conversation: ${initiationResult['error']}');
+                      // print('Error initiating conversation: ${initiationResult['error']}');
                       // Handle error
                     }
                   },

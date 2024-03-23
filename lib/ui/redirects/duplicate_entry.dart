@@ -5,7 +5,7 @@ class ErrorPage extends StatefulWidget {
   const ErrorPage({super.key});
 
   @override
-  _ErrorPageState createState() => _ErrorPageState();
+  State<ErrorPage> createState() => _ErrorPageState();
 }
 
 class _ErrorPageState extends State<ErrorPage> {

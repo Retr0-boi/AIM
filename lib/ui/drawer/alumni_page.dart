@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, use_build_context_synchronously
+
 import 'package:albertians/services/api_service.dart';
 import 'package:albertians/ui/drawer/profile_details_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ class Alumni extends StatefulWidget {
   const Alumni({super.key});
 
   @override
-  _AlumniState createState() => _AlumniState();
+  State<Alumni> createState() => _AlumniState();
 }
 
 class _AlumniState extends State<Alumni> {
@@ -50,10 +52,10 @@ Future<void> _fetchDepartments() async {
               : ""; // Initialize selected department here
         });
       } else {
-        print("Failed to fetch departments: ${data['error']}");
+        // print("Failed to fetch departments: ${data['error']}");
       }
     } catch (e) {
-      print("Error fetching departments: $e");
+      // print("Error fetching departments: $e");
     }
   }
  Future<void> _fetchCoursesByDepartment(String department) async {
@@ -68,10 +70,10 @@ Future<void> _fetchDepartments() async {
           _selectedProgram = programs.isNotEmpty ? programs[0] : "";
         });
       } else {
-        print("Failed to fetch courses: ${data['error']}");
+        // print("Failed to fetch courses: ${data['error']}");
       }
     } catch (e) {
-      print("Error fetching courses: $e");
+      // print("Error fetching courses: $e");
     }
   }
   List<Map<String, dynamic>> alumniData = [];
@@ -253,7 +255,7 @@ Future<void> _fetchDepartments() async {
                   batchFrom: batchFrom,
                   batchTo: batchTo,
                 );
-                print("RECIEEVED DATA: $data");
+                // print("RECIEEVED DATA: $data");
                 setState(() {
                   alumniData = data;
                 });

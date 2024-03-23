@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:albertians/ui/redirects/login_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +10,7 @@ class RegistrationPage extends StatefulWidget {
   const RegistrationPage({super.key});
 
   @override
-  _RegistrationPageState createState() => _RegistrationPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
@@ -490,25 +492,25 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  Map<String, dynamic> _getAdditionalFieldsBasedOnStatus() {
-    switch (_selectedStatus) {
-      case "Student":
-        return {
-          'current_institution': _currentInstitutionController.text,
-          'programme': _programmeController.text,
-          'expected_year_of_passing': _expectedYearController.text,
-        };
-      case "Working (Govt)":
-      case "Working (Non Govt)":
-      case "Entrepreneur":
-        return {
-          'current_organisation': _currentOrganisationController.text,
-          'designation': _designationController.text,
-        };
-      default:
-        return {};
-    }
-  }
+  // Map<String, dynamic> _getAdditionalFieldsBasedOnStatus() {
+  //   switch (_selectedStatus) {
+  //     case "Student":
+  //       return {
+  //         'current_institution': _currentInstitutionController.text,
+  //         'programme': _programmeController.text,
+  //         'expected_year_of_passing': _expectedYearController.text,
+  //       };
+  //     case "Working (Govt)":
+  //     case "Working (Non Govt)":
+  //     case "Entrepreneur":
+  //       return {
+  //         'current_organisation': _currentOrganisationController.text,
+  //         'designation': _designationController.text,
+  //       };
+  //     default:
+  //       return {};
+  //   }
+  // }
 
   @override
   void dispose() {

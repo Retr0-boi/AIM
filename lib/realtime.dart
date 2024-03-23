@@ -6,7 +6,7 @@ class NotificationsPage extends StatefulWidget {
   const NotificationsPage({super.key});
 
   @override
-  _NotificationsPageState createState() => _NotificationsPageState();
+  State<NotificationsPage> createState() => _NotificationsPageState();
 }
 
 class _NotificationsPageState extends State<NotificationsPage> {
@@ -30,11 +30,11 @@ class _NotificationsPageState extends State<NotificationsPage> {
         });
       } else {
         // Handle error response
-        print('Failed to fetch notifications: ${response.statusCode}');
+        // print('Failed to fetch notifications: ${response.statusCode}');
       }
     } catch (e) {
       // Handle network error
-      print('Error fetching notifications: $e');
+      // print('Error fetching notifications: $e');
     }
   }
 

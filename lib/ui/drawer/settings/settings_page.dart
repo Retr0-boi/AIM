@@ -119,13 +119,5 @@ class DataPrivacySettingsPage extends StatelessWidget {
       ),
     );
   }
-  void _navigateToPage(BuildContext context, Widget page) {
-    Navigator.pushReplacement(
-      context,
-      PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => page,
-        
-      ),
-    );
-  }
+
 }

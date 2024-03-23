@@ -1,10 +1,12 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings, use_build_context_synchronously
+
 import 'package:albertians/ui/drawer/alumni_page.dart';
 import 'package:albertians/ui/drawer/event_page.dart';
 import 'package:albertians/ui/drawer/job_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:albertians/models/theme_provider.dart';
-import 'package:albertians/ui/drawer/settings/settings_page.dart';
+// import 'package:albertians/ui/drawer/settings/settings_page.dart';
 import 'package:albertians/models/auth_service.dart';
 import 'package:albertians/ui/redirects/registration_page.dart';
 import 'package:albertians/models/db_helper.dart';
@@ -15,7 +17,7 @@ class MyDrawer extends StatefulWidget implements PreferredSizeWidget {
   const MyDrawer({super.key});
 
   @override
-  _MyDrawerState createState() => _MyDrawerState();
+  State<MyDrawer> createState() => _MyDrawerState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -213,7 +215,7 @@ class _MyDrawerState extends State<MyDrawer> {
                               .campusVisit(mongoId, selectedDate, department);
                           if (response['success']) {
                             ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
+                              const SnackBar(
                                 content: Text('Date has been updated.'),
                                 duration: Duration(
                                     seconds:
@@ -225,7 +227,7 @@ class _MyDrawerState extends State<MyDrawer> {
                               SnackBar(
                                 content: Text(response['error'] ??
                                     'Failed to update date.'),
-                                duration: Duration(
+                                duration: const Duration(
                                     seconds:
                                         2), // Adjust the duration as needed
                               ),
@@ -249,18 +251,18 @@ class _MyDrawerState extends State<MyDrawer> {
                 Divider(
                   color: Theme.of(context).primaryColor,
                 ),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Settings'),
-                  onTap: () {
-                    // Handle settings tap
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SettingsPage()),
-                    );
-                  },
-                ),
+                // ListTile(
+                //   leading: const Icon(Icons.settings),
+                //   title: const Text('Settings'),
+                //   onTap: () {
+                //     // Handle settings tap
+                //     Navigator.push(
+                //       context,
+                //       MaterialPageRoute(
+                //           builder: (context) => const SettingsPage()),
+                //     );
+                //   },
+                // ),
                 ListTile(
                   leading: const Icon(Icons.logout),
                   title: const Text('Logout'),

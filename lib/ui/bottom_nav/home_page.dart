@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:albertians/models/db_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/bottom_nav/bottom_navigation_bar.dart';
@@ -13,7 +15,7 @@ class Home extends StatefulWidget {
   const Home({super.key, this.userData});
 
   @override
-  _HomeState createState() => _HomeState();
+  State<Home> createState() => _HomeState();
 }
 
 class _HomeState extends State<Home> {
@@ -31,20 +33,20 @@ class _HomeState extends State<Home> {
     final userData = await DBHelper.getUserData();
     setState(() {
       department = userData['department'] ?? '';
-      print("department is $department");
+      // print("department is $department");
     });
     _fetchPosts(department);
   }
 
   Future<void> _fetchPosts(String department) async {
     try {
-      print("department is $department");
+      // print("department is $department");
       List<Map<String, dynamic>> posts = await _apiService.getPosts(department);
       setState(() {
         _posts = posts;
       });
     } catch (e) {
-      print('Error fetching posts: $e');
+      // print('Error fetching posts: $e');
       // Handle error here
     }
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:albertians/models/db_helper.dart';
 import 'package:albertians/models/userData.dart';
@@ -13,7 +15,7 @@ class PostMenu extends StatefulWidget {
   final UserData? userData;
   const PostMenu({super.key, this.userData});
   @override
-  _PostMenuState createState() => _PostMenuState();
+  State<PostMenu> createState() => _PostMenuState();
 }
 
 class _PostMenuState extends State<PostMenu> {
@@ -37,7 +39,7 @@ class _PostMenuState extends State<PostMenu> {
         userDataFuture = Future.value(userData);
       });
     } catch (e) {
-      print('Error initializing user data: $e');
+      // print('Error initializing user data: $e');
       setState(() {
         userDataFuture = Future.error(e);
       });
@@ -131,13 +133,13 @@ class _PostMenuState extends State<PostMenu> {
                   Map<String, dynamic> userData = await userDataFuture;
 
                   // Print the data before sending it
-                  print('Sending post content with the following data:');
-                  print('Subject: ${subjectController.text}');
-                  print('Content: ${contentController.text}');
-                  print('User ID: ${userData['mongo_id']}');
-                  print('User EMAIL: ${userData['email']}');
-                  print('User PASS: ${userData['password']}');
-                  print('Image: $selectedImage');
+                  // print('Sending post content with the following data:');
+                  // print('Subject: ${subjectController.text}');
+                  // print('Content: ${contentController.text}');
+                  // print('User ID: ${userData['mongo_id']}');
+                  // print('User EMAIL: ${userData['email']}');
+                  // print('User PASS: ${userData['password']}');
+                  // print('Image: $selectedImage');
                   String dept = userData['department'];
                   // Call the postContent method from an instance of ApiService
                   ApiService apiService = ApiService();
@@ -183,7 +185,7 @@ class _PostMenuState extends State<PostMenu> {
                     );
                   }
                 } catch (e) {
-                  print('Error fetching user data: $e');
+                  // print('Error fetching user data: $e');
                   // Handle error fetching user data, such as showing a snackbar or dialog
                 }
               },

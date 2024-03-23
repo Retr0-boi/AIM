@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:albertians/models/db_helper.dart';
 import 'package:albertians/models/userData.dart';
 import 'package:albertians/services/api_service.dart';
@@ -12,7 +14,7 @@ class EventMenu extends StatefulWidget {
   final UserData? userData;
   const EventMenu({super.key, this.userData});
   @override
-  _EventMenuState createState() => _EventMenuState();
+  State<EventMenu> createState() => _EventMenuState();
 }
 
 class _EventMenuState extends State<EventMenu> {
@@ -35,7 +37,7 @@ class _EventMenuState extends State<EventMenu> {
         userDataFuture = Future.value(userData);
       });
     } catch (e) {
-      print('Error initializing user data: $e');
+      // print('Error initializing user data: $e');
       setState(() {
         userDataFuture = Future.error(e);
       });

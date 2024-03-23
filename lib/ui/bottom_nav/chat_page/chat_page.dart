@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_interpolation_to_compose_strings
+
 import 'package:albertians/ui/bottom_nav/chat_page/chat_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
@@ -14,7 +16,7 @@ class Chat extends StatefulWidget implements PreferredSizeWidget {
   const Chat({super.key,required this.userData});
 
   @override
-  _ChatState createState() => _ChatState();
+  State<Chat> createState() => _ChatState();
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -136,8 +138,7 @@ class _ChatState extends State<Chat> {
                     // },
                     onTap: () {
                       // Handle tapping on the conversation
-                      print(
-                          'Chat button clicked for ${user['_id']} with conversation id ${conversation['_id']}');
+                      // print('Chat button clicked for ${user['_id']} with conversation id ${conversation['_id']}');
                       String recipientId = user['_id']['\$oid']
                           .toString(); // Access ObjectId correctly
                       String conversationId = conversation['_id']['\$oid']

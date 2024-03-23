@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -10,31 +12,31 @@ class ApiService {
   ApiService() {
     _dio.interceptors.add(InterceptorsWrapper(
       onRequest: (options, handler) {
-        print('Request: ${options.method} ${options.path}');
-        print('Request data: ${options.data}');
+        // print('Request: ${options.method} ${options.path}');
+        // print('Request data: ${options.data}');
         return handler.next(options);
       },
       onResponse: (response, handler) {
-        print('Response: ${response.statusCode}');
-        print('Response data: ${response.data}');
+        // print('Response: ${response.statusCode}');
+        // print('Response data: ${response.data}');
         return handler.next(response);
       },
       onError: (DioException e, handler) {
-        print('Error DioException: ${e.message}');
+        // print('Error DioException: ${e.message}');
 
         return handler.next(e);
       },
     ));
   }
 
-  void printFormData(FormData formData) {
-    for (var entry in formData.fields) {
-      print('${entry.key}: ${entry.value}');
-    }
-    for (var entry in formData.files) {
-      print('${entry.key}: ${entry.value.filename}');
-    }
-  }
+  // void printFormData(FormData formData) {
+  //   for (var entry in formData.fields) {
+  //     print('${entry.key}: ${entry.value}');
+  //   }
+  //   for (var entry in formData.files) {
+  //     print('${entry.key}: ${entry.value.filename}');
+  //   }
+  // }
 
   Future<Map<String, dynamic>> registerUser(
       Map<String, dynamic> userData) async {
@@ -46,16 +48,15 @@ class ApiService {
         }),
         data: json.encode(userData),
       );
-      print(
-          'registering-Raw Response: ${response.toString()}'); // Add this line
-      print('registering-Request Data: ${json.encode(userData)}');
-      print('registering-Response Status Code: ${response.statusCode}');
-      print('registering-Response Data: ${response.data}');
+      // print('registering-Raw Response: ${response.toString()}'); // Add this line
+      // print('registering-Request Data: ${json.encode(userData)}');
+      // print('registering-Response Status Code: ${response.statusCode}');
+      // print('registering-Response Data: ${response.data}');
 
       dynamic responseData = response.data;
 
       if (responseData == null) {
-        print('Empty response received');
+        // print('Empty response received');
         return {'success': false};
       }
 
@@ -64,7 +65,7 @@ class ApiService {
         try {
           responseData = json.decode(responseData);
         } catch (e) {
-          print('Invalid JSON response format: $responseData');
+          // print('Invalid JSON response format: $responseData');
           return {'success': false, 'error': 'Invalid JSON response format'};
         }
       }
@@ -77,13 +78,13 @@ class ApiService {
           'success': success
         }; // Include the MongoDB object ID in the response
       } else {
-        print('Error api_service.dart: ${response.statusMessage}');
+        // print('Error api_service.dart: ${response.statusMessage}');
         return {'success': false, 'error': response.statusMessage};
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       if (e is DioException && e.response != null) {
-        print('Full Response api_service.dart: ${e.response}');
+        // print('Full Response api_service.dart: ${e.response}');
         return {'success': false, 'error': e.response?.statusCode};
       } else {
         return {'success': false, 'error': 'Unknown error'};
@@ -101,8 +102,8 @@ class ApiService {
         data: json.encode({'email': email, 'password': password}),
       );
 
-      print('Response Status Code: ${response.statusCode}');
-      print('Response Data: ${response.data}');
+      // print('Response Status Code: ${response.statusCode}');
+      // print('Response Data: ${response.data}');
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
@@ -136,13 +137,13 @@ class ApiService {
           return {'success': false};
         }
       } else {
-        print('Error api_service.dart: ${response.statusMessage}');
+        // print('Error api_service.dart: ${response.statusMessage}');
         return {'success': false};
       }
     } catch (e) {
-      print('Exception at api_service.dart: $e');
+      // print('Exception at api_service.dart: $e');
       if (e is DioException && e.response != null) {
-        print('Full Response api_service.dart: ${e.response}');
+        // print('Full Response api_service.dart: ${e.response}');
       }
       return {'success': false};
     }
@@ -217,7 +218,7 @@ class ApiService {
       }
     } catch (e) {
       // Handle general exception
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {
         'success': false,
         'error-api_services': 'Failed to fetch user data'
@@ -235,7 +236,7 @@ class ApiService {
       dynamic responseData = response.data;
 
       if (responseData == null) {
-        print('Empty response received');
+        // print('Empty response received');
         return [];
       }
 
@@ -244,7 +245,7 @@ class ApiService {
         try {
           responseData = json.decode(responseData);
         } catch (e) {
-          print('Invalid JSON response format: $responseData');
+          // print('Invalid JSON response format: $responseData');
           return [];
         }
       }
@@ -260,11 +261,11 @@ class ApiService {
 
         return matchingUsers;
       } else {
-        print('Error api_service.dart: ${response.statusMessage}');
+        // print('Error api_service.dart: ${response.statusMessage}');
         return [];
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return [];
     }
   }
@@ -308,7 +309,7 @@ class ApiService {
       }
     } catch (e) {
       // Handle general exception
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {
         'success': false,
         'error-api_services': 'Failed to fetch conversation data'
@@ -352,7 +353,7 @@ class ApiService {
       };
     } catch (e) {
       // Handle general exception
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false, 'error': 'Failed to initiate conversation'};
     }
   }
@@ -386,8 +387,8 @@ class ApiService {
         }),
       );
 
-      print('Post Jobs Response Status Code: ${response.statusCode}');
-      print('Post Jobs Response Data: ${response.data}');
+      // print('Post Jobs Response Status Code: ${response.statusCode}');
+      // print('Post Jobs Response Data: ${response.data}');
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
@@ -409,11 +410,11 @@ class ApiService {
           throw Exception('Empty response data');
         }
       } else {
-        print('Error api_service.dart: ${response.statusMessage}');
+        // print('Error api_service.dart: ${response.statusMessage}');
         return {'success': false};
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false, 'error': e.toString()};
     }
   }
@@ -517,17 +518,15 @@ class ApiService {
           return usersData;
         } else {
           // Handle error from API
-          print(
-              'Failed to fetch alumni data. Reason: ${responseData['message']}');
+          // print('Failed to fetch alumni data. Reason: ${responseData['message']}');
           return [];
         }
       } else {
-        print(
-            'Failed to fetch alumni data. Status code: ${response.statusCode}');
+        // print('Failed to fetch alumni data. Status code: ${response.statusCode}');
         return [];
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return [];
     }
   }
@@ -547,9 +546,8 @@ class ApiService {
         data: formData,
       );
 
-      print(
-          'Update Profile Image Response Status Code: ${response.statusCode}');
-      print('Update Profile Image Response Data: ${response.data}');
+      // print('Update Profile Image Response Status Code: ${response.statusCode}');
+      // print('Update Profile Image Response Data: ${response.data}');
 
       if (response.statusCode == 200) {
         // Check if response data is empty
@@ -582,7 +580,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false, 'error': 'Exception occurred: $e'};
     }
   }
@@ -608,8 +606,8 @@ class ApiService {
         if (image != null) 'image': await MultipartFile.fromFile(image.path),
       });
 
-      print('FORM DATA:');
-      printFormData(formData);
+      // print('FORM DATA:');
+      // printFormData(formData);
 
       final response = await _dio.post(
         '$apiUrl?action=postContent',
@@ -619,8 +617,8 @@ class ApiService {
         data: formData,
       );
 
-      print('Post Content Response Status Code: ${response.statusCode}');
-      print('Post Content Response Data: ${response.data}');
+      // print('Post Content Response Status Code: ${response.statusCode}');
+      // print('Post Content Response Data: ${response.data}');
 
       if (response.statusCode == 200) {
         dynamic responseData = response.data;
@@ -642,11 +640,11 @@ class ApiService {
           throw Exception('Empty response data');
         }
       } else {
-        print('Error api_service.dart: ${response.statusMessage}');
+        // print('Error api_service.dart: ${response.statusMessage}');
         return {'success': false};
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false};
     }
   }
@@ -712,7 +710,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {
         'success': false,
         'error-api_services': 'Failed to fetch messages data'
@@ -749,7 +747,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false, 'error-api_services': 'Failed to send message'};
     }
   }
@@ -775,7 +773,7 @@ class ApiService {
         };
       }
     } catch (e) {
-      print('Exception api_service.dart: $e');
+      // print('Exception api_service.dart: $e');
       return {'success': false, 'error': 'Failed to fetch departments data'};
     }
   }
@@ -798,9 +796,9 @@ class ApiService {
 
   Future<Map<String, dynamic>> campusVisit(
       String mongoId, DateTime date, String department) async {
-    print("the datas are:\n $mongoId\n $department \n$date");
+    // print("the datas are:\n $mongoId\n $department \n$date");
     try {
-      print("Inside the try block");
+      // print("Inside the try block");
       FormData formData = FormData.fromMap({
         'mongoId': mongoId,
         'date': date,

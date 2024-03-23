@@ -9,10 +9,10 @@ import 'package:albertians/services/api_service.dart';
 class Notifications extends StatefulWidget {
   final UserData? userData; // Update the type to UserData
 
-  const Notifications({Key? key, this.userData}) : super(key: key);
+  const Notifications({super.key, this.userData});
 
   @override
-  _NotificationsPage createState() => _NotificationsPage();
+  State<Notifications> createState() => _NotificationsPage();
 }
 
 class _NotificationsPage extends State<Notifications> {
@@ -54,7 +54,7 @@ Widget _buildNotificationsList() {
     future: apiService.getNotifications(department),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
-        return Center(child: CircularProgressIndicator());
+        return const Center(child: CircularProgressIndicator());
       } else if (snapshot.hasError) {
         return Center(child: Text('Error: ${snapshot.error}'));
       } else if (snapshot.hasData) {
@@ -87,13 +87,13 @@ Widget _buildNotificationsList() {
                       ...entry.value
                           .map((notification) =>
                               _buildNotificationItem(notification))
-                          .toList(),
+                          ,
                     ],
                   ))
               .toList(),
         );
       } else {
-        return Center(child: Text('No notifications available'));
+        return const Center(child: Text('No notifications available'));
       }
     },
   );
@@ -102,23 +102,23 @@ Widget _buildNotificationsList() {
 Map<String, List<Map<String, dynamic>>> groupNotificationsByDate(
     List<Map<String, dynamic>> notifications) {
   Map<String, List<Map<String, dynamic>>> groupedNotifications = {};
-  notifications.forEach((notification) {
+  for (var notification in notifications) {
     String date = notification['timestamp'] ?? 'Unknown Date';
     if (!groupedNotifications.containsKey(date)) {
       groupedNotifications[date] = [];
     }
     groupedNotifications[date]!.add(notification);
-  });
+  }
   return groupedNotifications;
 }
-  bool _isToday(DateTime? timestamp) {
-    if (timestamp == null) return false;
+  // bool _isToday(DateTime? timestamp) {
+  //   if (timestamp == null) return false;
 
-    final now = DateTime.now();
-    return timestamp.day == now.day &&
-        timestamp.month == now.month &&
-        timestamp.year == now.year;
-  }
+  //   final now = DateTime.now();
+  //   return timestamp.day == now.day &&
+  //       timestamp.month == now.month &&
+  //       timestamp.year == now.year;
+  // }
 
   Widget _buildSectionDivider(String title) {
     return Container(
@@ -136,7 +136,7 @@ Widget _buildNotificationItem(Map<String, dynamic> notification) {
   }
 
   String notificationMessage = '';
-  String uwu = notification['type'];
+  // String uwu = notification['type'];
   // Handle different notification types
   switch (notification['type']) {
     case 'job':
@@ -151,7 +151,7 @@ Widget _buildNotificationItem(Map<String, dynamic> notification) {
     // Add more cases as needed
     default:
       notificationMessage = 'Unknown notification type';
-      print("the value is $uwu");
+      // print("the value is $uwu");
       break;
   }
 

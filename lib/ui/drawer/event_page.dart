@@ -1,3 +1,6 @@
+// ignore_for_file: use_build_context_synchronously
+
+
 import 'package:flutter/material.dart';
 import 'package:albertians/ui/app_bars/app_bar.dart';
 import 'package:albertians/ui/drawer/drawer.dart';
@@ -11,7 +14,7 @@ class EventPage extends StatefulWidget {
   const EventPage({super.key});
 
   @override
-  _EventPage createState() => _EventPage();
+  State<EventPage> createState() => _EventPage();
 }
 
 class _EventPage extends State<EventPage> {

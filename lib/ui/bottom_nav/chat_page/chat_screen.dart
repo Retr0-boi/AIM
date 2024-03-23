@@ -18,7 +18,7 @@ class ChatScreen extends StatefulWidget {
   });
 
   @override
-  _ChatScreenState createState() => _ChatScreenState();
+  State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
@@ -57,7 +57,7 @@ void _fetchMessages() async {
     });
   } else {
     // Handle error when fetching messages
-    print('Error fetching messages: ${result['error']}');
+    // print('Error fetching messages: ${result['error']}');
   }
 }
 
@@ -171,7 +171,7 @@ void _handleSubmitted(String text) async {
 
   if (!result['success']) {
     // Handle error when sending message
-    print('Error sending message: ${result['error']}');
+    // print('Error sending message: ${result['error']}');
   }
 }
 
