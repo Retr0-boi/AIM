@@ -103,8 +103,8 @@ class _ChatState extends State<Chat> {
                   child: ListTile(
                     leading: CircleAvatar(
                       child: Image.network(
-                        // 'http://192.168.56.1/' + profilePicUrl,
-                        'http://192.168.45.72/' + profilePicUrl,
+                        serverUrl + profilePicUrl,
+                        // 'http://192.168.45.72/' + profilePicUrl,
                         width: 40,
                         height: 40,
                         fit: BoxFit.cover,

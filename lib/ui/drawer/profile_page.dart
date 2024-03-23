@@ -160,10 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     onTap: _pickImage,
                     child: CircleAvatar(
                       radius: 90,
-                      backgroundImage: NetworkImage(
-                          // 'http://192.168.56.1/' + userData['profile_picture']),
-                          'http://192.168.45.72/' +
-                              userData['profile_picture']),
+                      backgroundImage: NetworkImage(serverUrl + userData['profile_picture']),
                     ),
                   ),
 

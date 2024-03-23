@@ -3,7 +3,7 @@
 import 'package:dio/dio.dart';
 import 'dart:convert';
 import 'dart:io';
-
+const String serverUrl = 'http://192.168.56.1/';
 class ApiService {
   static const String apiUrl = 'http://10.0.2.2:80/AIM/api/api.php';
   // 'http://192.168.45.72/AIM/api/api.php';

@@ -1,3 +1,4 @@
+import 'package:albertians/services/api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -21,7 +22,7 @@ class _NotificationsPageState extends State<NotificationsPage> {
   Future<void> fetchNotifications() async {
     try {
       // Make HTTP GET request to fetch notifications from the server
-      var response = await http.get(Uri.parse('http://192.168.56.1/AIM/api/change_listener.php'));
+      var response = await http.get(Uri.parse(serverUrl+'AIM/api/change_listener.php'));
 
       if (response.statusCode == 200) {
         // Parse the JSON response and update the notifications list

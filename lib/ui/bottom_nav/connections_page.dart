@@ -116,8 +116,8 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
 
                 ClipOval(
                   child: Image.network(
-                    // 'http://192.168.56.1/' + user['profile_picture'],
-                    'http://192.168.45.72/' + user['profile_picture'],
+                    serverUrl + user['profile_picture'],
+                    // 'http://192.168.45.72/' + user['profile_picture'],
                     width: 40, // Adjust the width as needed
                     height: 40, // Adjust the height as needed
                     fit: BoxFit.cover,

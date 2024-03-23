@@ -85,8 +85,8 @@ void _fetchMessages() async {
                         12), // Add spacing between back icon and profile picture
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      // 'http://192.168.56.1/${widget.profilePicture}'),
-                      'http://192.168.45.72/${widget.profilePicture}'),
+                      'http://192.168.56.1/${widget.profilePicture}'),
+                      // 'http://192.168.45.72/${widget.profilePicture}'),
                   radius: 16, // Adjust the radius as needed
                 ),
                 const SizedBox(
@@ -197,8 +197,8 @@ void _handleSubmitted(String text) async {
           CircleAvatar(
             // Use appropriate avatar for the receiver
             backgroundImage: NetworkImage(
-              // 'http://192.168.56.1/${widget.profilePicture}',
-              'http://192.168.45.72/${widget.profilePicture}',
+              '$serverUrl${widget.profilePicture}',
+              // 'http://192.168.45.72/${widget.profilePicture}',
             ),
             radius: 16, // Adjust the radius as needed
           ),
