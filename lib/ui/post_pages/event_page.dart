@@ -104,6 +104,8 @@ class _EventMenuState extends State<EventMenu> {
                     subject,
                     jobDetails,
                     userData['mongo_id'],
+                    userData['email'],
+                    userData['password'],
                     'event',
                     dept,
                     registrationLink,

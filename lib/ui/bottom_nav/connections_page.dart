@@ -29,12 +29,12 @@ class _ConnectionsPageState extends State<ConnectionsPage> {
   @override
   void initState() {
     super.initState();
-    print("PRINTING USER DATA");
-    if (widget.userData != null) {
-      widget.userData!.printUserData();
-    } else {
-      print("NULL USER DATA");
-    }
+    // print("PRINTING USER DATA");
+    // if (widget.userData != null) {
+    //   widget.userData!.printUserData();
+    // } else {
+    //   print("NULL USER DATA");
+    // }
     // Call the SQLite database helper function to get user data
     userDataFuture = DBHelper.getUserData().then((userData) {
       // Extract mongoId from the user data

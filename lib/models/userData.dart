@@ -59,15 +59,15 @@ class UserData extends ChangeNotifier {
   }
 
   // Method to print user data
-  void printUserData() {
-    print('UserData:');
-    print('mongoId: $mongoId');
-    print('username: $username');
-    print('email: $email');
-    print('password: $password');
-    print('department: $department');
-    print('batchFrom: $batchFrom');
-    print('batchTo: $batchTo');
-    // Print other fields
-  }
+  // void printUserData() {
+  //   print('UserData:');
+  //   print('mongoId: $mongoId');
+  //   print('username: $username');
+  //   print('email: $email');
+  //   print('password: $password');
+  //   print('department: $department');
+  //   print('batchFrom: $batchFrom');
+  //   print('batchTo: $batchTo');
+  //   // Print other fields
+  // }
 }

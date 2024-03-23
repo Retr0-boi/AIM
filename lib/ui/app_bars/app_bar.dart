@@ -16,12 +16,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: Builder(
         builder: (BuildContext context) {
           return IconButton(
-        icon: const Icon(
-          Icons.menu,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          Scaffold.of(context).openDrawer();
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              Scaffold.of(context).openDrawer();
             },
           );
         },
@@ -188,7 +188,6 @@ class AlumniAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               Navigator.pop(context);
-
             },
           );
         },
@@ -199,6 +198,7 @@ class AlumniAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const PostAppBar({super.key});
 
@@ -221,7 +221,6 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               Navigator.pop(context);
-
             },
           );
         },
@@ -232,6 +231,7 @@ class PostAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class JobAppBar extends StatelessWidget implements PreferredSizeWidget {
   const JobAppBar({super.key});
 
@@ -254,7 +254,6 @@ class JobAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               Navigator.pop(context);
-
             },
           );
         },
@@ -265,6 +264,7 @@ class JobAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class JobPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const JobPageAppBar({super.key});
 
@@ -287,7 +287,6 @@ class JobPageAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               Navigator.pop(context);
-
             },
           );
         },
@@ -298,6 +297,7 @@ class JobPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
+
 class EventPageAppBar extends StatelessWidget implements PreferredSizeWidget {
   const EventPageAppBar({super.key});
 
@@ -320,7 +320,6 @@ class EventPageAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
             onPressed: () {
               Navigator.pop(context);
-
             },
           );
         },

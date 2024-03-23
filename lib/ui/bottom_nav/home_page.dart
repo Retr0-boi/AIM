@@ -52,8 +52,8 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final userData = widget.userData;
-    print("CHECKING IF THIS WORKS $userData");
-    userData?.printUserData();
+    // print("CHECKING IF THIS WORKS $userData");
+    // userData?.printUserData();
     return Scaffold(
       appBar: AppBar(
         title: const Text(

@@ -43,7 +43,7 @@ class DBHelper {
     );
   }
 
- static Future<void> insertUserData(Map<String, dynamic> userData) async {
+  static Future<void> insertUserData(Map<String, dynamic> userData) async {
     final Database db = await initDatabase();
 
     await db.insert('users', userData);
@@ -65,7 +65,6 @@ class DBHelper {
     await db.delete('registered_user');
   }
 
-
   static Future<void> insertRegistrationData(
       Map<String, dynamic> registrationData) async {
     final Database db = await initDatabase();
@@ -79,41 +78,41 @@ class DBHelper {
   }
 
   //DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE ON PRODUCTION
-  static Future<void> printUsersTable() async {
-    final Database db = await initDatabase();
-    List<Map<String, dynamic>> users = await db.query('users');
+  // static Future<void> printUsersTable() async {
+    // final Database db = await initDatabase();
+    // List<Map<String, dynamic>> users = await db.query('users');
 
-    print('Contents of users table:');
-    for (var user in users) {
-      print(
-          'userame: ${user['username']}, Email: ${user['email']},Password: ${user['password']},mongo_id: ${user['mongo_id']},Dept: ${user['department']}');
-    }
-  }
+    // print('Contents of users table:');
+    // for (var user in users) {
+      // print(
+      // 'userame: ${user['username']}, Email: ${user['email']},Password: ${user['password']},mongo_id: ${user['mongo_id']},Dept: ${user['department']}');
+    // }
+  // }
 
-  static Future<void> printRegisteredUserTable() async {
-    final Database db = await initDatabase();
-    List<Map<String, dynamic>> registeredUsers =
-        await db.query('registered_user');
+  // static Future<void> printRegisteredUserTable() async {
+  //   final Database db = await initDatabase();
+  //   List<Map<String, dynamic>> registeredUsers =
+  //       await db.query('registered_user');
 
-    print('Contents of registered_user table:');
-    for (var user in registeredUsers) {
-      print(
-        'ID: ${user['id']}, Department: ${user['department']}, Program: ${user['program']}, '
-        'Batch From: ${user['batch_from']}, Batch To: ${user['batch_to']}, '
-        'Name: ${user['name']}, DOB: ${user['DOB']}, Email: ${user['email']}, '
-        'Password: ${user['password']}, Account Status: ${user['account_status']}, '
-        'Identification: ${user['identification']}, '
-        'Updation Date: ${user['updation_date']}, Updation Time: ${user['updation_time']}, '
-        'Object ID: ${user['obj_id']}, '
-        'Current Status: ${user['current_status']}, '
-        'Current Institution: ${user['current_institution']}, '
-        'Expected Pass Year: ${user['expected_pass_year']}, '
-        'Current Organisation: ${user['current_organisation']}, '
-        'Designation: ${user['designation']},'
-        'phone: ${user['phone']}',
-      );
-    }
-  }
+  //   print('Contents of registered_user table:');
+  //   for (var user in registeredUsers) {
+  //     print(
+  //       'ID: ${user['id']}, Department: ${user['department']}, Program: ${user['program']}, '
+  //       'Batch From: ${user['batch_from']}, Batch To: ${user['batch_to']}, '
+  //       'Name: ${user['name']}, DOB: ${user['DOB']}, Email: ${user['email']}, '
+  //       'Password: ${user['password']}, Account Status: ${user['account_status']}, '
+  //       'Identification: ${user['identification']}, '
+  //       'Updation Date: ${user['updation_date']}, Updation Time: ${user['updation_time']}, '
+  //       'Object ID: ${user['obj_id']}, '
+  //       'Current Status: ${user['current_status']}, '
+  //       'Current Institution: ${user['current_institution']}, '
+  //       'Expected Pass Year: ${user['expected_pass_year']}, '
+  //       'Current Organisation: ${user['current_organisation']}, '
+  //       'Designation: ${user['designation']},'
+  //       'phone: ${user['phone']}',
+  //     );
+  //   }
+  // }
 
   static Future<List<Map<String, dynamic>>> getUsersTable() async {
     final Database db = await initDatabase();
@@ -136,6 +135,7 @@ class DBHelper {
       return {}; // Return an empty map if no user data found
     }
   }
+
   static Future<String?> getDepartment() async {
     final Database db = await initDatabase();
     List<Map<String, dynamic>> result = await db.query(

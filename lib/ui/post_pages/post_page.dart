@@ -9,14 +9,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:albertians/ui/bottom_nav/home_page.dart';
 
-
 class PostMenu extends StatefulWidget {
   final UserData? userData;
   const PostMenu({super.key, this.userData});
   @override
   _PostMenuState createState() => _PostMenuState();
 }
-
 
 class _PostMenuState extends State<PostMenu> {
   UserData? userData;
@@ -137,6 +135,8 @@ class _PostMenuState extends State<PostMenu> {
                   print('Subject: ${subjectController.text}');
                   print('Content: ${contentController.text}');
                   print('User ID: ${userData['mongo_id']}');
+                  print('User EMAIL: ${userData['email']}');
+                  print('User PASS: ${userData['password']}');
                   print('Image: $selectedImage');
                   String dept = userData['department'];
                   // Call the postContent method from an instance of ApiService
@@ -147,6 +147,8 @@ class _PostMenuState extends State<PostMenu> {
                     userData['mongo_id'],
                     'post',
                     dept,
+                    userData['email'],
+                    userData['password'],
                     image: selectedImage,
                   );
 
@@ -166,11 +168,11 @@ class _PostMenuState extends State<PostMenu> {
                     });
 
                     Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Home(),
-                    ),
-                  );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const Home(),
+                      ),
+                    );
                   } else {
                     // Show a snackbar or dialog indicating failure
                     ScaffoldMessenger.of(context).showSnackBar(

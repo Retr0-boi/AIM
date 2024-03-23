@@ -3,9 +3,8 @@ import 'dart:convert';
 import 'dart:io';
 
 class ApiService {
-  static const String apiUrl =
-      // 'http://10.0.2.2:80/AIM/api/api.php'; // Update with your API URL
-      'http://192.168.45.72/AIM/api/api.php'; // Update with your API URL
+  static const String apiUrl = 'http://10.0.2.2:80/AIM/api/api.php';
+  // 'http://192.168.45.72/AIM/api/api.php';
   final Dio _dio = Dio();
 
   ApiService() {
@@ -95,7 +94,7 @@ class ApiService {
   Future<Map<String, dynamic>> loginUser(String email, String password) async {
     try {
       final response = await _dio.post(
-        '$apiUrl?action=login', // Include the login action in the URL
+        '$apiUrl?action=login',
         options: Options(headers: {
           'Content-Type': 'application/json',
         }),
@@ -112,12 +111,10 @@ class ApiService {
           responseData = json.decode(responseData);
         }
 
-        // Check if the response contains the expected keys
         if (responseData.containsKey('success') &&
             responseData['success'] != null) {
           bool success = responseData['success'];
-          String mongoId = responseData[
-              'mongo_id']; // Add this line to get the MongoDB object ID
+          String mongoId = responseData['mongo_id'];
           String userName = responseData['name'];
           String email = responseData['email'];
           String password = responseData['password'];
@@ -364,6 +361,8 @@ class ApiService {
       String subject,
       String jobDetails,
       String postedBy,
+      String email,
+      String password,
       String type,
       String department,
       String registrationLink,
@@ -376,6 +375,8 @@ class ApiService {
         }),
         data: json.encode({
           'posted_by': postedBy,
+          'email': email,
+          'password': password,
           'subject': subject,
           'job_details': jobDetails,
           'type': type,
@@ -532,10 +533,12 @@ class ApiService {
   }
 
   Future<Map<String, dynamic>> updateProfileImage(
-      String mongoId, File imageFile) async {
+      String mongoId, File imageFile, String email, String password) async {
     try {
       FormData formData = FormData.fromMap({
         'mongoId': mongoId,
+        'email': email,
+        'password': password,
         'profile_image': await MultipartFile.fromFile(imageFile.path),
       });
 
@@ -584,8 +587,14 @@ class ApiService {
     }
   }
 
-  Future<Map<String, dynamic>> postContent(String subject, String content,
-      String postedBy, String type, String department,
+  Future<Map<String, dynamic>> postContent(
+      String subject,
+      String content,
+      String postedBy,
+      String type,
+      String department,
+      String email,
+      String password,
       {File? image}) async {
     try {
       FormData formData = FormData.fromMap({
@@ -594,10 +603,12 @@ class ApiService {
         'posted_by': postedBy,
         'type': type,
         'department': department,
+        'email': email,
+        'password': password,
         if (image != null) 'image': await MultipartFile.fromFile(image.path),
       });
 
-      print('Sending post content with the following data:');
+      print('FORM DATA:');
       printFormData(formData);
 
       final response = await _dio.post(

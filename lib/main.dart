@@ -61,22 +61,3 @@ class AuthenticationWrapper extends StatelessWidget {
     );
   }
 }
-// CLIENT SIDE
-
-// campus visit set aakanam
-// job request set aakanam
-// share,like, comment set aakanam
-// real time notifcations
-// notifications page
-// actual messaging thingy
-// settings page enthelum aakanam (optional)
-
-
-// SERVER SIDE
-
-// REQUEST ID 
-// post management
-// request management
-// notifications 
-// login mysql aakanam
-// email thingy

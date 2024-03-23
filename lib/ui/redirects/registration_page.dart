@@ -69,10 +69,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
               : ""; // Initialize selected department here
         });
       } else {
-        print("Failed to fetch departments: ${data['error']}");
+        // print("Failed to fetch departments: ${data['error']}");
       }
     } catch (e) {
-      print("Error fetching departments: $e");
+      // print("Error fetching departments: $e");
     }
   }
 
@@ -88,10 +88,10 @@ class _RegistrationPageState extends State<RegistrationPage> {
           _selectedProgram = programs.isNotEmpty ? programs[0] : "";
         });
       } else {
-        print("Failed to fetch courses: ${data['error']}");
+        // print("Failed to fetch courses: ${data['error']}");
       }
     } catch (e) {
-      print("Error fetching courses: $e");
+      // print("Error fetching courses: $e");
     }
   }
 
@@ -440,7 +440,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         registrationResult['success'] ?? false;
 
                     if (registrationSuccess) {
-                      print("registered successfully");
+                      // print("registered successfully");
 
                       // Insert registration data into local SQLite database
                       await DBHelper.insertRegistrationData(registrationData);
@@ -453,11 +453,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                       );
                     } else {
-                      print('Registration failed');
+                      // print('Registration failed');
                     }
                   } catch (e) {
                     // Print the full error message
-                    print('Error registration_page.dart: $e');
+                    // print('Error registration_page.dart: $e');
                   }
                 },
                 child: const Text('Register'),

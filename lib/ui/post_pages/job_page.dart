@@ -114,6 +114,8 @@ class _JobMenuState extends State<JobMenu> {
                     subject,
                     jobDetails,
                     userData['mongo_id'],
+                    userData['email'],
+                    userData['password'],
                     'job',
                     dept,
                     registrationLink,
